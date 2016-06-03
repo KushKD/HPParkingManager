@@ -57,6 +57,7 @@ public class OUT_Activity extends AppCompatActivity {
         tasks = new ArrayList<>();
 
 
+
         //getParkedVehiclelist_JSON/{ParkingId}
 
         if(isOnline()){
@@ -79,10 +80,17 @@ public class OUT_Activity extends AppCompatActivity {
                 userSearch.setClass(OUT_Activity.this, OUT_DETAILS.class);
                 startActivity(userSearch);
 
+
             }
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+
+    }
 
     protected boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -99,6 +107,7 @@ public class OUT_Activity extends AppCompatActivity {
         // LGone.setVisibility(View.VISIBLE);
         adapter = new OUT_Adapter(this, R.layout.item_out_list, ads_Server);
         listv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         // listv.setTextFilterEnabled(true);
 
     }

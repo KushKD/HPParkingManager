@@ -35,13 +35,15 @@ public class OUT_DETAILS extends AppCompatActivity {
     //VehicleNumber
     //Out Time
 
-    TextView tv_parkingid,tv_drivername,tv_phonenumber,tv_vehiclenumber,tv_outtime , tv_message_from_server;
-    Button checkout,confirm;
+    TextView tv_parkingid,tv_drivername,tv_phonenumber,tv_vehiclenumber,tv_outtime , tv_message_from_server, tv_intimee;
+    Button checkout,confirm,back;
 
     URL url_;
     HttpURLConnection conn_;
     StringBuilder sb = null;
     JSONStringer userJson = null;
+    String OUT_TIME = null;
+
 
 
     @Override
@@ -59,26 +61,29 @@ public class OUT_DETAILS extends AppCompatActivity {
                 tv_vehiclenumber = (TextView)findViewById(R.id.vehiclenumber);
                 tv_outtime = (TextView)findViewById(R.id.outtime);
                 checkout = (Button)findViewById(R.id.checkout);
-        tv_message_from_server = (TextView)findViewById(R.id.message_from_server);
+                tv_message_from_server = (TextView)findViewById(R.id.message_from_server);
                confirm = (Button)findViewById(R.id.confirm);
+                tv_intimee = (TextView)findViewById(R.id.intime);
+
+        back = (Button)findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OUT_DETAILS.this.finish();
+            }
+        });
 
 
 
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => "+c.getTime());
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = df.format(c.getTime());
-        // formattedDate have current date/time
-        Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
-
-        String OUT_TIME = formattedDate;
 
         tv_parkingid.setText(OUT_Details.getParkingId());
         tv_drivername.setText(OUT_Details.getDriverName());
         tv_phonenumber.setText(OUT_Details.getPhoneNumber());
         tv_vehiclenumber.setText(OUT_Details.getVehicleNo());
-        tv_outtime.setText(OUT_TIME);
+       // tv_outtime.setText(OUT_TIME);
+        tv_intimee.setText(OUT_Details.getParkInTime());
 
 
 
@@ -93,10 +98,20 @@ public class OUT_DETAILS extends AppCompatActivity {
                     String drivername = OUT_Details.getDriverName();
                     String phone_number = OUT_Details.getPhoneNumber();
                     String vehicle_number = OUT_Details.getVehicleNo();
-                    String out_time = tv_outtime.getText().toString().trim();
+                  //  String out_time = tv_outtime.getText().toString().trim();
+                    Calendar c = Calendar.getInstance();
+                    System.out.println("Current time => "+c.getTime());
+
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    String formattedDate = df.format(c.getTime());
+                    // formattedDate have current date/time
+                    Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
+
+                   OUT_TIME = formattedDate;
+                    tv_outtime.setText(OUT_TIME);
 
                     CHECK_OUT_CAR COC = new CHECK_OUT_CAR();
-                    COC.execute(parking_id,drivername,phone_number,vehicle_number,out_time,"checkout");
+                    COC.execute(parking_id,drivername,phone_number,vehicle_number,OUT_TIME,"checkout");
 
                 }else{
                     Toast.makeText(OUT_DETAILS.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
@@ -263,21 +278,38 @@ public class OUT_DETAILS extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getApplicationContext(),Integer.toString(s.length()),Toast.LENGTH_LONG).show();
+
+
+            if(s.length()==54){
+                Parking_Id = null;
+                Driver_Name = null;
+                Vehicle_NO = null;
+                Phone_number = null;
+                OUT_Time = null;
+
+                Log.e("Result",s);
+                tv_message_from_server.setText(s);
+                dialog.dismiss();
+                OUT_DETAILS.this.finish();
+            }else{
+                Parking_Id = null;
+                Driver_Name = null;
+                Vehicle_NO = null;
+                Phone_number = null;
+                OUT_Time = null;
+
+                Log.e("Result",s);
+                tv_message_from_server.setText(s);
+                dialog.dismiss();
+
+            }
 
 
 
 
 
-            Parking_Id = null;
-            Driver_Name = null;
-            Vehicle_NO = null;
-            Phone_number = null;
-            OUT_Time = null;
 
-            Log.e("Result",s);
-            tv_message_from_server.setText(s);
-            dialog.dismiss();
            // OUT_DETAILS.this.finish();
           /*  JsonParser JP;
             String finalResult = null;

@@ -76,22 +76,44 @@ public class IN_Activity extends Activity {
                 String Parking_ID = ID.trim();
 
                 Calendar c = Calendar.getInstance();
-                System.out.println("Current time => "+c.getTime());
+              //  System.out.println("Current time => "+c.getTime());
 
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 String formattedDate = df.format(c.getTime());
                 // formattedDate have current date/time
-                Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
 
                 String IN_TIME = formattedDate;
 
 
-                System.out.println("\t"+typecar + "\t"+ Long.toString(estimated_Time+1));
+               // System.out.println("\t"+typecar + "\t"+ Long.toString(estimated_Time+1));
 
-                if(isOnline()) {
-                    PARK_CAR PC = new PARK_CAR();
-                    PC.execute(Parking_ID, typecar, car_number, Driver_Name, phonenumber, Long.toString(estimated_Time + 1), formattedDate);
+
+
+
+                if(phonenumber.length()==10 && phonenumber!=null){
+                    if(car_number.length()!=0 && car_number!=null){
+                        if(Parking_ID.length()!=0 && Parking_ID!=null){
+                            if(isOnline()) {
+                                PARK_CAR PC = new PARK_CAR();
+                                PC.execute(Parking_ID, typecar, car_number, Driver_Name, phonenumber, Long.toString(estimated_Time + 1), formattedDate);
+                            }
+                        }else{
+                            Toast.makeText(IN_Activity.this, "Something Bad Happened", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }else{
+                        Toast.makeText(IN_Activity.this, "Please enter vehicle number", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(IN_Activity.this, "Please enter valid 10 digit phone number.", Toast.LENGTH_SHORT).show();
                 }
+
+
+
+
+
+
 
             }
         });
@@ -223,19 +245,29 @@ public class IN_Activity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),s + s.length(),Toast.LENGTH_LONG).show();
 
-             Car_Type = null;
-             Car_Number = null;
-             Driver_Name = null;
-             Phone_Number = null;
-            ES_Parking_Time = null;
-           Parking_ID = null;
-            time = null;
+            if(s.length()>170 && s.length()<180)
+            {
+                Toast.makeText(getApplicationContext(),"Data sent to server.",Toast.LENGTH_LONG).show();
+                Car_Type = null;
+                Car_Number = null;
+                Driver_Name = null;
+                Phone_Number = null;
+                ES_Parking_Time = null;
+                Parking_ID = null;
+                time = null;
+                Log.e("Result",s);
+                dialog.dismiss();
+                IN_Activity.this.finish();
+            }else{
+                Toast.makeText(getApplicationContext(),"Something bad happened.",Toast.LENGTH_LONG).show();
+            }
 
-            Log.e("Result",s);
 
-            dialog.dismiss();
+
+
+
           //  IN_Activity.this.finish();
           /*  JsonParser JP;
             String finalResult = null;

@@ -9,6 +9,26 @@ public class OUT_POJO implements Serializable{
 
    public  String DriverName;
 
+
+    public String getParkInTime() {
+        return ParkInTime;
+    }
+
+    public void setParkInTime(String parkInTime) {
+        ParkInTime = parkInTime;
+    }
+
+    public String getParkOutTime() {
+        return ParkOutTime;
+    }
+
+    public void setParkOutTime(String parkOutTime) {
+        ParkOutTime = parkOutTime;
+    }
+
+    public String ParkInTime;
+    public String ParkOutTime;
+
     public String getVehicleNo() {
         return VehicleNo;
     }

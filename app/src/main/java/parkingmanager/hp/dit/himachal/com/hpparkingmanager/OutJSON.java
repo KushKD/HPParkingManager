@@ -33,6 +33,8 @@ public class OutJSON {
                 pojo_ads.setPhoneNumber(obj.getString("PhoneNumber"));
                 pojo_ads.setVehicleNo(obj.getString("VehicleNo"));
                 pojo_ads.setParkingId(obj.getString("ParkingId"));
+                pojo_ads.setParkInTime(obj.getString("ParkInTime"));
+                pojo_ads.setParkOutTime(obj.getString("ParkOutTime"));
                 AdsList.add(pojo_ads);
             }
             return AdsList;

@@ -114,6 +114,7 @@ public class MainActivity extends Activity {
                             editor.commit();
                             Intent Details_Intent = new Intent(MainActivity.this,ParkingDetails.class);
                             startActivity(Details_Intent);
+                            MainActivity.this.finish();
 
 
                         }catch (Exception e){
