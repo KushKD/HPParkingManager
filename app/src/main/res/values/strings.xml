@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">HP Parking Manager</string>
+
+    <string-array name="town">
+        <item>Shimla</item>
+
+    </string-array>
+
+
+    <string-array name="type_of_car">
+        <item>Small Car</item>
+        <item>Big Car</item>
+
+    </string-array>
+
+    <string-array name="estimatedtime">
+        <item>Upto 1 hour</item>
+        <item>Upto 2 hours</item>
+        <item>Upto 3 hours</item>
+        <item>Upto 4 hours</item>
+        <item>Upto 6 hours</item>
+        <item>Upto 8 hours</item>
+        <item>Upto 10 hours</item>
+        <item>Upto 12 hours</item>
+        <item>Upto 24 hours</item>
+        <item>Upto 1 month</item>
+
+    </string-array>
+</resources>
