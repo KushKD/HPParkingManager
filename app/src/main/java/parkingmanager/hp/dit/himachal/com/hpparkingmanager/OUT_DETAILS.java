@@ -35,12 +35,13 @@ public class OUT_DETAILS extends AppCompatActivity {
     //VehicleNumber
     //Out Time
 
-    TextView tv_parkingid,tv_drivername,tv_phonenumber,tv_vehiclenumber,tv_outtime;
-    Button checkout;
+    TextView tv_parkingid,tv_drivername,tv_phonenumber,tv_vehiclenumber,tv_outtime , tv_message_from_server;
+    Button checkout,confirm;
 
     URL url_;
     HttpURLConnection conn_;
-    StringBuilder sb = new StringBuilder();
+    StringBuilder sb = null;
+    JSONStringer userJson = null;
 
 
     @Override
@@ -58,6 +59,8 @@ public class OUT_DETAILS extends AppCompatActivity {
                 tv_vehiclenumber = (TextView)findViewById(R.id.vehiclenumber);
                 tv_outtime = (TextView)findViewById(R.id.outtime);
                 checkout = (Button)findViewById(R.id.checkout);
+        tv_message_from_server = (TextView)findViewById(R.id.message_from_server);
+               confirm = (Button)findViewById(R.id.confirm);
 
 
 
@@ -93,7 +96,33 @@ public class OUT_DETAILS extends AppCompatActivity {
                     String out_time = tv_outtime.getText().toString().trim();
 
                     CHECK_OUT_CAR COC = new CHECK_OUT_CAR();
-                    COC.execute(parking_id,drivername,phone_number,vehicle_number,out_time);
+                    COC.execute(parking_id,drivername,phone_number,vehicle_number,out_time,"checkout");
+
+                }else{
+                    Toast.makeText(OUT_DETAILS.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isOnline()){
+
+                    if(tv_message_from_server.getText().length()!=0)
+                    {
+                        tv_message_from_server.setText("");
+                    }
+                    String parking_id = OUT_Details.getParkingId();
+                    String drivername = OUT_Details.getDriverName();
+                    String phone_number = OUT_Details.getPhoneNumber();
+                    String vehicle_number = OUT_Details.getVehicleNo();
+                    String out_time = tv_outtime.getText().toString().trim();
+
+                    CHECK_OUT_CAR COC = new CHECK_OUT_CAR();
+                    COC.execute(parking_id,drivername,phone_number,vehicle_number,out_time,"confirm");
 
                 }else{
                     Toast.makeText(OUT_DETAILS.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
@@ -130,9 +159,12 @@ public class OUT_DETAILS extends AppCompatActivity {
         private String Phone_number = null;
         private String Vehicle_NO = null;
         private String OUT_Time = null;
+        private String function_Name = null;
+        private String flag_Function = null;
 
         private ProgressDialog dialog;
         String url = null;
+
 
 
         @Override
@@ -152,10 +184,17 @@ public class OUT_DETAILS extends AppCompatActivity {
             Phone_number = params[2];
             Vehicle_NO = params[3];
             OUT_Time = params[4];
+            flag_Function = params[5];
+
+            if(flag_Function.equalsIgnoreCase("confirm")){
+                function_Name =  "getConfirmPayment_JSON";
+            }else{
+                function_Name = "getParkingOut_JSON";
+            }
 
 
             try {
-                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getParkingOut_JSON");
+                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/"+function_Name);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -165,7 +204,7 @@ public class OUT_DETAILS extends AppCompatActivity {
                 conn_.setRequestProperty("Content-Type", "application/json");
                 conn_.connect();
 
-                JSONStringer userJson = new JSONStringer()
+                 userJson = new JSONStringer()
                         .object().key("VehicleOuts")
                         .object()
                         .key("VehicleNo").value(Vehicle_NO)
@@ -184,10 +223,13 @@ public class OUT_DETAILS extends AppCompatActivity {
                 out.close();
 
                 try{
+                    sb = null;
+
                     int HttpResult =conn_.getResponseCode();
                     if(HttpResult ==HttpURLConnection.HTTP_OK){
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn_.getInputStream(),"utf-8"));
                         String line = null;
+                        sb = new StringBuilder();
                         while ((line = br.readLine()) != null) {
                             sb.append(line + "\n");
                         }
@@ -223,6 +265,10 @@ public class OUT_DETAILS extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
 
+
+
+
+
             Parking_Id = null;
             Driver_Name = null;
             Vehicle_NO = null;
@@ -230,9 +276,9 @@ public class OUT_DETAILS extends AppCompatActivity {
             OUT_Time = null;
 
             Log.e("Result",s);
-
+            tv_message_from_server.setText(s);
             dialog.dismiss();
-            OUT_DETAILS.this.finish();
+           // OUT_DETAILS.this.finish();
           /*  JsonParser JP;
             String finalResult = null;
 

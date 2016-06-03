@@ -31,7 +31,6 @@ public class OUT_Adapter extends ArrayAdapter<OUT_POJO> {
         OUT_POJO u = userlist.get(position);
         TextView tv1 = (TextView)view.findViewById(R.id.textView1_name);
         TextView tv2 = (TextView)view.findViewById(R.id.textView2_number);
-
         tv1.setText(u.getVehicleNo());
         tv2.setText(u.getPhoneNumber());
 
