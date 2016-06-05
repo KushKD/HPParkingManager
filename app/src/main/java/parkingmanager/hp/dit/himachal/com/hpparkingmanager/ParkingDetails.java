@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class ParkingDetails extends Activity {
 
     TextView parkingname,parkingidentifier;
-    Button back,in,out;
+    Button back,in,out,inbox,outbox;
 
     String ParkingID=null,Parking_Name=null,Capacity=null,thrashhold=null,Identifier=null;
 
@@ -37,6 +37,8 @@ public class ParkingDetails extends Activity {
         back = (Button)findViewById(R.id.back);
         in = (Button)findViewById(R.id.in);
         out = (Button)findViewById(R.id.out);
+        inbox = (Button)findViewById(R.id.inbox);
+        outbox = (Button)findViewById(R.id.outbox);
 
         //Intent getParkingDetailsIntent = getIntent();
         //final ParkingPOJO ParkingDetails =  (ParkingPOJO) getParkingDetailsIntent.getSerializableExtra("DETAILS");
@@ -50,6 +52,31 @@ public class ParkingDetails extends Activity {
                 ParkingDetails.this.finish();
             }
         });
+
+
+
+        inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Get Parking ID
+                Intent i = new Intent(ParkingDetails.this, Inbox.class);
+                i.putExtra("ID",ParkingID);
+                startActivity(i);
+
+                //Go to Request Inward
+            }
+        });
+
+        outbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
 
         in.setOnClickListener(new View.OnClickListener() {
             @Override

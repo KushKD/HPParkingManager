@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#f2f2f2"
+    android:background="#F2F2F2"
     android:weightSum="3">
 
-    <!-- ImageView -->
+    <!-- Header -->
 
     <LinearLayout
         android:id="@+id/lay1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#CCCCCC"
         android:layout_weight="0.5"
         android:gravity="left|center_vertical|center_horizontal"
         android:orientation="horizontal">
@@ -48,55 +49,116 @@
 </LinearLayout>
     </LinearLayout>
 
-    <!-- Buttons -->
+    <!-- Body -->
 
     <LinearLayout
         android:id="@+id/laydetails"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:orientation="vertical"
-        android:gravity="center|center_horizontal|center_vertical"
+        android:background="#CCCCCC"
         android:layout_margin="5dp"
         android:layout_weight="2.2" >
 
-
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-            >
-
-           <Button
-               android:id="@+id/in"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:background="@drawable/bluebutton"
-               android:layout_margin="20dp"
-               android:textColor="#FFFFFF"
-               android:textSize="20sp"
-               android:textStyle="bold"
-               android:text="Vehicle In"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:background="#CCCCCC"
+            android:layout_margin="5dp"
+            android:weightSum="3" >
 
 
-           <Button
-               android:id="@+id/out"
-               android:layout_margin="20dp"
-               android:layout_width="match_parent"
-               android:background="#FF545454"
-               android:layout_height="wrap_content"
-               android:textColor="#FFFFFF"
-               android:textSize="20sp"
-               android:textStyle="bold"
-               android:text="Vehicle Out"/>
+            <!-- Requests received from app -->
 
 
-       </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_weight="1.5"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Requests received from app"
+                    android:gravity="center"/>
+                <Button
+                    android:id="@+id/inbox"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#006838"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:text="Inward"/>
+
+
+                <Button
+                    android:id="@+id/outbox"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:background="#F7941E"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:text="Outward"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Manual Entries"
+                    android:gravity="center"/>
+
+                <Button
+                    android:id="@+id/in"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bluebutton"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="5dp"
+                    android:textSize="18sp"
+                    android:text="Vehicle In"/>
+
+
+                <Button
+                    android:id="@+id/out"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:background="#FF545454"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:text="Vehicle Out"/>
+
+
+            </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
 
 
     </LinearLayout>
 
 
-    <!-- Button -->
+    <!-- FF -->
     <LinearLayout
         android:id="@+id/lay3"
         android:layout_width="fill_parent"
@@ -114,9 +176,10 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:text="  EXIT  "
-            android:background="#e6e6e6"
-            android:textColor="#000000"
-
+            android:background="#FF545454"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="18dp"
             android:layout_marginRight="2dp"
             android:gravity="center|center_horizontal|center_vertical"/>
 

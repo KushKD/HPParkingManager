@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,68 +23,60 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OUT_Activity extends AppCompatActivity {
+public class Inbox extends AppCompatActivity {
 
-    String ID = null;
-    private String Date_Service = null;
-
-    Button refresh;
+    public String ID = null;
     ProgressBar pb;
     URL url_;
     HttpURLConnection conn_;
     StringBuilder sb = new StringBuilder();
     ListView listv;
     Context context;
-    List<GET_CARS_FOR_OUT> tasks;
-    List<OUT_POJO> ads_Server;
-    OUT_Adapter adapter;
-
+    List<Fetch_Inbox> tasks;  //Changet he Object and task
+    List<InboxPOJO> Inbox_Server;   // change the list
+    Inbox_Adapter adapter;  // change the adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_out_);
+        setContentView(R.layout.activity_inbox);
 
         Bundle bundle = getIntent().getExtras();
 
         ID = bundle.getString("ID");
         Log.e("id",ID);
 
-        listv = (ListView) findViewById(R.id.list_ads);
+
+        listv = (ListView) findViewById(R.id.list);
         context = this;
         pb = (ProgressBar) findViewById(R.id.progressBar1);
         pb.setVisibility(View.INVISIBLE);
-        tasks = new ArrayList<>();
-
-
-
-        //getParkedVehiclelist_JSON/{ParkingId}
+        tasks = new ArrayList<>();   //Write the Tasks
 
         if(isOnline()){
 
-            GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
-            asy_Get_Ads.execute(ID);
+            //Create Async Class
+            Fetch_Inbox get_Inbox = new Fetch_Inbox();
+            get_Inbox.execute(ID);
 
 
         }else{
-            Toast.makeText(OUT_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Inbox.this, "No Network", Toast.LENGTH_SHORT).show();
         }
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                OUT_POJO Ads_Details = (OUT_POJO) parent.getItemAtPosition(position);
+                InboxPOJO Inbox_Details = (InboxPOJO) parent.getItemAtPosition(position);   //change object
                 Intent userSearch = new Intent();
-                userSearch.putExtra("ADS_Details", Ads_Details);
-                userSearch.setClass(OUT_Activity.this, OUT_DETAILS.class);
+                userSearch.putExtra("INBOX", Inbox_Details);
+                userSearch.setClass(Inbox.this, Inbox_Details.class);
                 startActivity(userSearch);
 
 
             }
         });
     }
-
-
 
     protected boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -99,15 +90,15 @@ public class OUT_Activity extends AppCompatActivity {
 
     protected void updateDisplay() {
 
-        // LGone.setVisibility(View.VISIBLE);
-        adapter = new OUT_Adapter(this, R.layout.item_out_list, ads_Server);
+        // LGone.setVisibility(View.VISIBLE);   Adapter needs to be changed
+        adapter = new Inbox_Adapter(this, R.layout.item_inbox, Inbox_Server);
         listv.setAdapter(adapter);
-      //  adapter.notifyDataSetChanged();
+        //  adapter.notifyDataSetChanged();
         // listv.setTextFilterEnabled(true);
 
     }
 
-    class GET_CARS_FOR_OUT extends AsyncTask<String,String,String> {
+    class Fetch_Inbox extends AsyncTask<String,String,String> {
         String url = null;
         @Override
         protected void onPreExecute() {
@@ -120,7 +111,8 @@ public class OUT_Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getParkedVehiclelist_JSON/"+params[0]);
+                //Change URL Function
+                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getAllParkReqest_JSON/"+params[0]);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setRequestMethod("GET");
                 conn_.setUseCaches(false);
@@ -155,8 +147,8 @@ public class OUT_Activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            ads_Server = OutJSON.parseFeed(result);
-            if(ads_Server.isEmpty()){
+            Inbox_Server = Inbox_JSON.parseFeed(result);
+            if(Inbox_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else
             {
@@ -168,4 +160,5 @@ public class OUT_Activity extends AppCompatActivity {
             }
         }
     }
+
 }
