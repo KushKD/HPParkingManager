@@ -15,6 +15,37 @@ public class InboxPOJO implements Serializable {
             public  String PhoneNumber;
             public  String RequestTime;
             public  String RequestStatus;
+            public String  EstimatedTime;
+            public String VehicleType;
+            public String InTime;
+
+    public String getInTime() {
+        return InTime;
+    }
+
+    public void setInTime(String inTime) {
+        InTime = inTime;
+    }
+
+
+
+    public String getEstimatedTime() {
+        return EstimatedTime;
+    }
+
+    public void setEstimatedTime(String estimatedTime) {
+        EstimatedTime = estimatedTime;
+    }
+
+    public String getVehicleType() {
+        return VehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        VehicleType = vehicleType;
+    }
+
+
 
     public  String getRequestStatus() {
         return RequestStatus;

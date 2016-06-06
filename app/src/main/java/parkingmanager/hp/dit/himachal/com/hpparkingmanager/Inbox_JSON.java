@@ -36,6 +36,8 @@ public class Inbox_JSON {
                 pojo_ads.setRequestTime(obj.getString("RequestTime"));
                 pojo_ads.setVehicleNo(obj.getString("VehicleNo"));
                 pojo_ads.setRequestStatus(obj.getString("RequestStatus"));
+                pojo_ads.setEstimatedTime(obj.getString("EstimatedTime"));
+                pojo_ads.setVehicleType(obj.getString("VehicleType"));
                 InboxList.add(pojo_ads);
             }
             return InboxList;

@@ -98,6 +98,21 @@ public class Inbox extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(isOnline()){
+
+            //Create Async Class
+            Fetch_Inbox get_Inbox = new Fetch_Inbox();
+            get_Inbox.execute(ID);
+
+
+        }else{
+            Toast.makeText(Inbox.this, "No Network", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     class Fetch_Inbox extends AsyncTask<String,String,String> {
         String url = null;
         @Override
