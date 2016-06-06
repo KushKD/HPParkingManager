@@ -1,6 +1,5 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -24,8 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inbox extends Activity {
-
+public class Outbox extends AppCompatActivity {
     public String ID = null;
     ProgressBar pb;
     URL url_;
@@ -33,13 +31,13 @@ public class Inbox extends Activity {
     StringBuilder sb = new StringBuilder();
     ListView listv;
     Context context;
-    List<Fetch_Inbox> tasks;  //Changet he Object and task
-    List<InboxPOJO> Inbox_Server;   // change the list
-    Inbox_Adapter adapter;  // change the adapter
+    List<Fetch_Outbox> tasks;  //Changet he Object and task
+    List<OutboxPOJO> Outbox_Server;   // change the list
+    Outbox_Adapter adapter;  // change the adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inbox);
+        setContentView(R.layout.activity_outbox);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -56,22 +54,22 @@ public class Inbox extends Activity {
         if(isOnline()){
 
             //Create Async Class
-            Fetch_Inbox get_Inbox = new Fetch_Inbox();
-            get_Inbox.execute(ID);
+            Fetch_Outbox get_Outbox = new Fetch_Outbox();
+            get_Outbox.execute(ID);
 
 
         }else{
-            Toast.makeText(Inbox.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Outbox.this, "No Network", Toast.LENGTH_SHORT).show();
         }
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                InboxPOJO Inbox_Details = (InboxPOJO) parent.getItemAtPosition(position);   //change object
+                OutboxPOJO Outbox_Details = (OutboxPOJO) parent.getItemAtPosition(position);   //change object
                 Intent userSearch = new Intent();
-                userSearch.putExtra("INBOX", Inbox_Details);
-                userSearch.setClass(Inbox.this, Inbox_Details.class);
+                userSearch.putExtra("OUTBOX", Outbox_Details);
+                userSearch.setClass(Outbox.this, Outbox_Details.class);
                 startActivity(userSearch);
 
 
@@ -92,7 +90,7 @@ public class Inbox extends Activity {
     protected void updateDisplay() {
 
         // LGone.setVisibility(View.VISIBLE);   Adapter needs to be changed
-        adapter = new Inbox_Adapter(this, R.layout.item_inbox, Inbox_Server);
+        adapter = new Outbox_Adapter(this, R.layout.item_outbox, Outbox_Server);
         listv.setAdapter(adapter);
         //  adapter.notifyDataSetChanged();
         // listv.setTextFilterEnabled(true);
@@ -105,16 +103,16 @@ public class Inbox extends Activity {
         if(isOnline()){
 
             //Create Async Class
-            Fetch_Inbox get_Inbox = new Fetch_Inbox();
-            get_Inbox.execute(ID);
+            Fetch_Outbox get_Outbox = new Fetch_Outbox();
+            get_Outbox.execute(ID);
 
 
         }else{
-            Toast.makeText(Inbox.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Outbox.this, "No Network", Toast.LENGTH_SHORT).show();
         }
     }
 
-    class Fetch_Inbox extends AsyncTask<String,String,String> {
+    class Fetch_Outbox extends AsyncTask<String,String,String> {
         String url = null;
         @Override
         protected void onPreExecute() {
@@ -128,7 +126,7 @@ public class Inbox extends Activity {
         protected String doInBackground(String... params) {
             try {
                 //Change URL Function
-                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getAllParkReqest_JSON/"+params[0]);
+                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getAllParkOutReqest_JSON/"+params[0]);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setRequestMethod("GET");
                 conn_.setUseCaches(false);
@@ -157,14 +155,15 @@ public class Inbox extends Activity {
                 if(conn_!=null)
                     conn_.disconnect();
             }
+            Log.e("Error",sb.toString());
             return sb.toString();
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Inbox_Server = Inbox_JSON.parseFeed(result);
-            if(Inbox_Server.isEmpty()){
+            Outbox_Server = Outbox_JSON.parseFeed(result);
+            if(Outbox_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else
             {
@@ -176,5 +175,4 @@ public class Inbox extends Activity {
             }
         }
     }
-
 }

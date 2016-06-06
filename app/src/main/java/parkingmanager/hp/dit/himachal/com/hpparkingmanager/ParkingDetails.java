@@ -71,6 +71,9 @@ public class ParkingDetails extends Activity {
         outbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(ParkingDetails.this, Outbox.class);
+                i.putExtra("ID",ParkingID);
+                startActivity(i);
 
             }
         });

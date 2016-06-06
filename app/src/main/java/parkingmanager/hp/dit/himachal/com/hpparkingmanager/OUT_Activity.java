@@ -120,7 +120,7 @@ public class OUT_Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getParkedVehiclelist_JSON/"+params[0]);
+                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getParkedVehiclelist_JSON/"+params[0]);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setRequestMethod("GET");
                 conn_.setUseCaches(false);

@@ -1,5 +1,6 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONStringer;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,32 +29,31 @@ import java.net.URL;
 import HelperFunctions.GetDateAndTime;
 import JsonManager.Manage_Json;
 
-public class Inbox_Details extends AppCompatActivity {
-
+public class Outbox_Details extends Activity {
     private TextView tv_ParkingId,tv_RegisterId,tv_VehicleNo,tv_PhoneNumber,tv_RequestTime,tv_RequestStatus;
     private TextView tv_EstimatedTime , tv_VehicleType;
     private Button bt_back, bt_reject, bt_checkin;
 
     URL url_;
     HttpURLConnection conn_;
-    StringBuilder sb = new StringBuilder();
+    StringBuilder sb = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inbox__details);
+        setContentView(R.layout.activity_outbox__details);
 
         //GTO
 
         Intent getRoomDetailsIntent = getIntent();
-        final InboxPOJO Inbox_Details =  (InboxPOJO) getRoomDetailsIntent.getSerializableExtra("INBOX");
+        final OutboxPOJO Outbox_Details =  (OutboxPOJO) getRoomDetailsIntent.getSerializableExtra("OUTBOX");
 
-         tv_ParkingId = (TextView)findViewById(R.id.ParkingId);
-       tv_RegisterId = (TextView)findViewById(R.id.RegisterId);
+        tv_ParkingId = (TextView)findViewById(R.id.ParkingId);
+        tv_RegisterId = (TextView)findViewById(R.id.RegisterId);
         tv_VehicleNo = (TextView)findViewById(R.id.VehicleNo);
-       tv_PhoneNumber = (TextView)findViewById(R.id.PhoneNumber);
+        tv_PhoneNumber = (TextView)findViewById(R.id.PhoneNumber);
         tv_RequestTime = (TextView)findViewById(R.id.RequestTime);
-       tv_RequestStatus = (TextView)findViewById(R.id.RequestStatus);
+        tv_RequestStatus = (TextView)findViewById(R.id.RequestStatus);
         tv_EstimatedTime = (TextView)findViewById(R.id.EstimatedTime);
         tv_VehicleType = (TextView)findViewById(R.id.VehicleType);
         bt_back = (Button)findViewById(R.id.backinbox);
@@ -62,34 +61,34 @@ public class Inbox_Details extends AppCompatActivity {
         bt_checkin = (Button)findViewById(R.id.checkin);
 
 
-                tv_ParkingId.setText(Inbox_Details.getParkingId());
-                tv_RegisterId.setText(Inbox_Details.getRegisterId());
-                tv_VehicleNo.setText(Inbox_Details.getVehicleNo());
-                tv_PhoneNumber.setText(Inbox_Details.getPhoneNumber());
-                tv_RequestTime.setText(Inbox_Details.getRequestTime());
-                tv_RequestStatus.setText(Inbox_Details.getRequestStatus());
-                tv_EstimatedTime.setText(Inbox_Details.getEstimatedTime());
-                tv_VehicleType.setText(Inbox_Details.getVehicleType());
+        tv_ParkingId.setText(Outbox_Details.getParkingId());
+        tv_RegisterId.setText(Outbox_Details.getRegisterId());
+        tv_VehicleNo.setText(Outbox_Details.getVehicleNo());
+        tv_PhoneNumber.setText(Outbox_Details.getPhoneNumber());
+        tv_RequestTime.setText(Outbox_Details.getRequestTime());
+        tv_RequestStatus.setText(Outbox_Details.getRequestStatus());
+        tv_EstimatedTime.setText(Outbox_Details.getEstimatedTime());
+        tv_VehicleType.setText(Outbox_Details.getVehicleType());
 
 
-bt_back.setOnClickListener(new View.OnClickListener() {
+        bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Inbox_Details.this.finish();
+                Outbox_Details.this.finish();
             }
         });
 
         bt_checkin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //Start Async Task
+                //Start Async Task
 
                 if(isOnline()){
-                    CHECKIN C_IN = new CHECKIN();
-                    C_IN.execute(Inbox_Details);
+                    CHECKOUT C_IN = new CHECKOUT();
+                    C_IN.execute(Outbox_Details);
 
                 }else{
-                    Toast.makeText(Inbox_Details.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Outbox_Details.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -106,7 +105,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
         }
     }
 
-    class CHECKIN extends AsyncTask<Object,String,String>{
+    class CHECKOUT extends AsyncTask<Object,String,String> {
 
         JSONStringer userJson = null;
 
@@ -116,10 +115,10 @@ bt_back.setOnClickListener(new View.OnClickListener() {
 
         @Override
         protected String doInBackground(Object... objects) {
-            InboxPOJO Inbox_Object_result = (InboxPOJO)objects[0];
+            OutboxPOJO Outbox_Object_result = (OutboxPOJO)objects[0];
 
             try {
-                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getConfirmParkinStatus_JSON");
+                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getConfirmParkOutStatus_JSON");
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -132,15 +131,15 @@ bt_back.setOnClickListener(new View.OnClickListener() {
                 userJson = new JSONStringer()
                         .object().key("ParkInRequst")
                         .object()
-                        .key("EstimatedTime").value(Inbox_Object_result.getEstimatedTime())
+                        .key("EstimatedTime").value(Outbox_Object_result.getEstimatedTime())
                         .key("InTime").value(GetDateAndTime.GetDateAndTime())
-                        .key("ParkingId").value(Inbox_Object_result.getParkingId())
-                        .key("PhoneNumber").value(Inbox_Object_result.getPhoneNumber())
-                        .key("RegisterId").value(Inbox_Object_result.getRegisterId())
-                        .key("RequestStatus").value("Comfirm")
-                        .key("RequestTime").value(Inbox_Object_result.getRequestTime())
-                        .key("VehicleNo").value(Inbox_Object_result.getVehicleNo())
-                        .key("VehicleType").value(Inbox_Object_result.getVehicleType())
+                        .key("ParkingId").value(Outbox_Object_result.getParkingId())
+                        .key("PhoneNumber").value(Outbox_Object_result.getPhoneNumber())
+                        .key("RegisterId").value(Outbox_Object_result.getRegisterId())
+                        .key("RequestStatus").value("Checkout")
+                        .key("RequestTime").value(Outbox_Object_result.getRequestTime())
+                        .key("VehicleNo").value(Outbox_Object_result.getVehicleNo())
+                        .key("VehicleType").value(Outbox_Object_result.getVehicleType())
                         .endObject()
                         .endObject();
 
@@ -156,6 +155,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
                     if(HttpResult ==HttpURLConnection.HTTP_OK){
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn_.getInputStream(),"utf-8"));
                         String line = null;
+                        sb = new StringBuilder();
                         while ((line = br.readLine()) != null) {
                             sb.append(line + "\n");
                         }
@@ -189,12 +189,12 @@ bt_back.setOnClickListener(new View.OnClickListener() {
             super.onPostExecute(s);
             Log.e("Message",s);
 
-            String Result = Manage_Json.parseInward(s);
+            String Result = Manage_Json.parseOutward(s);
 
             Log.e("Message IS",Result);
 
-                Toast.makeText(getApplicationContext(),Result,Toast.LENGTH_LONG).show();
-                Inbox_Details.this.finish();
+            Toast.makeText(getApplicationContext(),Result,Toast.LENGTH_LONG).show();
+            Outbox_Details.this.finish();
 
 
 

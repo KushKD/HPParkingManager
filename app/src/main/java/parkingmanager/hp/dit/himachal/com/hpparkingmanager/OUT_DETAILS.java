@@ -209,7 +209,7 @@ public class OUT_DETAILS extends AppCompatActivity {
 
 
             try {
-                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/"+function_Name);
+                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc"+function_Name);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
