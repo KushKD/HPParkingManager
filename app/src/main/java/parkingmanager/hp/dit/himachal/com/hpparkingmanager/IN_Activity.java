@@ -97,7 +97,7 @@ public class IN_Activity extends Activity {
                         if(Parking_ID.length()!=0 && Parking_ID!=null){
                             if(isOnline()) {
                                 PARK_CAR PC = new PARK_CAR();
-                                PC.execute(Parking_ID, typecar, car_number, Driver_Name, phonenumber, Long.toString(estimated_Time + 1), formattedDate);
+                                PC.execute(Parking_ID, typecar, car_number, Driver_Name, phonenumber, Long.toString(estimated_Time), formattedDate);
                             }
                         }else{
                             Toast.makeText(IN_Activity.this, "Something Bad Happened", Toast.LENGTH_SHORT).show();
