@@ -70,6 +70,7 @@ public class IN_Activity extends Activity {
 
                 String typecar = s_typecar.getSelectedItem().toString().trim();
                 long estimated_Time = s_estimatedtime.getSelectedItemId();
+                Log.e("Time",Long.toString(estimated_Time));
                 String car_number = carnumber_.getText().toString().trim();
                 String Driver_Name = drivername_.getText().toString().trim();
                 String phonenumber = phonenumber_.getText().toString().trim();

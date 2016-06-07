@@ -36,7 +36,7 @@
         <activity
             android:name=".OUT_Activity"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
+            />
         <activity
             android:name=".OUT_DETAILS"
             android:launchMode="singleInstance"

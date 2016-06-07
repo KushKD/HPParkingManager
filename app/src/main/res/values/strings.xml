@@ -14,7 +14,6 @@
     </string-array>
 
     <string-array name="estimatedtime">
-        <item>Upto 1 hours</item>
         <item>Upto 2 hours</item>
         <item>Upto 3 hours</item>
         <item>Upto 4 hours</item>
@@ -24,6 +23,7 @@
         <item>Upto 12 hours</item>
         <item>Upto 24 hours</item>
         <item>Upto 1 month</item>
+        <item>Upto 1 hours</item>
 
     </string-array>
 </resources>
