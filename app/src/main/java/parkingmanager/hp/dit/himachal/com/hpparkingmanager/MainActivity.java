@@ -176,7 +176,7 @@ public class MainActivity extends Activity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                url_ =new URL(EConstants.URL_GENERIC+params[0]);
+                url_ =new URL(EConstants.URL_GENERIC_Production+params[0]);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setRequestMethod("GET");
                 conn_.setUseCaches(false);

@@ -115,11 +115,20 @@ bt_back.setOnClickListener(new View.OnClickListener() {
 
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(Inbox_Details.this);
+            this.dialog.setMessage("Please wait ..");
+            this.dialog.show();
+            this.dialog.setCancelable(false);
+        }
+
+        @Override
         protected String doInBackground(Object... objects) {
             InboxPOJO Inbox_Object_result = (InboxPOJO)objects[0];
 
             try {
-                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getConfirmParkinStatus_JSON");
+                url_ =new URL(EConstants.Production_URL+"getConfirmParkinStatus_JSON");
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -195,6 +204,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
 
                 Toast.makeText(getApplicationContext(),Result,Toast.LENGTH_LONG).show();
                 Inbox_Details.this.finish();
+            dialog.dismiss();
 
 
 

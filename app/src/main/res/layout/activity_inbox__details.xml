@@ -83,11 +83,12 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/ParkingId"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
@@ -119,12 +120,13 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/RegisterId"
                         android:inputType="textCapCharacters"
+                        android:padding="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
@@ -156,11 +158,12 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/VehicleNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:padding="5dp"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
@@ -192,11 +195,12 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/PhoneNumber"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
@@ -228,11 +232,12 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/RequestTime"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
@@ -264,11 +269,12 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/RequestStatus"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
@@ -300,11 +306,12 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/VehicleType"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
@@ -336,11 +343,12 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="fill_parent">
                     <TextView
                         android:id="@+id/EstimatedTime"
+                        android:padding="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
 

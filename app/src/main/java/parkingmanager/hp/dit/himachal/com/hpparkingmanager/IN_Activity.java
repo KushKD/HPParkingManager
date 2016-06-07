@@ -175,7 +175,7 @@ public class IN_Activity extends Activity {
             time = params[6];
 
             try {
-                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getParkingTransaction_JSON");
+                url_ =new URL(EConstants.Production_URL+"getParkingTransaction_JSON");
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -262,7 +262,7 @@ public class IN_Activity extends Activity {
                 dialog.dismiss();
                 IN_Activity.this.finish();
             }else{
-                Toast.makeText(getApplicationContext(),"Data sent to server.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
                 Car_Type = null;
                 Car_Number = null;
                 Driver_Name = null;

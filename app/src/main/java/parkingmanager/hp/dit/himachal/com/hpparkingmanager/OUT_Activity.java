@@ -120,23 +120,14 @@ public class OUT_Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                Log.e("Params",params[0]);
-                Log.e("Error Is","We are Here1");
-                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getParkedVehiclelist_JSON/"+params[0]);
-                Log.e("URL",url_.toString());
-                Log.e("Error Is","We are Here2");
+
+                url_ =new URL(EConstants.Production_URL+"getParkedVehiclelist_JSON/"+params[0]);
                 conn_ = (HttpURLConnection)url_.openConnection();
-                Log.e("Error Is","We are Here3");
                 conn_.setRequestMethod("GET");
-                Log.e("Error Is","We are Here4");
                 conn_.setUseCaches(false);
-                Log.e("Error Is","We are Here5");
                 conn_.setConnectTimeout(20000);
-                Log.e("Error Is","We are Here6");
                 conn_.setReadTimeout(20000);
-                Log.e("Error Is","We are Here7");
                 conn_.connect();
-                Log.e("Error Is","We are Here8");
 
 
                 int HttpResult =conn_.getResponseCode();

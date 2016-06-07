@@ -128,7 +128,7 @@ public class Inbox extends Activity {
         protected String doInBackground(String... params) {
             try {
                 //Change URL Function
-                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getAllParkReqest_JSON/"+params[0]);
+                url_ =new URL(EConstants.Production_URL+"getAllParkReqest_JSON/"+params[0]);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setRequestMethod("GET");
                 conn_.setUseCaches(false);

@@ -114,11 +114,20 @@ public class Outbox_Details extends Activity {
 
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(Outbox_Details.this);
+            this.dialog.setMessage("Please wait ..");
+            this.dialog.show();
+            this.dialog.setCancelable(false);
+        }
+
+        @Override
         protected String doInBackground(Object... objects) {
             OutboxPOJO Outbox_Object_result = (OutboxPOJO)objects[0];
 
             try {
-                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getConfirmParkOutStatus_JSON");
+                url_ =new URL(EConstants.Production_URL+"getConfirmParkOutStatus_JSON");
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -196,6 +205,7 @@ public class Outbox_Details extends Activity {
             Toast.makeText(getApplicationContext(),Result,Toast.LENGTH_LONG).show();
             Outbox_Details.this.finish();
 
+            dialog.dismiss();
 
 
         }
