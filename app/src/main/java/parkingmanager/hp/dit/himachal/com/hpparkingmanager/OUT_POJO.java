@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class OUT_POJO implements Serializable{
 
-   public  String DriverName;
+
 
 
     public String getParkInTime() {
@@ -26,8 +26,14 @@ public class OUT_POJO implements Serializable{
         ParkOutTime = parkOutTime;
     }
 
+    public  String DriverName;
     public String ParkInTime;
     public String ParkOutTime;
+    public String PhoneNumber;
+    public String VehicleNo;
+    public String ParkingId;
+
+
 
     public String getVehicleNo() {
         return VehicleNo;
@@ -53,8 +59,7 @@ public class OUT_POJO implements Serializable{
         DriverName = driverName;
     }
 
-    public String PhoneNumber;
-   public String VehicleNo;
+
 
     public String getParkingId() {
         return ParkingId;
@@ -64,5 +69,5 @@ public class OUT_POJO implements Serializable{
         ParkingId = parkingId;
     }
 
-    public String ParkingId;
+
 }

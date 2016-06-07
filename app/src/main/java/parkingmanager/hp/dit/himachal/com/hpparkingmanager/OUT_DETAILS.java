@@ -102,7 +102,7 @@ public class OUT_DETAILS extends AppCompatActivity {
                     Calendar c = Calendar.getInstance();
                     System.out.println("Current time => "+c.getTime());
 
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String formattedDate = df.format(c.getTime());
                     // formattedDate have current date/time
                     Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
@@ -209,13 +209,13 @@ public class OUT_DETAILS extends AppCompatActivity {
 
 
             try {
-                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc"+function_Name);
+                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/"+function_Name);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
                 conn_.setUseCaches(false);
-                conn_.setConnectTimeout(10000);
-                conn_.setReadTimeout(10000);
+                conn_.setConnectTimeout(20000);
+                conn_.setReadTimeout(20000);
                 conn_.setRequestProperty("Content-Type", "application/json");
                 conn_.connect();
 
@@ -238,9 +238,10 @@ public class OUT_DETAILS extends AppCompatActivity {
                 out.close();
 
                 try{
-                    sb = null;
+
 
                     int HttpResult =conn_.getResponseCode();
+                    Log.e("HttpResult",Integer.toString(HttpResult));
                     if(HttpResult ==HttpURLConnection.HTTP_OK){
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn_.getInputStream(),"utf-8"));
                         String line = null;
@@ -252,7 +253,7 @@ public class OUT_DETAILS extends AppCompatActivity {
                         System.out.println(sb.toString());
 
                     }else{
-                        System.out.println("Server Connection failed.");
+                        System.out.println("Server Connection failed." + HttpResult);
                     }
 
                 } catch(Exception e){
@@ -302,6 +303,7 @@ public class OUT_DETAILS extends AppCompatActivity {
                 Log.e("Result",s);
                 tv_message_from_server.setText(s);
                 dialog.dismiss();
+               // OUT_DETAILS.this.finish();
 
             }
 

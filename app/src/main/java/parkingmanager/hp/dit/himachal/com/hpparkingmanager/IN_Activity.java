@@ -78,7 +78,7 @@ public class IN_Activity extends Activity {
                 Calendar c = Calendar.getInstance();
               //  System.out.println("Current time => "+c.getTime());
 
-                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String formattedDate = df.format(c.getTime());
                 // formattedDate have current date/time
                // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
@@ -174,7 +174,7 @@ public class IN_Activity extends Activity {
             time = params[6];
 
             try {
-                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getParkingTransaction_JSON");
+                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getParkingTransaction_JSON");
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -261,36 +261,22 @@ public class IN_Activity extends Activity {
                 dialog.dismiss();
                 IN_Activity.this.finish();
             }else{
-                Toast.makeText(getApplicationContext(),"Something bad happened.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Data sent to server.",Toast.LENGTH_LONG).show();
+                Car_Type = null;
+                Car_Number = null;
+                Driver_Name = null;
+                Phone_Number = null;
+                ES_Parking_Time = null;
+                Parking_ID = null;
+                time = null;
+                Log.e("Result",s);
+                dialog.dismiss();
+                IN_Activity.this.finish();
             }
 
 
 
 
-
-          //  IN_Activity.this.finish();
-          /*  JsonParser JP;
-            String finalResult = null;
-
-            if(s.equalsIgnoreCase("Server Connection failed.")){
-                dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Server Connection failed.", Toast.LENGTH_SHORT).show();
-            }else{
-                JP = new JsonParser();
-                finalResult = JP.POST_ISSUE(s);
-                if(finalResult.length()>50){
-                    // clearData();
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), finalResult, Toast.LENGTH_SHORT).show();
-                    Issues_Feedback.this.finish();
-                }
-                else{
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), finalResult, Toast.LENGTH_SHORT).show();
-
-                }
-
-            }*/
 
 
 

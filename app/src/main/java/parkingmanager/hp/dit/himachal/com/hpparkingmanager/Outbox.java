@@ -126,7 +126,7 @@ public class Outbox extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 //Change URL Function
-                url_ =new URL("http://hpparking.hp.gov.in/HPParking.svc/getAllParkOutReqest_JSON/"+params[0]);
+                url_ =new URL("http://192.168.0.171/HPParking/HPParking.svc/getAllParkOutReqest_JSON/"+params[0]);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setRequestMethod("GET");
                 conn_.setUseCaches(false);
