@@ -6,14 +6,14 @@ android {
 
     defaultConfig {
         applicationId "parkingmanager.hp.dit.himachal.com.hpparkingmanager"
-        minSdkVersion 14
+        minSdkVersion 10
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
