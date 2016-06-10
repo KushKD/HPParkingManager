@@ -128,6 +128,9 @@ public class IN_Activity extends Activity {
 
     }
 
+
+
+
     protected boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();

@@ -29,6 +29,35 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/lgone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:visibility="gone"
+            android:weightSum="1.5"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_text_search"
+                android:layout_width="match_parent"
+                android:hint="Search"
+                android:layout_weight="1.5"
+                android:textColorHint="#366988"
+                android:textColor="#366988"
+                android:layout_height="60dp" />
+
+            <Button
+                android:id="@+id/refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="#366988"
+                android:textColor="#FFFFFF"
+                android:text="Refresh"/>
+
+        </LinearLayout>
+
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"

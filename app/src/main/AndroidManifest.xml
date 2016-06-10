@@ -37,14 +37,18 @@
         <activity
             android:name=".OUT_Activity"
             android:launchMode="singleInstance"
+
             />
         <activity
             android:name=".OUT_DETAILS"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".Inbox" />
+
+        <activity android:name=".Inbox"
+          />
         <activity android:name=".Inbox_Details" />
-        <activity android:name=".Outbox" />
+        <activity android:name=".Outbox"
+           />
         <activity android:name=".Outbox_Details"></activity>
     </application>
 

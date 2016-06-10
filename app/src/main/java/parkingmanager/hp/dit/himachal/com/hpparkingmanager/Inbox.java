@@ -8,9 +8,14 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -36,6 +41,11 @@ public class Inbox extends Activity {
     List<Fetch_Inbox> tasks;  //Changet he Object and task
     List<InboxPOJO> Inbox_Server;   // change the list
     Inbox_Adapter adapter;  // change the adapter
+
+    LinearLayout LGone;
+    EditText Search_EditText;
+    Button refresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +56,29 @@ public class Inbox extends Activity {
         ID = bundle.getString("ID");
         Log.e("id",ID);
 
+        Search_EditText = (EditText)findViewById(R.id.edit_text_search);
+        refresh = (Button)findViewById(R.id.refresh);
+        LGone = (LinearLayout)findViewById(R.id.lgone);
 
         listv = (ListView) findViewById(R.id.list);
         context = this;
         pb = (ProgressBar) findViewById(R.id.progressBar1);
         pb.setVisibility(View.INVISIBLE);
         tasks = new ArrayList<>();   //Write the Tasks
+
+        //getParkedVehiclelist_JSON/{ParkingId}
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isOnline()) {
+                    Search_EditText.setText("");
+                    Fetch_Inbox get_Inbox = new Fetch_Inbox();
+                    get_Inbox.execute(ID);
+                } else {
+                    Toast.makeText(getApplicationContext(),"Please Connect to Internet", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         if(isOnline()){
 
@@ -77,6 +104,39 @@ public class Inbox extends Activity {
 
             }
         });
+
+        Search_EditText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+                //MainActivity.this.adapt.getFilter().filter(s);
+                //  String searchString=Search_EditText.getText().toString();
+                //  adapter.getFilter().filter(searchString);
+                // System.out.println("Text ["+s+"] - Start ["+start+"] - Before ["+before+"] - Count ["+count+"]");
+               /* if (count < before) {
+                    // We're deleting char so we need to reset the adapter data
+                    adapter.resetData();
+                }*/
+
+                adapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+                Inbox.this.adapter.getFilter().filter(s);
+
+
+            }
+        });
     }
 
     protected boolean isOnline() {
@@ -91,7 +151,7 @@ public class Inbox extends Activity {
 
     protected void updateDisplay() {
 
-        // LGone.setVisibility(View.VISIBLE);   Adapter needs to be changed
+         LGone.setVisibility(View.VISIBLE);   //Adapter needs to be changed
         adapter = new Inbox_Adapter(this, R.layout.item_inbox, Inbox_Server);
         listv.setAdapter(adapter);
         //  adapter.notifyDataSetChanged();
@@ -99,20 +159,7 @@ public class Inbox extends Activity {
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        if(isOnline()){
 
-            //Create Async Class
-            Fetch_Inbox get_Inbox = new Fetch_Inbox();
-            get_Inbox.execute(ID);
-
-
-        }else{
-            Toast.makeText(Inbox.this, "No Network", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     class Fetch_Inbox extends AsyncTask<String,String,String> {
         String url = null;

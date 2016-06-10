@@ -7,10 +7,15 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -29,7 +34,7 @@ public class OUT_Activity extends AppCompatActivity {
     String ID = null;
     private String Date_Service = null;
 
-    Button refresh;
+
     ProgressBar pb;
     URL url_;
     HttpURLConnection conn_;
@@ -39,6 +44,9 @@ public class OUT_Activity extends AppCompatActivity {
     List<GET_CARS_FOR_OUT> tasks;
     List<OUT_POJO> ads_Server;
     OUT_Adapter adapter;
+    LinearLayout LGone;
+    EditText Search_EditText;
+    Button refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,9 @@ public class OUT_Activity extends AppCompatActivity {
 
         ID = bundle.getString("ID");
         Log.e("id",ID);
+        Search_EditText = (EditText)findViewById(R.id.edit_text_search);
+        refresh = (Button)findViewById(R.id.refresh);
+        LGone = (LinearLayout)findViewById(R.id.lgone);
 
         listv = (ListView) findViewById(R.id.list_ads);
         context = this;
@@ -59,6 +70,18 @@ public class OUT_Activity extends AppCompatActivity {
 
 
         //getParkedVehiclelist_JSON/{ParkingId}
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isOnline()) {
+                    Search_EditText.setText("");
+                    GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
+                    asy_Get_Ads.execute(ID);
+                } else {
+                    Toast.makeText(getApplicationContext(),"Please Connect to Internet", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         if(isOnline()){
 
@@ -83,7 +106,69 @@ public class OUT_Activity extends AppCompatActivity {
 
             }
         });
+
+        Search_EditText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+                //MainActivity.this.adapt.getFilter().filter(s);
+                //  String searchString=Search_EditText.getText().toString();
+                //  adapter.getFilter().filter(searchString);
+                // System.out.println("Text ["+s+"] - Start ["+start+"] - Before ["+before+"] - Count ["+count+"]");
+               /* if (count < before) {
+                    // We're deleting char so we need to reset the adapter data
+                    adapter.resetData();
+                }*/
+
+                adapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+                OUT_Activity.this.adapter.getFilter().filter(s);
+
+
+            }
+        });
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+       if(adapter!=null){
+           //Reload data
+           ads_Server.clear();
+           adapter = null;
+           //itemList = getOrderList();
+           if(isOnline()){
+
+               GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
+               asy_Get_Ads.execute(ID);
+
+              // updateDisplay();
+
+
+
+           }else{
+               Toast.makeText(OUT_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
+           }
+
+
+       }
+
+    }
+
 
 
 
@@ -99,11 +184,11 @@ public class OUT_Activity extends AppCompatActivity {
 
     protected void updateDisplay() {
 
-        // LGone.setVisibility(View.VISIBLE);
+        LGone.setVisibility(View.VISIBLE);
         adapter = new OUT_Adapter(this, R.layout.item_out_list, ads_Server);
         listv.setAdapter(adapter);
-      //  adapter.notifyDataSetChanged();
-        // listv.setTextFilterEnabled(true);
+        adapter.notifyDataSetChanged();
+        adapter.setNotifyOnChange (true);
 
     }
 

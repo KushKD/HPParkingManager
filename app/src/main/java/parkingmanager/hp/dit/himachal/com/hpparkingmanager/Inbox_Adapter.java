@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +20,9 @@ public class Inbox_Adapter  extends ArrayAdapter<InboxPOJO> implements Filterabl
 
     private Context context;
     private List<InboxPOJO> inbox_List;
+
+    private Filter planetFilter;
+    private List<InboxPOJO> origUserList;
 
     public Inbox_Adapter(Context context, int resource, List<InboxPOJO> objects) {
         super(context, resource, objects);
@@ -49,5 +54,67 @@ public class Inbox_Adapter  extends ArrayAdapter<InboxPOJO> implements Filterabl
     @Override
     public int getCount() {
         return inbox_List.size();
+    }
+
+    public void resetData() {
+        inbox_List = origUserList;
+    }
+
+    /*
+	 * We create our filter
+	 */
+
+    @Override
+    public Filter getFilter() {
+        if (planetFilter == null)
+            planetFilter = new PlanetFilter();
+
+        return planetFilter;
+    }
+
+    private class PlanetFilter  extends Filter {
+
+
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (constraint == null || constraint.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = origUserList;
+                results.count = origUserList.size();
+            }
+            else {
+                // We perform filtering operation
+                List<InboxPOJO> nPlanetList = new ArrayList<>();
+
+                for (InboxPOJO p : inbox_List) {
+                    if (p.getVehicleNo().toUpperCase().contains(constraint.toString().toUpperCase()))
+                        nPlanetList.add(p);
+                    //p.getPostName().toUpperCase().startsWith(constraint.toString().toUpperCase())
+                }
+
+                results.values = nPlanetList;
+                results.count = nPlanetList.size();
+
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint,
+                                      FilterResults results) {
+
+            // Now we have to inform the adapter about the new list filtered
+            if (results.count == 0)
+                notifyDataSetInvalidated();
+            else {
+                inbox_List = (List<InboxPOJO>) results.values;
+                notifyDataSetChanged();
+            }
+
+        }
+
     }
 }

@@ -14,13 +14,41 @@
         <TextView
             android:id="@+id/ads"
             android:layout_width="fill_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:scrollbars="vertical"
             android:gravity="center|center_horizontal|center_vertical"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="16sp"
             android:text="List of vehicles in parking" />
+
+        <LinearLayout
+            android:id="@+id/lgone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:visibility="gone"
+            android:weightSum="1.5"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_text_search"
+                android:layout_width="match_parent"
+                android:hint="Search"
+                android:layout_weight="1.5"
+                android:textColorHint="#366988"
+                android:textColor="#366988"
+                android:layout_height="60dp" />
+
+            <Button
+                android:id="@+id/refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="#366988"
+                android:textColor="#FFFFFF"
+                android:text="Refresh"/>
+
+        </LinearLayout>
 
 
         <ListView
