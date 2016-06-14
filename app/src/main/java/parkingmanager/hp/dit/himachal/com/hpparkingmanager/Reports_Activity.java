@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -159,16 +160,16 @@ public class Reports_Activity extends Activity implements View.OnClickListener {
                    // Log.e(Current_from_date_time,Changed_from_date_time);
                     Changed_to_date_time = Date_Time.Change_Date_Format(Current_to_date_time);
                     Changed_from_date_time = Date_Time.Change_Date_Format(Current_from_date_time);
-                   // Log.e("ParkingID",ID_Parking);
 
-                    //Strat Async Thread
-                    if(isOnline()){
+                      //  ID_Parking,Changed_from_date_time,Changed_to_date_time
 
-                        GET_REPORT  GR = new GET_REPORT();
-                        GR.execute(ID_Parking,Changed_from_date_time,Changed_to_date_time);
-                    }else{
-                        Toast.makeText(Reports_Activity.this, "Network not available.", Toast.LENGTH_SHORT).show();
-                    }
+                     Intent I_List = new Intent(Reports_Activity.this,List_Reports.class);
+                    I_List.putExtra("ID",ID_Parking);
+                    I_List.putExtra("FROM",Changed_from_date_time);
+                    I_List.putExtra("TO",Changed_to_date_time);
+                    startActivity(I_List);
+
+
 
                    // Log.e(Current_to_date_time,Changed_to_date_time);
                 } catch (ParseException e) {
@@ -327,110 +328,8 @@ public class Reports_Activity extends Activity implements View.OnClickListener {
 
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
 
-    private class GET_REPORT extends AsyncTask<String,String,String>{
 
-        String P_ID_Server = null;
-        String FromDate_Server = null;
-        String ToDate_Server = null;
-        JSONStringer userJson = null;
-
-        private ProgressDialog dialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new ProgressDialog(Reports_Activity.this);
-            this.dialog.setMessage("Please wait ..");
-            this.dialog.show();
-            this.dialog.setCancelable(false);
-            this.dialog.setCancelable(false);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            P_ID_Server = params[0];
-            FromDate_Server = params[1];
-            ToDate_Server = params[2];
-
-
-            try {
-                url_ =new URL(EConstants.Production_URL+"getDailyReport_JSON");
-                conn_ = (HttpURLConnection)url_.openConnection();
-                conn_.setDoOutput(true);
-                conn_.setRequestMethod("POST");
-                conn_.setUseCaches(false);
-                conn_.setConnectTimeout(10000);
-                conn_.setReadTimeout(10000);
-                conn_.setRequestProperty("Content-Type", "application/json");
-                conn_.connect();
-
-                userJson = new JSONStringer()
-                        .object().key("fDate")
-                        .object()
-                        .key("ParkingId").value(P_ID_Server)
-                        .key("FromDate").value(FromDate_Server)
-                        .key("LastDate").value(ToDate_Server)
-                        .endObject()
-                        .endObject();
-
-
-                System.out.println(userJson.toString());
-                Log.e("Object",userJson.toString());
-                OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
-                out.write(userJson.toString());
-                out.close();
-
-                try{
-                    int HttpResult =conn_.getResponseCode();
-                    if(HttpResult ==HttpURLConnection.HTTP_OK){
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn_.getInputStream(),"utf-8"));
-                        String line = null;
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line + "\n");
-                        }
-                        br.close();
-                        System.out.println(sb.toString());
-
-                    }else{
-                        System.out.println("Server Connection failed.");
-                    }
-
-                } catch(Exception e){
-                    return "Server Connection failed.";
-                }
-
-            }
-            catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally{
-                if(conn_!=null)
-                    conn_.disconnect();
-            }
-            return sb.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("Value From Server",s);
-            this.dialog.dismiss();
-        }
-    }
 }

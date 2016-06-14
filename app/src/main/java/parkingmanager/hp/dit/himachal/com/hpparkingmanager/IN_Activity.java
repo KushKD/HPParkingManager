@@ -72,7 +72,7 @@ public class IN_Activity extends Activity {
                 long estimated_Time = s_estimatedtime.getSelectedItemId();
                 Log.e("Time",Long.toString(estimated_Time));
                 String car_number = carnumber_.getText().toString().trim();
-                String Driver_Name = drivername_.getText().toString().trim();
+              //  String Driver_Name = drivername_.getText().toString().trim();
                 String phonenumber = phonenumber_.getText().toString().trim();
                 String Parking_ID = ID.trim();
 
@@ -97,7 +97,7 @@ public class IN_Activity extends Activity {
                         if(Parking_ID.length()!=0 && Parking_ID!=null){
                             if(isOnline()) {
                                 PARK_CAR PC = new PARK_CAR();
-                                PC.execute(Parking_ID, typecar, car_number, Driver_Name, phonenumber, Long.toString(estimated_Time), formattedDate);
+                                PC.execute(Parking_ID, typecar, car_number, "", phonenumber, Long.toString(estimated_Time), formattedDate);
                             }
                         }else{
                             Toast.makeText(IN_Activity.this, "Something Bad Happened", Toast.LENGTH_SHORT).show();
@@ -194,7 +194,7 @@ public class IN_Activity extends Activity {
                         .key("ParkingId").value(Parking_ID)
                         .key("TypeofCar").value(Car_Type)
                         .key("VehicleNo").value(Car_Number)
-                        .key("DriverName").value(Driver_Name)
+                        .key("DriverName").value("")
                         .key("PhoneNumber").value(Phone_Number)
                         .key("EstimatedParkingtime").value(ES_Parking_Time)
                         .key("EstimatedFee").value("")

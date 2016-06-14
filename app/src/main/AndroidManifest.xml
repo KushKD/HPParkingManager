@@ -46,8 +46,11 @@
         <activity android:name=".Inbox_Details_Activity" />
         <activity android:name=".Outbox_Activity" />
         <activity android:name=".Outbox_Details_Activity" />
-        <activity android:name=".Reports_Activity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Reports_Activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".List_Reports"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
     </application>
 
 </manifest>
