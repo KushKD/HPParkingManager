@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +27,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import Adapters.OUT_Adapter;
+import JsonManager.OutJSON;
+import Model.OUT_POJO;
+import Utils.EConstants;
 
 public class OUT_Activity extends AppCompatActivity {
 

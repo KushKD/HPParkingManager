@@ -1,4 +1,4 @@
-package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
+package JsonManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import java.util.ArrayList;
 import java.util.List;
+
+import Model.ParkingPOJO;
 
 /**
  * Created by kuush on 6/3/2016.

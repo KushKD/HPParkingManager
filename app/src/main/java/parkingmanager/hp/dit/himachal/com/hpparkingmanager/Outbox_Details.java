@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +27,8 @@ import java.net.URL;
 
 import HelperFunctions.GetDateAndTime;
 import JsonManager.Manage_Json;
+import Model.OutboxPOJO;
+import Utils.EConstants;
 
 public class Outbox_Details extends Activity {
     private TextView tv_ParkingId,tv_RegisterId,tv_VehicleNo,tv_PhoneNumber,tv_RequestTime,tv_RequestStatus;

@@ -1,4 +1,4 @@
-package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
+package Model;
 
 import java.io.Serializable;
 

@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONStringer;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +27,8 @@ import java.net.URL;
 
 import HelperFunctions.GetDateAndTime;
 import JsonManager.Manage_Json;
+import Model.InboxPOJO;
+import Utils.EConstants;
 
 public class Inbox_Details extends AppCompatActivity {
 

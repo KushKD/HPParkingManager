@@ -2,15 +2,9 @@ package JsonManager;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import parkingmanager.hp.dit.himachal.com.hpparkingmanager.InboxPOJO;
 
 /**
  * Created by kuush on 6/6/2016.

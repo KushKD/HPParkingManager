@@ -1,4 +1,4 @@
-package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
+package Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,52 +13,54 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import Model.InboxPOJO;
+import parkingmanager.hp.dit.himachal.com.hpparkingmanager.R;
+
 /**
- * Created by kuush on 5/24/2016.
+ * Created by kuush on 6/5/2016.
  */
-public class OUT_Adapter extends ArrayAdapter<OUT_POJO> implements Filterable {
+public class Inbox_Adapter  extends ArrayAdapter<InboxPOJO> implements Filterable {
 
     private Context context;
-    private List<OUT_POJO> userlist;
+    private List<InboxPOJO> inbox_List;
 
     private Filter planetFilter;
-    private List<OUT_POJO> origUserList;
+    private List<InboxPOJO> origUserList;
 
-    public OUT_Adapter(Context context, int resource, List<OUT_POJO> objects) {
+    public Inbox_Adapter(Context context, int resource, List<InboxPOJO> objects) {
         super(context, resource, objects);
         this.context = context;
-        this.userlist = objects;
+        this.inbox_List = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.item_out_list, parent, false);
-        OUT_POJO u = userlist.get(position);
-        TextView tv1 = (TextView)view.findViewById(R.id.textView1_name);
-        TextView tv2 = (TextView)view.findViewById(R.id.textView2_number);
+        View view = inflater.inflate(R.layout.item_inbox, parent, false);
+        InboxPOJO u = inbox_List.get(position);
+        TextView tv1 = (TextView)view.findViewById(R.id.itemone);
+        TextView tv2 = (TextView)view.findViewById(R.id.itemtwo);
         tv1.setText(u.getVehicleNo());
-        tv2.setText(u.getPhoneNumber());
-
+        tv2.setText(u.getRequestTime());
         return view;
     }
 
-    public OUT_POJO getItem(int position) {
-        return userlist.get(position);
+    public InboxPOJO getItem(int position) {
+        return inbox_List.get(position);
     }
 
     public long getItemId(int position) {
-        return userlist.get(position).hashCode();
+        return inbox_List.get(position).hashCode();
     }
 
 
     @Override
     public int getCount() {
-        return userlist.size();
+        return inbox_List.size();
     }
 
     public void resetData() {
-        userlist = origUserList;
+        inbox_List = origUserList;
     }
 
     /*
@@ -88,9 +90,9 @@ public class OUT_Adapter extends ArrayAdapter<OUT_POJO> implements Filterable {
             }
             else {
                 // We perform filtering operation
-                List<OUT_POJO> nPlanetList = new ArrayList<>();
+                List<InboxPOJO> nPlanetList = new ArrayList<>();
 
-                for (OUT_POJO p : userlist) {
+                for (InboxPOJO p : inbox_List) {
                     if (p.getVehicleNo().toUpperCase().contains(constraint.toString().toUpperCase()))
                         nPlanetList.add(p);
                     //p.getPostName().toUpperCase().startsWith(constraint.toString().toUpperCase())
@@ -111,12 +113,11 @@ public class OUT_Adapter extends ArrayAdapter<OUT_POJO> implements Filterable {
             if (results.count == 0)
                 notifyDataSetInvalidated();
             else {
-                userlist = (List<OUT_POJO>) results.values;
+                inbox_List = (List<InboxPOJO>) results.values;
                 notifyDataSetChanged();
             }
 
         }
 
     }
-
 }

@@ -23,6 +23,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapters.Outbox_Adapter;
+import JsonManager.Outbox_JSON;
+import Model.OutboxPOJO;
+import Utils.EConstants;
+
 public class Outbox extends AppCompatActivity {
     public String ID = null;
     ProgressBar pb;

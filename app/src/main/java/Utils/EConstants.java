@@ -1,4 +1,4 @@
-package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
+package Utils;
 
 /**
  * Created by kuush on 6/3/2016.

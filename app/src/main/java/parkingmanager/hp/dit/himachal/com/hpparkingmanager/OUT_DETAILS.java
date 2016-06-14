@@ -27,6 +27,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import Model.OUT_POJO;
+import Utils.EConstants;
+
 public class OUT_DETAILS extends AppCompatActivity {
 
     //PArking ID

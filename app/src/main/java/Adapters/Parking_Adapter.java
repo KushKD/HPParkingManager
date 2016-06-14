@@ -1,4 +1,4 @@
-package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
+package Adapters;
 
 
 import android.app.Activity;
@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import java.util.ArrayList;
+
 import java.util.List;
+
+import Model.ParkingPOJO;
+import parkingmanager.hp.dit.himachal.com.hpparkingmanager.R;
 
 /**
  * Created by HPZ231 on 24-07-2015.
