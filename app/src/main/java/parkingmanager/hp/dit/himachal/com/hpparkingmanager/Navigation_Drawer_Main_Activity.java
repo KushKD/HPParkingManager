@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -34,6 +35,8 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer__main_);
 
+
+
         SharedPreferences prfs = getSharedPreferences(EConstants.PREF_NAME, Context.MODE_PRIVATE);
 
         ParkingID  = prfs.getString("ParkingID","");
@@ -54,6 +57,8 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         View header=navigationView.getHeaderView(0);
 /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
       TextView  Parking_Name_tv = (TextView)header.findViewById(R.id.parkingname);
@@ -166,19 +171,17 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.collection_reports) {
-            Toast.makeText(Navigation_Drawer_Main_Activity.this, "This is US", Toast.LENGTH_SHORT).show();
-        }/* else if (id == R.id.nav_gallery) {
+        Log.e("This",Integer.toString(id));
+        if (id == R.id.nav_collection_report) {
 
-        } else if (id == R.id.nav_slideshow) {
+            Intent i  = new Intent(Navigation_Drawer_Main_Activity.this,Reports_Activity.class);
+            i.putExtra("ID",ParkingID);
+            startActivity(i);
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
+            return true;
+        } else{
+            Toast.makeText(getApplicationContext(),"No idea whats going on.",Toast.LENGTH_LONG).show();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

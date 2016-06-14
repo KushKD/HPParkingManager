@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="6"
+    android:background="#f2f2f2"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:layout_weight="3.0"
+        android:background="#FF545454"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="Collection Report"
+            android:textColor="#FFFFFF"
+            android:background="#FF545454"
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            />
+
+
+    </LinearLayout>
+
+    <!-- Body -->
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#f2f2f2"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+
+
+        <!-- Relative LAyout Goes Here -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#40666666"
+            android:gravity="left|center_vertical|center_horizontal"
+            android:padding="10dip"
+            android:text="Select from Date and Time:- "
+            android:textColor="#FF545454"/>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#40666666"
+            android:gravity="center|center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <!-- ListRow Left  Thumbnail image -->
+
+            <LinearLayout
+                android:id="@+id/thumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="3dip"
+                android:padding="3dip" >
+
+
+                <ImageView
+                    android:id="@+id/list_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/calendar"
+                    android:contentDescription="@string/app_name" />
+
+            </LinearLayout>
+
+            <!-- Rightend Arrow -->
+            <ImageButton
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:background="@drawable/circularbutton"
+                android:contentDescription="@string/app_name"
+                 />
+
+
+            <TextView
+                android:id="@+id/fromdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="5dip"
+                android:layout_toLeftOf="@+id/imageView1"
+                android:background="@drawable/rounded_edittext"
+                android:hint="  From date"
+                android:inputType="number"
+                android:textColor="#FF545454"
+                android:textColorHint="#FF545454"
+                android:textSize="18dip" />
+
+        </RelativeLayout>
+
+        <!-- From Time -->
+        <!-- To Date -->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#40666666"
+            android:gravity="center|center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <!-- ListRow Left sied Thumbnail image -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="3dip"
+                android:padding="3dip" >
+
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/calendar"
+                    android:contentDescription="@string/app_name" />
+
+            </LinearLayout>
+
+            <!-- Rightend Arrow -->
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circularbutton"
+                android:contentDescription="@string/app_name"
+                android:visibility="gone"
+                />
+
+
+
+
+
+
+            <TextView
+                android:id="@+id/fromtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/rounded_edittext"
+                android:hint="From time"
+                android:textColor="#FF545454"
+                android:textColorHint="#FF545454"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#40666666"
+            android:gravity="left|center_vertical|center_horizontal"
+            android:padding="10dip"
+            android:text="Select To Date and Time:- "
+            android:textColor="#FF545454"/>
+        <!-- To Date -->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#40666666"
+            android:gravity="center|center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <!-- ListRow Left sied Thumbnail image -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="3dip"
+                android:padding="3dip" >
+
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/calendar"
+                    android:contentDescription="@string/app_name" />
+
+            </LinearLayout>
+
+            <!-- Rightend Arrow -->
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circularbutton"
+                android:contentDescription="@string/app_name"
+                android:visibility="gone"
+                />
+
+
+
+
+
+
+            <TextView
+                android:id="@+id/todate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/rounded_edittext"
+                android:hint="To Date"
+                android:textColor="#FF545454"
+                android:textColorHint="#FF545454"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+
+        <!-- To Date -->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#40666666"
+            android:gravity="center|center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <!-- ListRow Left sied Thumbnail image -->
+
+            <LinearLayout
+                android:id="@+id/thumbnail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="3dip"
+                android:padding="3dip" >
+
+
+                <ImageView
+                    android:id="@+id/list_image2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/calendar"
+                    android:contentDescription="@string/app_name" />
+
+            </LinearLayout>
+
+            <!-- Rightend Arrow -->
+            <ImageButton
+                android:id="@+id/imageView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circularbutton"
+                android:contentDescription="@string/app_name"
+                android:visibility="gone"
+                />
+
+
+
+
+
+
+            <TextView
+                android:id="@+id/totime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="5dip"
+                android:layout_toLeftOf="@+id/imageView12"
+                android:background="@drawable/rounded_edittext"
+                android:hint="To Time"
+                android:textColor="#FF545454"
+                android:textColorHint="#FF545454"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:id="@+id/ll3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3.0"
+        android:gravity="bottom|center_horizontal|center_vertical"
+        android:background="#F2F2F2"
+        android:orientation="vertical">
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:weightSum="2">
+
+
+
+
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FF545454"
+                android:layout_margin="5dp"
+                android:text="Back"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"/>
+
+
+
+            <Button
+                android:id="@+id/getreport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FF545454"
+                android:layout_margin="5dp"
+                android:text="Get Report"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"/>
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

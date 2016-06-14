@@ -26,7 +26,7 @@
             android:name=".Navigation_Drawer_Main_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Main_Activity"
             android:launchMode="singleInstance"
@@ -46,7 +46,8 @@
         <activity android:name=".Inbox_Details_Activity" />
         <activity android:name=".Outbox_Activity" />
         <activity android:name=".Outbox_Details_Activity" />
-
+        <activity android:name=".Reports_Activity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
