@@ -13,21 +13,21 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.OUT_POJO;
+import Model.Out_Pojo;
 import parkingmanager.hp.dit.himachal.com.hpparkingmanager.R;
 
 /**
  * Created by kuush on 5/24/2016.
  */
-public class OUT_Adapter extends ArrayAdapter<OUT_POJO> implements Filterable {
+public class Out_Adapter extends ArrayAdapter<Out_Pojo> implements Filterable {
 
     private Context context;
-    private List<OUT_POJO> userlist;
+    private List<Out_Pojo> userlist;
 
     private Filter planetFilter;
-    private List<OUT_POJO> origUserList;
+    private List<Out_Pojo> origUserList;
 
-    public OUT_Adapter(Context context, int resource, List<OUT_POJO> objects) {
+    public Out_Adapter(Context context, int resource, List<Out_Pojo> objects) {
         super(context, resource, objects);
         this.context = context;
         this.userlist = objects;
@@ -37,7 +37,7 @@ public class OUT_Adapter extends ArrayAdapter<OUT_POJO> implements Filterable {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.item_out_list, parent, false);
-        OUT_POJO u = userlist.get(position);
+        Out_Pojo u = userlist.get(position);
         TextView tv1 = (TextView)view.findViewById(R.id.textView1_name);
         TextView tv2 = (TextView)view.findViewById(R.id.textView2_number);
         tv1.setText(u.getVehicleNo());
@@ -46,7 +46,7 @@ public class OUT_Adapter extends ArrayAdapter<OUT_POJO> implements Filterable {
         return view;
     }
 
-    public OUT_POJO getItem(int position) {
+    public Out_Pojo getItem(int position) {
         return userlist.get(position);
     }
 
@@ -91,9 +91,9 @@ public class OUT_Adapter extends ArrayAdapter<OUT_POJO> implements Filterable {
             }
             else {
                 // We perform filtering operation
-                List<OUT_POJO> nPlanetList = new ArrayList<>();
+                List<Out_Pojo> nPlanetList = new ArrayList<>();
 
-                for (OUT_POJO p : userlist) {
+                for (Out_Pojo p : userlist) {
                     if (p.getVehicleNo().toUpperCase().contains(constraint.toString().toUpperCase()))
                         nPlanetList.add(p);
                     //p.getPostName().toUpperCase().startsWith(constraint.toString().toUpperCase())
@@ -114,7 +114,7 @@ public class OUT_Adapter extends ArrayAdapter<OUT_POJO> implements Filterable {
             if (results.count == 0)
                 notifyDataSetInvalidated();
             else {
-                userlist = (List<OUT_POJO>) results.values;
+                userlist = (List<Out_Pojo>) results.values;
                 notifyDataSetChanged();
             }
 

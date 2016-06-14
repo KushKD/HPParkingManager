@@ -116,7 +116,7 @@ public class Main_Activity extends Activity {
                             editor.putString("Identifier",vacancy_Details.getIdentifier());
                             // Commit the edits!
                             editor.commit();
-                            Intent Details_Intent = new Intent(Main_Activity.this,Parking_Details_Activity.class);
+                            Intent Details_Intent = new Intent(Main_Activity.this,Navigation_Drawer_Main_Activity.class);
                             startActivity(Details_Intent);
                             Main_Activity.this.finish();
 

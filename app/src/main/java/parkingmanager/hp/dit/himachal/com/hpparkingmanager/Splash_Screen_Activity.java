@@ -25,7 +25,8 @@ public class Splash_Screen_Activity extends AppCompatActivity {
 
                 if(hasLoggedIn)
                 {
-                    Intent mainIntent = new Intent(Splash_Screen_Activity.this, Parking_Details_Activity.class);
+                    //Parking_Details_Activity
+                    Intent mainIntent = new Intent(Splash_Screen_Activity.this, Navigation_Drawer_Main_Activity.class);
                     Splash_Screen_Activity.this.startActivity(mainIntent);
                     Splash_Screen_Activity.this.finish();
                 }else{
@@ -39,6 +40,6 @@ public class Splash_Screen_Activity extends AppCompatActivity {
 
 
             }
-        }, 3000);
+        }, 1000);
     }
 }
