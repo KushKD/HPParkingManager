@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="parkingmanager.hp.dit.himachal.com.hpparkingmanager.MainActivity">
+    tools:context=".Main_Activity">
 
     <TextView
         android:layout_width="match_parent"

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import Utils.EConstants;
 
-public class ParkingDetails extends Activity {
+public class Parking_Details_Activity extends Activity {
 
     TextView parkingname,parkingidentifier;
     Button back,in,out,inbox,outbox;
@@ -42,7 +42,7 @@ public class ParkingDetails extends Activity {
         outbox = (Button)findViewById(R.id.outbox);
 
         //Intent getParkingDetailsIntent = getIntent();
-        //final ParkingPOJO ParkingDetails =  (ParkingPOJO) getParkingDetailsIntent.getSerializableExtra("DETAILS");
+        //final Parking_Pojo Parking_Details_Activity =  (Parking_Pojo) getParkingDetailsIntent.getSerializableExtra("DETAILS");
         parkingname.setText(Parking_Name);
         parkingidentifier.setText(Identifier);
 
@@ -50,7 +50,7 @@ public class ParkingDetails extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParkingDetails.this.finish();
+                Parking_Details_Activity.this.finish();
             }
         });
 
@@ -61,7 +61,7 @@ public class ParkingDetails extends Activity {
             public void onClick(View v) {
 
                 //Get Parking ID
-                Intent i = new Intent(ParkingDetails.this, Inbox.class);
+                Intent i = new Intent(Parking_Details_Activity.this, Inbox_Activity.class);
                 i.putExtra("ID",ParkingID);
                 startActivity(i);
 
@@ -72,7 +72,7 @@ public class ParkingDetails extends Activity {
         outbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ParkingDetails.this, Outbox.class);
+                Intent i = new Intent(Parking_Details_Activity.this, Outbox_Activity.class);
                 i.putExtra("ID",ParkingID);
                 startActivity(i);
 
@@ -86,7 +86,7 @@ public class ParkingDetails extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(ParkingDetails.this, IN_Activity.class);
+                Intent i = new Intent(Parking_Details_Activity.this, IN_Activity.class);
                 i.putExtra("ID",ParkingID);
                 startActivity(i);
 
@@ -97,7 +97,7 @@ public class ParkingDetails extends Activity {
         out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ParkingDetails.this, OUT_Activity.class);
+                Intent i = new Intent(Parking_Details_Activity.this, OUT_Activity.class);
                 i.putExtra("ID",ParkingID);
                 startActivity(i);
 

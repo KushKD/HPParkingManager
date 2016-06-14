@@ -29,11 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.Parking_Adapter;
-import JsonManager.ParkingJSON;
-import Model.ParkingPOJO;
+import JsonManager.Parking_Json;
+import Model.Parking_Pojo;
 import Utils.EConstants;
 
-public class MainActivity extends Activity {
+public class Main_Activity extends Activity {
 
    private String[] town;
    private Spinner spinner_town;
@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
     ListView listv;
     Context context;
     List<GetParkingDetails> tasks;
-    List<ParkingPOJO> Parking_Server;
+    List<Parking_Pojo> Parking_Server;
     Parking_Adapter adapter;
 
     @Override
@@ -95,9 +95,9 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-               final ParkingPOJO vacancy_Details = (ParkingPOJO) parent.getItemAtPosition(position);
+               final Parking_Pojo vacancy_Details = (Parking_Pojo) parent.getItemAtPosition(position);
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Main_Activity.this);
                 alertDialog.setTitle("Alert");
                 alertDialog.setMessage("You are about to select "+vacancy_Details.getParkingPlace()+". Are you sure you want to continue?");
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -116,9 +116,9 @@ public class MainActivity extends Activity {
                             editor.putString("Identifier",vacancy_Details.getIdentifier());
                             // Commit the edits!
                             editor.commit();
-                            Intent Details_Intent = new Intent(MainActivity.this,ParkingDetails.class);
+                            Intent Details_Intent = new Intent(Main_Activity.this,Parking_Details_Activity.class);
                             startActivity(Details_Intent);
-                            MainActivity.this.finish();
+                            Main_Activity.this.finish();
 
 
                         }catch (Exception e){
@@ -215,7 +215,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Parking_Server = ParkingJSON.parseFeed(result);
+            Parking_Server = Parking_Json.parseFeed(result);
             if(Parking_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else

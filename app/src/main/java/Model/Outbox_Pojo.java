@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by kuush on 6/6/2016.
  */
-public class OutboxPOJO implements Serializable {
+public class Outbox_Pojo implements Serializable {
 
 
     public  String ParkingId;

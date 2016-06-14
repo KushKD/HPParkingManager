@@ -29,11 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.Inbox_Adapter;
-import JsonManager.Inbox_JSON;
-import Model.InboxPOJO;
+import JsonManager.Inbox_Json;
+import Model.Inbox_Pojo;
 import Utils.EConstants;
 
-public class Inbox extends Activity {
+public class Inbox_Activity extends Activity {
 
     public String ID = null;
     ProgressBar pb;
@@ -43,7 +43,7 @@ public class Inbox extends Activity {
     ListView listv;
     Context context;
     List<Fetch_Inbox> tasks;  //Changet he Object and task
-    List<InboxPOJO> Inbox_Server;   // change the list
+    List<Inbox_Pojo> Inbox_Server;   // change the list
     Inbox_Adapter adapter;  // change the adapter
 
     LinearLayout LGone;
@@ -92,17 +92,17 @@ public class Inbox extends Activity {
 
 
         }else{
-            Toast.makeText(Inbox.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Inbox_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
         }
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                InboxPOJO Inbox_Details = (InboxPOJO) parent.getItemAtPosition(position);   //change object
+                Inbox_Pojo Inbox_Details = (Inbox_Pojo) parent.getItemAtPosition(position);   //change object
                 Intent userSearch = new Intent();
                 userSearch.putExtra("INBOX", Inbox_Details);
-                userSearch.setClass(Inbox.this, Inbox_Details.class);
+                userSearch.setClass(Inbox_Activity.this, Inbox_Details_Activity.class);
                 startActivity(userSearch);
 
 
@@ -114,7 +114,7 @@ public class Inbox extends Activity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                //MainActivity.this.adapt.getFilter().filter(s);
+                //Main_Activity.this.adapt.getFilter().filter(s);
                 //  String searchString=Search_EditText.getText().toString();
                 //  adapter.getFilter().filter(searchString);
                 // System.out.println("Text ["+s+"] - Start ["+start+"] - Before ["+before+"] - Count ["+count+"]");
@@ -136,7 +136,7 @@ public class Inbox extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-                Inbox.this.adapter.getFilter().filter(s);
+                Inbox_Activity.this.adapter.getFilter().filter(s);
 
 
             }
@@ -214,7 +214,7 @@ public class Inbox extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Inbox_Server = Inbox_JSON.parseFeed(result);
+            Inbox_Server = Inbox_Json.parseFeed(result);
             if(Inbox_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else

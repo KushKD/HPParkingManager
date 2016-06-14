@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.Outbox_Adapter;
-import JsonManager.Outbox_JSON;
-import Model.OutboxPOJO;
+import JsonManager.Outbox_Json;
+import Model.Outbox_Pojo;
 import Utils.EConstants;
 
-public class Outbox extends AppCompatActivity {
+public class Outbox_Activity extends AppCompatActivity {
     public String ID = null;
     ProgressBar pb;
     URL url_;
@@ -37,7 +37,7 @@ public class Outbox extends AppCompatActivity {
     ListView listv;
     Context context;
     List<Fetch_Outbox> tasks;  //Changet he Object and task
-    List<OutboxPOJO> Outbox_Server;   // change the list
+    List<Outbox_Pojo> Outbox_Server;   // change the list
     Outbox_Adapter adapter;  // change the adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +64,17 @@ public class Outbox extends AppCompatActivity {
 
 
         }else{
-            Toast.makeText(Outbox.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Outbox_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
         }
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                OutboxPOJO Outbox_Details = (OutboxPOJO) parent.getItemAtPosition(position);   //change object
+                Outbox_Pojo Outbox_Details = (Outbox_Pojo) parent.getItemAtPosition(position);   //change object
                 Intent userSearch = new Intent();
                 userSearch.putExtra("OUTBOX", Outbox_Details);
-                userSearch.setClass(Outbox.this, Outbox_Details.class);
+                userSearch.setClass(Outbox_Activity.this, Outbox_Details_Activity.class);
                 startActivity(userSearch);
 
 
@@ -113,7 +113,7 @@ public class Outbox extends AppCompatActivity {
 
 
         }else{
-            Toast.makeText(Outbox.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Outbox_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -167,7 +167,7 @@ public class Outbox extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Outbox_Server = Outbox_JSON.parseFeed(result);
+            Outbox_Server = Outbox_Json.parseFeed(result);
             if(Outbox_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else

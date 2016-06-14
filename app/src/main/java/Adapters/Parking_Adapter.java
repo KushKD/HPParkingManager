@@ -12,20 +12,20 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import Model.ParkingPOJO;
+import Model.Parking_Pojo;
 import parkingmanager.hp.dit.himachal.com.hpparkingmanager.R;
 
 /**
  * Created by HPZ231 on 24-07-2015.
  */
-public class Parking_Adapter extends ArrayAdapter<ParkingPOJO> implements Filterable {
+public class Parking_Adapter extends ArrayAdapter<Parking_Pojo> implements Filterable {
 
     private Context context;
-    private List<ParkingPOJO> parkingList;
+    private List<Parking_Pojo> parkingList;
 
 
 
-    public Parking_Adapter(Context context, int resource, List<ParkingPOJO> objects) {
+    public Parking_Adapter(Context context, int resource, List<Parking_Pojo> objects) {
         super(context, resource, objects);
         this.context = context;
         this.parkingList = objects;
@@ -36,7 +36,7 @@ public class Parking_Adapter extends ArrayAdapter<ParkingPOJO> implements Filter
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.item_parking, parent, false);
-        ParkingPOJO u = parkingList.get(position);
+        Parking_Pojo u = parkingList.get(position);
         TextView tv1 = (TextView)view.findViewById(R.id.textView1_parkingname);
         TextView tv2 = (TextView)view.findViewById(R.id.textView2_landmark);
         tv1.setText(u.getParkingPlace());
@@ -44,7 +44,7 @@ public class Parking_Adapter extends ArrayAdapter<ParkingPOJO> implements Filter
         return view;
     }
 
-    public ParkingPOJO getItem(int position) {
+    public Parking_Pojo getItem(int position) {
         return parkingList.get(position);
     }
 

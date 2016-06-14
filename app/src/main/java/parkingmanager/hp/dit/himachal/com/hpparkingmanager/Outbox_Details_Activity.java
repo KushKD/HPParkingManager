@@ -25,12 +25,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import HelperFunctions.GetDateAndTime;
+import HelperFunctions.Date_Time;
 import JsonManager.Manage_Json;
-import Model.OutboxPOJO;
+import Model.Outbox_Pojo;
 import Utils.EConstants;
 
-public class Outbox_Details extends Activity {
+public class Outbox_Details_Activity extends Activity {
     private TextView tv_ParkingId,tv_RegisterId,tv_VehicleNo,tv_PhoneNumber,tv_RequestTime,tv_RequestStatus;
     private TextView tv_EstimatedTime , tv_VehicleType;
     private Button bt_back, bt_reject, bt_checkin;
@@ -47,7 +47,7 @@ public class Outbox_Details extends Activity {
         //GTO
 
         Intent getRoomDetailsIntent = getIntent();
-        final OutboxPOJO Outbox_Details =  (OutboxPOJO) getRoomDetailsIntent.getSerializableExtra("OUTBOX");
+        final Outbox_Pojo Outbox_Details =  (Outbox_Pojo) getRoomDetailsIntent.getSerializableExtra("OUTBOX");
 
         tv_ParkingId = (TextView)findViewById(R.id.ParkingId);
         tv_RegisterId = (TextView)findViewById(R.id.RegisterId);
@@ -75,7 +75,7 @@ public class Outbox_Details extends Activity {
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Outbox_Details.this.finish();
+                Outbox_Details_Activity.this.finish();
             }
         });
 
@@ -89,7 +89,7 @@ public class Outbox_Details extends Activity {
                     C_IN.execute(Outbox_Details);
 
                 }else{
-                    Toast.makeText(Outbox_Details.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Outbox_Details_Activity.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -117,7 +117,7 @@ public class Outbox_Details extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(Outbox_Details.this);
+            dialog = new ProgressDialog(Outbox_Details_Activity.this);
             this.dialog.setMessage("Please wait ..");
             this.dialog.show();
             this.dialog.setCancelable(false);
@@ -125,7 +125,7 @@ public class Outbox_Details extends Activity {
 
         @Override
         protected String doInBackground(Object... objects) {
-            OutboxPOJO Outbox_Object_result = (OutboxPOJO)objects[0];
+            Outbox_Pojo Outbox_Object_result = (Outbox_Pojo)objects[0];
 
             try {
                 url_ =new URL(EConstants.Production_URL+"getConfirmParkOutStatus_JSON");
@@ -142,7 +142,7 @@ public class Outbox_Details extends Activity {
                         .object().key("ParkInRequst")
                         .object()
                         .key("EstimatedTime").value(Outbox_Object_result.getEstimatedTime())
-                        .key("InTime").value(GetDateAndTime.GetDateAndTime())
+                        .key("InTime").value(Date_Time.GetDateAndTime())
                         .key("ParkingId").value(Outbox_Object_result.getParkingId())
                         .key("PhoneNumber").value(Outbox_Object_result.getPhoneNumber())
                         .key("RegisterId").value(Outbox_Object_result.getRegisterId())
@@ -204,7 +204,7 @@ public class Outbox_Details extends Activity {
             Log.e("Message IS",Result);
 
             Toast.makeText(getApplicationContext(),Result,Toast.LENGTH_LONG).show();
-            Outbox_Details.this.finish();
+            Outbox_Details_Activity.this.finish();
 
             dialog.dismiss();
 

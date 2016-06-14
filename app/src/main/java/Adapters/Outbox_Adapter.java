@@ -10,18 +10,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import Model.OutboxPOJO;
+import Model.Outbox_Pojo;
 import parkingmanager.hp.dit.himachal.com.hpparkingmanager.R;
 
 /**
  * Created by kuush on 6/6/2016.
  */
-public class Outbox_Adapter  extends ArrayAdapter<OutboxPOJO> {
+public class Outbox_Adapter  extends ArrayAdapter<Outbox_Pojo> {
 
     private Context context;
-    private List<OutboxPOJO> outbox_List;
+    private List<Outbox_Pojo> outbox_List;
 
-    public Outbox_Adapter(Context context, int resource, List<OutboxPOJO> objects) {
+    public Outbox_Adapter(Context context, int resource, List<Outbox_Pojo> objects) {
         super(context, resource, objects);
         this.context = context;
         this.outbox_List = objects;
@@ -31,7 +31,7 @@ public class Outbox_Adapter  extends ArrayAdapter<OutboxPOJO> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.item_outbox, parent, false);
-        OutboxPOJO u = outbox_List.get(position);
+        Outbox_Pojo u = outbox_List.get(position);
         TextView tv1 = (TextView)view.findViewById(R.id.itemone);
         TextView tv2 = (TextView)view.findViewById(R.id.itemtwo);
         tv1.setText(u.getVehicleNo());
@@ -39,7 +39,7 @@ public class Outbox_Adapter  extends ArrayAdapter<OutboxPOJO> {
         return view;
     }
 
-    public OutboxPOJO getItem(int position) {
+    public Outbox_Pojo getItem(int position) {
         return outbox_List.get(position);
     }
 

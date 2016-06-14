@@ -13,21 +13,21 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.InboxPOJO;
+import Model.Inbox_Pojo;
 import parkingmanager.hp.dit.himachal.com.hpparkingmanager.R;
 
 /**
  * Created by kuush on 6/5/2016.
  */
-public class Inbox_Adapter  extends ArrayAdapter<InboxPOJO> implements Filterable {
+public class Inbox_Adapter  extends ArrayAdapter<Inbox_Pojo> implements Filterable {
 
     private Context context;
-    private List<InboxPOJO> inbox_List;
+    private List<Inbox_Pojo> inbox_List;
 
     private Filter planetFilter;
-    private List<InboxPOJO> origUserList;
+    private List<Inbox_Pojo> origUserList;
 
-    public Inbox_Adapter(Context context, int resource, List<InboxPOJO> objects) {
+    public Inbox_Adapter(Context context, int resource, List<Inbox_Pojo> objects) {
         super(context, resource, objects);
         this.context = context;
         this.inbox_List = objects;
@@ -37,7 +37,7 @@ public class Inbox_Adapter  extends ArrayAdapter<InboxPOJO> implements Filterabl
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.item_inbox, parent, false);
-        InboxPOJO u = inbox_List.get(position);
+        Inbox_Pojo u = inbox_List.get(position);
         TextView tv1 = (TextView)view.findViewById(R.id.itemone);
         TextView tv2 = (TextView)view.findViewById(R.id.itemtwo);
         tv1.setText(u.getVehicleNo());
@@ -45,7 +45,7 @@ public class Inbox_Adapter  extends ArrayAdapter<InboxPOJO> implements Filterabl
         return view;
     }
 
-    public InboxPOJO getItem(int position) {
+    public Inbox_Pojo getItem(int position) {
         return inbox_List.get(position);
     }
 
@@ -90,9 +90,9 @@ public class Inbox_Adapter  extends ArrayAdapter<InboxPOJO> implements Filterabl
             }
             else {
                 // We perform filtering operation
-                List<InboxPOJO> nPlanetList = new ArrayList<>();
+                List<Inbox_Pojo> nPlanetList = new ArrayList<>();
 
-                for (InboxPOJO p : inbox_List) {
+                for (Inbox_Pojo p : inbox_List) {
                     if (p.getVehicleNo().toUpperCase().contains(constraint.toString().toUpperCase()))
                         nPlanetList.add(p);
                     //p.getPostName().toUpperCase().startsWith(constraint.toString().toUpperCase())
@@ -113,7 +113,7 @@ public class Inbox_Adapter  extends ArrayAdapter<InboxPOJO> implements Filterabl
             if (results.count == 0)
                 notifyDataSetInvalidated();
             else {
-                inbox_List = (List<InboxPOJO>) results.values;
+                inbox_List = (List<Inbox_Pojo>) results.values;
                 notifyDataSetChanged();
             }
 

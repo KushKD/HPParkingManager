@@ -13,7 +13,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashScreen"
+            android:name=".Splash_Screen_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ParkingDetails"
+            android:name=".Parking_Details_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Main_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
@@ -40,16 +40,16 @@
 
             />
         <activity
-            android:name=".OUT_DETAILS"
+            android:name=".OUT_Details_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".Inbox"
+        <activity android:name=".Inbox_Activity"
           />
-        <activity android:name=".Inbox_Details" />
-        <activity android:name=".Outbox"
+        <activity android:name=".Inbox_Details_Activity" />
+        <activity android:name=".Outbox_Activity"
            />
-        <activity android:name=".Outbox_Details"></activity>
+        <activity android:name=".Outbox_Details_Activity"></activity>
     </application>
 
 </manifest>

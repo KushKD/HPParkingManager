@@ -27,10 +27,10 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import Model.OUT_POJO;
+import Model.Out_Pojo;
 import Utils.EConstants;
 
-public class OUT_DETAILS extends AppCompatActivity {
+public class OUT_Details_Activity extends AppCompatActivity {
 
     //PArking ID
     //Driver Name
@@ -55,7 +55,7 @@ public class OUT_DETAILS extends AppCompatActivity {
         setContentView(R.layout.activity_out__details);
 
         Intent getRoomDetailsIntent = getIntent();
-        final OUT_POJO OUT_Details =  (OUT_POJO) getRoomDetailsIntent.getSerializableExtra("ADS_Details");
+        final Out_Pojo OUT_Details =  (Out_Pojo) getRoomDetailsIntent.getSerializableExtra("ADS_Details");
 
 
                 tv_parkingid = (TextView)findViewById(R.id.parkingid);
@@ -73,7 +73,7 @@ public class OUT_DETAILS extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OUT_DETAILS.this.finish();
+                OUT_Details_Activity.this.finish();
             }
         });
 
@@ -117,7 +117,7 @@ public class OUT_DETAILS extends AppCompatActivity {
                     COC.execute(parking_id,drivername,phone_number,vehicle_number,OUT_TIME,"checkout");
 
                 }else{
-                    Toast.makeText(OUT_DETAILS.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OUT_Details_Activity.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -143,7 +143,7 @@ public class OUT_DETAILS extends AppCompatActivity {
                     COC.execute(parking_id,drivername,phone_number,vehicle_number,out_time,"confirm");
 
                 }else{
-                    Toast.makeText(OUT_DETAILS.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OUT_Details_Activity.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -188,7 +188,7 @@ public class OUT_DETAILS extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(OUT_DETAILS.this);
+            dialog = new ProgressDialog(OUT_Details_Activity.this);
             this.dialog.setMessage("Please wait ..");
             this.dialog.show();
             this.dialog.setCancelable(false);
@@ -295,7 +295,7 @@ public class OUT_DETAILS extends AppCompatActivity {
                 Log.e("Result",s);
                 tv_message_from_server.setText(s);
                 dialog.dismiss();
-                OUT_DETAILS.this.finish();
+                OUT_Details_Activity.this.finish();
             }else{
                 Parking_Id = null;
                 Driver_Name = null;
@@ -306,7 +306,7 @@ public class OUT_DETAILS extends AppCompatActivity {
                 Log.e("Result",s);
                 tv_message_from_server.setText(s);
                 dialog.dismiss();
-               // OUT_DETAILS.this.finish();
+               // OUT_Details_Activity.this.finish();
 
             }
 
@@ -315,7 +315,7 @@ public class OUT_DETAILS extends AppCompatActivity {
 
 
 
-           // OUT_DETAILS.this.finish();
+           // OUT_Details_Activity.this.finish();
           /*  JsonParser JP;
             String finalResult = null;
 

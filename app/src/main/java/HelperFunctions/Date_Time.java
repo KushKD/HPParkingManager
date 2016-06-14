@@ -11,7 +11,7 @@ import java.util.Calendar;
 /**
  * Created by kuush on 6/6/2016.
  */
-public class GetDateAndTime  {
+public class Date_Time {
 
     /**
      * Function to get Data and Time

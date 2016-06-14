@@ -8,14 +8,14 @@ import org.json.JSONTokener;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.InboxPOJO;
+import Model.Inbox_Pojo;
 
 /**
  * Created by kuush on 6/5/2016.
  */
-public class Inbox_JSON {
+public class Inbox_Json {
 
-    public static List<InboxPOJO> parseFeed(String content) {
+    public static List<Inbox_Pojo> parseFeed(String content) {
 
         try {
             String g_Table = null;
@@ -27,11 +27,11 @@ public class Inbox_JSON {
             else if (json instanceof JSONArray){
             }
             JSONArray ar = new JSONArray(g_Table);
-            List<InboxPOJO>InboxList = new ArrayList<>();
+            List<Inbox_Pojo>InboxList = new ArrayList<>();
 
             for (int i = 0; i < ar.length(); i++) {
                 JSONObject obj = ar.getJSONObject(i);
-                InboxPOJO pojo_ads = new InboxPOJO();
+                Inbox_Pojo pojo_ads = new Inbox_Pojo();
                 pojo_ads.setParkingId(obj.getString("ParkingId"));
                 pojo_ads.setPhoneNumber(obj.getString("PhoneNumber"));
                 pojo_ads.setRegisterId(obj.getString("RegisterId"));

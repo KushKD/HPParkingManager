@@ -7,13 +7,13 @@ import org.json.JSONTokener;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.ParkingPOJO;
+import Model.Parking_Pojo;
 
 /**
  * Created by kuush on 6/3/2016.
  */
-public class ParkingJSON {
-    public static List<ParkingPOJO> parseFeed(String content) {
+public class Parking_Json {
+    public static List<Parking_Pojo> parseFeed(String content) {
 
         try {
             String g_Table = null;
@@ -25,11 +25,11 @@ public class ParkingJSON {
             else if (json instanceof JSONArray){
             }
             JSONArray ar = new JSONArray(g_Table);
-            List<ParkingPOJO>VacancyList = new ArrayList<>();
+            List<Parking_Pojo>VacancyList = new ArrayList<>();
 
             for (int i = 0; i < ar.length(); i++) {
                 JSONObject obj = ar.getJSONObject(i);
-                ParkingPOJO pojo_Vacancy = new ParkingPOJO();
+                Parking_Pojo pojo_Vacancy = new Parking_Pojo();
                 pojo_Vacancy.setCapacity(obj.getString("Capacity"));
                 pojo_Vacancy.setContactNumber1(obj.getString("ContactNumber1"));
                 pojo_Vacancy.setContactNumber2(obj.getString("ContactNumber2"));

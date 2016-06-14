@@ -25,12 +25,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import HelperFunctions.GetDateAndTime;
+import HelperFunctions.Date_Time;
 import JsonManager.Manage_Json;
-import Model.InboxPOJO;
+import Model.Inbox_Pojo;
 import Utils.EConstants;
 
-public class Inbox_Details extends AppCompatActivity {
+public class Inbox_Details_Activity extends AppCompatActivity {
 
     private TextView tv_ParkingId,tv_RegisterId,tv_VehicleNo,tv_PhoneNumber,tv_RequestTime,tv_RequestStatus;
     private TextView tv_EstimatedTime , tv_VehicleType;
@@ -48,7 +48,7 @@ public class Inbox_Details extends AppCompatActivity {
         //GTO
 
         Intent getRoomDetailsIntent = getIntent();
-        final InboxPOJO Inbox_Details =  (InboxPOJO) getRoomDetailsIntent.getSerializableExtra("INBOX");
+        final Inbox_Pojo Inbox_Details =  (Inbox_Pojo) getRoomDetailsIntent.getSerializableExtra("INBOX");
 
          tv_ParkingId = (TextView)findViewById(R.id.ParkingId);
        tv_RegisterId = (TextView)findViewById(R.id.RegisterId);
@@ -76,7 +76,7 @@ public class Inbox_Details extends AppCompatActivity {
 bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Inbox_Details.this.finish();
+                Inbox_Details_Activity.this.finish();
             }
         });
 
@@ -90,7 +90,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
                     C_IN.execute(Inbox_Details);
 
                 }else{
-                    Toast.makeText(Inbox_Details.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Inbox_Details_Activity.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -118,7 +118,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(Inbox_Details.this);
+            dialog = new ProgressDialog(Inbox_Details_Activity.this);
             this.dialog.setMessage("Please wait ..");
             this.dialog.show();
             this.dialog.setCancelable(false);
@@ -126,7 +126,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
 
         @Override
         protected String doInBackground(Object... objects) {
-            InboxPOJO Inbox_Object_result = (InboxPOJO)objects[0];
+            Inbox_Pojo Inbox_Object_result = (Inbox_Pojo)objects[0];
 
             try {
                 url_ =new URL(EConstants.Production_URL+"getConfirmParkinStatus_JSON");
@@ -143,7 +143,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
                         .object().key("ParkInRequst")
                         .object()
                         .key("EstimatedTime").value(Inbox_Object_result.getEstimatedTime())
-                        .key("InTime").value(GetDateAndTime.GetDateAndTime())
+                        .key("InTime").value(Date_Time.GetDateAndTime())
                         .key("ParkingId").value(Inbox_Object_result.getParkingId())
                         .key("PhoneNumber").value(Inbox_Object_result.getPhoneNumber())
                         .key("RegisterId").value(Inbox_Object_result.getRegisterId())
@@ -204,7 +204,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
             Log.e("Message IS",Result);
 
                 Toast.makeText(getApplicationContext(),Result,Toast.LENGTH_LONG).show();
-                Inbox_Details.this.finish();
+                Inbox_Details_Activity.this.finish();
             dialog.dismiss();
 
 

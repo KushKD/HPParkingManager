@@ -8,13 +8,13 @@ import org.json.JSONTokener;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.OutboxPOJO;
+import Model.Outbox_Pojo;
 
 /**
  * Created by kuush on 6/6/2016.
  */
-public class Outbox_JSON {
-    public static List<OutboxPOJO> parseFeed(String content) {
+public class Outbox_Json {
+    public static List<Outbox_Pojo> parseFeed(String content) {
 
         try {
             String g_Table = null;
@@ -26,11 +26,11 @@ public class Outbox_JSON {
             else if (json instanceof JSONArray){
             }
             JSONArray ar = new JSONArray(g_Table);
-            List<OutboxPOJO>OutboxList = new ArrayList<>();
+            List<Outbox_Pojo>OutboxList = new ArrayList<>();
 
             for (int i = 0; i < ar.length(); i++) {
                 JSONObject obj = ar.getJSONObject(i);
-                OutboxPOJO pojo_ads = new OutboxPOJO();
+                Outbox_Pojo pojo_ads = new Outbox_Pojo();
                 pojo_ads.setParkingId(obj.getString("ParkingId"));
                 pojo_ads.setPhoneNumber(obj.getString("PhoneNumber"));
                 pojo_ads.setRegisterId(obj.getString("RegisterId"));

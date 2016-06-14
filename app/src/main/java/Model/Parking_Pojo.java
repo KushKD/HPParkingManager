@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by kuush on 6/3/2016.
  */
-public class ParkingPOJO implements Serializable {
+public class Parking_Pojo implements Serializable {
 
     public String getThrashholdValue() {
         return ThrashholdValue;
@@ -218,21 +218,21 @@ public class ParkingPOJO implements Serializable {
     }
 
 
-    public ParkingPOJO(){
+    public Parking_Pojo(){
 
     }
 
 
-    public ParkingPOJO(String Capacity,
-                     String ContactNumber1, String ContactNumber2, String ContactNumber3,
-                     String ContactPerson1, String ContactPerson2, String ContactPerson3,
-                     String Identifier,
-                     String Image, String Image1, String Image2,
-                     Double Latitude, Double Longitude,
-                     String ParkingArea, String ParkingFullTag,String ParkingPlace,
-                     String Remarks, String SutedFor, String ThrashholdValue,
-                     String MinimumParkingFeeSmallCar, String MinimumParkingFeebigCar, String MinimumParkingTime,
-                     String ParkingID)
+    public Parking_Pojo(String Capacity,
+                        String ContactNumber1, String ContactNumber2, String ContactNumber3,
+                        String ContactPerson1, String ContactPerson2, String ContactPerson3,
+                        String Identifier,
+                        String Image, String Image1, String Image2,
+                        Double Latitude, Double Longitude,
+                        String ParkingArea, String ParkingFullTag, String ParkingPlace,
+                        String Remarks, String SutedFor, String ThrashholdValue,
+                        String MinimumParkingFeeSmallCar, String MinimumParkingFeebigCar, String MinimumParkingTime,
+                        String ParkingID)
     {
         this.Capacity = Capacity;
         this.ContactNumber1 = ContactNumber1;

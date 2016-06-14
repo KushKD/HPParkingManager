@@ -28,9 +28,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapters.OUT_Adapter;
-import JsonManager.OutJSON;
-import Model.OUT_POJO;
+import Adapters.Out_Adapter;
+import JsonManager.Out_Json;
+import Model.Out_Pojo;
 import Utils.EConstants;
 
 public class OUT_Activity extends AppCompatActivity {
@@ -46,8 +46,8 @@ public class OUT_Activity extends AppCompatActivity {
     ListView listv;
     Context context;
     List<GET_CARS_FOR_OUT> tasks;
-    List<OUT_POJO> ads_Server;
-    OUT_Adapter adapter;
+    List<Out_Pojo> ads_Server;
+    Out_Adapter adapter;
     LinearLayout LGone;
     EditText Search_EditText;
     Button refresh;
@@ -101,10 +101,10 @@ public class OUT_Activity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                OUT_POJO Ads_Details = (OUT_POJO) parent.getItemAtPosition(position);
+                Out_Pojo Ads_Details = (Out_Pojo) parent.getItemAtPosition(position);
                 Intent userSearch = new Intent();
                 userSearch.putExtra("ADS_Details", Ads_Details);
-                userSearch.setClass(OUT_Activity.this, OUT_DETAILS.class);
+                userSearch.setClass(OUT_Activity.this, OUT_Details_Activity.class);
                 startActivity(userSearch);
 
 
@@ -116,7 +116,7 @@ public class OUT_Activity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                //MainActivity.this.adapt.getFilter().filter(s);
+                //Main_Activity.this.adapt.getFilter().filter(s);
                 //  String searchString=Search_EditText.getText().toString();
                 //  adapter.getFilter().filter(searchString);
                 // System.out.println("Text ["+s+"] - Start ["+start+"] - Before ["+before+"] - Count ["+count+"]");
@@ -189,7 +189,7 @@ public class OUT_Activity extends AppCompatActivity {
     protected void updateDisplay() {
 
         LGone.setVisibility(View.VISIBLE);
-        adapter = new OUT_Adapter(this, R.layout.item_out_list, ads_Server);
+        adapter = new Out_Adapter(this, R.layout.item_out_list, ads_Server);
         listv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         adapter.setNotifyOnChange (true);
@@ -247,7 +247,7 @@ public class OUT_Activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            ads_Server = OutJSON.parseFeed(result);
+            ads_Server = Out_Json.parseFeed(result);
             if(ads_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else

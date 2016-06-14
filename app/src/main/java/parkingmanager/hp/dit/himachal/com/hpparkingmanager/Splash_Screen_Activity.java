@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import Utils.EConstants;
 
-public class SplashScreen extends AppCompatActivity {
+public class Splash_Screen_Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +25,13 @@ public class SplashScreen extends AppCompatActivity {
 
                 if(hasLoggedIn)
                 {
-                    Intent mainIntent = new Intent(SplashScreen.this, ParkingDetails.class);
-                    SplashScreen.this.startActivity(mainIntent);
-                    SplashScreen.this.finish();
+                    Intent mainIntent = new Intent(Splash_Screen_Activity.this, Parking_Details_Activity.class);
+                    Splash_Screen_Activity.this.startActivity(mainIntent);
+                    Splash_Screen_Activity.this.finish();
                 }else{
-                    Intent loginIntent = new Intent(SplashScreen.this, MainActivity.class);
-                    SplashScreen.this.startActivity(loginIntent);
-                    SplashScreen.this.finish();
+                    Intent loginIntent = new Intent(Splash_Screen_Activity.this, Main_Activity.class);
+                    Splash_Screen_Activity.this.startActivity(loginIntent);
+                    Splash_Screen_Activity.this.finish();
 
                 }
 
