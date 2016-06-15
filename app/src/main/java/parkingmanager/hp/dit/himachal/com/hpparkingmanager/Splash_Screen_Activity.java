@@ -21,9 +21,10 @@ public class Splash_Screen_Activity extends AppCompatActivity {
 
                 SharedPreferences settings = getSharedPreferences(EConstants.PREF_NAME, 0);
                 //Get "hasLoggedIn" value. If the value doesn't exist yet false is returned
-                boolean hasLoggedIn = settings.getBoolean("hasParkingSelected", false);
+                boolean hasParkingSelected_ = settings.getBoolean("hasParkingSelected", false);
+                boolean has_Logged_IN = settings.getBoolean("hasLoggedIn",false);
 
-                if(hasLoggedIn)
+                if(hasParkingSelected_)
                 {
                     //Parking_Details_Activity
                     Intent mainIntent = new Intent(Splash_Screen_Activity.this, Navigation_Drawer_Main_Activity.class);
@@ -35,6 +36,29 @@ public class Splash_Screen_Activity extends AppCompatActivity {
                     Splash_Screen_Activity.this.finish();
 
                 }
+
+             /*   if(has_Logged_IN)
+                {
+                    if(hasParkingSelected_)
+                    {
+                        //Parking_Details_Activity
+                        Intent mainIntent = new Intent(Splash_Screen_Activity.this, Navigation_Drawer_Main_Activity.class);
+                        Splash_Screen_Activity.this.startActivity(mainIntent);
+                        Splash_Screen_Activity.this.finish();
+                    }else{
+                        Intent loginIntent = new Intent(Splash_Screen_Activity.this, Main_Activity.class);
+                        Splash_Screen_Activity.this.startActivity(loginIntent);
+                        Splash_Screen_Activity.this.finish();
+
+                    }
+
+
+                }else{
+                    Intent login_Intent = new Intent(Splash_Screen_Activity.this, Login_Activity.class);
+                    Splash_Screen_Activity.this.startActivity(login_Intent);
+                    Splash_Screen_Activity.this.finish();
+
+                }*/
 
 
 

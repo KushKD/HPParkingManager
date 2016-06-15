@@ -10,4 +10,5 @@ public class EConstants  {
     public static final String Production_URL = "http://hpparking.hp.gov.in/HPParking.svc/";
     public static final String Testing_URL = "http://192.168.0.171/HPParking/HPParking.svc/";
     public static final String PREF_NAME = "Manager_Console";
+    public static String ParkingID_Task = null;
 }

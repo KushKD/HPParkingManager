@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="3dp"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:id="@+id/header_login"
+            android:layout_width="fill_parent"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:background="#FF545454"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:id="@+id/tvheader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="LOGIN"
+                android:paddingBottom ="10dip"
+
+                android:textColor="#FFFFFF"
+                android:textSize="30dip"
+                android:layout_margin="2dip"
+                android:textStyle="bold"
+                android:typeface="sans"
+                />
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+
+    <!-- Login Procedure -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/framlayout_transparent"
+        android:layout_weight="14.27"
+        android:background="#FFFFFF"
+        >
+
+        <!-- OLD CODE -->
+        <!-- Login progress -->
+
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_margin="20dip"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_aadhaar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Your Aadhaar"
+                android:inputType="number"
+                android:maxLength="12"
+                android:textColorHint="#FF545454"
+                android:textColor="#FF545454"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <Button android:id="@+id/bt_getotp"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="#FF545454"
+                android:text="Submit"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/et_tt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="An OTP is sent to your registered Mobile number. Please enter the OTP"
+                    android:textColor="#FF545454"
+                    android:textSize="22sp"
+                    android:layout_marginTop="18dp" />
+
+                <EditText
+                    android:id="@+id/et_otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter OTP"
+                    android:imeOptions="actionUnspecified"
+                    android:textColor="#FF545454"
+                    android:layout_marginTop="16dp"
+                    android:textColorHint="#FF545454"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+                <Button android:id="@+id/bt_login"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="#FF545454"
+                    android:textColor="#FFFFFF"
+                    android:text="Login"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+</LinearLayout>

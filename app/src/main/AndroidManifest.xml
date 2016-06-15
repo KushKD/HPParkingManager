@@ -49,8 +49,11 @@
         <activity
             android:name=".Reports_Activity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".List_Reports"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".List_Reports"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Login_Activity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

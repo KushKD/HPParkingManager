@@ -40,6 +40,7 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         SharedPreferences prfs = getSharedPreferences(EConstants.PREF_NAME, Context.MODE_PRIVATE);
 
         ParkingID  = prfs.getString("ParkingID","");
+        EConstants.ParkingID_Task = ParkingID;
         Parking_Name = prfs.getString("Parking_Name","");
         Capacity = prfs.getString("Capacity","");
         thrashhold = prfs.getString("thrashhold","");
