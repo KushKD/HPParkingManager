@@ -25,6 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import HelperFunctions.AppStatus;
 import HelperFunctions.Date_Time;
 import JsonManager.Manage_Json;
 import Model.Outbox_Pojo;
@@ -84,7 +85,7 @@ public class Outbox_Details_Activity extends Activity {
             public void onClick(View v) {
                 //Start Async Task
 
-                if(isOnline()){
+                if(AppStatus.getInstance(Outbox_Details_Activity.this).isOnline()){
                     CHECKOUT C_IN = new CHECKOUT();
                     C_IN.execute(Outbox_Details);
 
@@ -96,15 +97,6 @@ public class Outbox_Details_Activity extends Activity {
 
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     class CHECKOUT extends AsyncTask<Object,String,String> {
 

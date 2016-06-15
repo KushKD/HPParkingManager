@@ -1,5 +1,6 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +28,11 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import HelperFunctions.AppStatus;
 import Model.Out_Pojo;
 import Utils.EConstants;
 
-public class OUT_Details_Activity extends AppCompatActivity {
+public class OUT_Details_Activity extends Activity {
 
     //PArking ID
     //Driver Name
@@ -95,7 +97,7 @@ public class OUT_Details_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Send data to server
-                if(isOnline()){
+                if(AppStatus.getInstance(OUT_Details_Activity.this).isOnline()){
 
                     String parking_id = OUT_Details.getParkingId();
                     String drivername = OUT_Details.getDriverName();
@@ -127,7 +129,7 @@ public class OUT_Details_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(isOnline()){
+                if(AppStatus.getInstance(OUT_Details_Activity.this).isOnline()){
 
                     if(tv_message_from_server.getText().length()!=0)
                     {
@@ -159,15 +161,7 @@ public class OUT_Details_Activity extends AppCompatActivity {
 
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
 
     private class CHECK_OUT_CAR extends AsyncTask<String,String,String> {

@@ -26,10 +26,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import HTTP.HttpManager;
+import HelperFunctions.AppStatus;
 import JsonManager.Login_Json;
 import Utils.EConstants;
 
-public class Login_Activity extends AppCompatActivity {
+public class Login_Activity extends Activity {
 
     private int backButtonCount = 0;
     Boolean Flag_Initialize = false;
@@ -113,15 +114,7 @@ public class Login_Activity extends AppCompatActivity {
         }
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Login_Activity.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     private void getOtpandAadhaa() {
 
@@ -129,7 +122,7 @@ public class Login_Activity extends AppCompatActivity {
         String aadhaar_a = editText_aadhaarLogin.getText().toString().trim();
         if(!otp.isEmpty()){
             if(otp.length()== 6){
-                if(isOnline()) {
+                if(AppStatus.getInstance(this).isOnline()) {
                     OTP_Async OA = new OTP_Async();
                     OA.execute(aadhaar_a, otp);
                 } else {
@@ -151,7 +144,7 @@ public class Login_Activity extends AppCompatActivity {
         if(!aadhaar.isEmpty() ){
             if(aadhaar.length() == 12 ){
 
-                if(isOnline()){
+                if(AppStatus.getInstance(this).isOnline()){
                     Login_Async LA  = new Login_Async();
                     LA.execute(aadhaar);}
                 else {

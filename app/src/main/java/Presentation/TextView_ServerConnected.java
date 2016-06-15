@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -52,13 +54,15 @@ public class TextView_ServerConnected extends TextView {
     public void SetUP_TextView(Context context){
        // Typeface face= Typeface.createFromAsset(context.getAssets(), "GOTHICB.TTF");
        // this.setTypeface(face);
-        this.setTextSize(12);
+        this.setTextSize(16);
         this.setPadding(13,3,3,3);
-        this.setBackgroundColor(Color.parseColor("#FF545454"));
-        this.setTextColor(Color.parseColor("#FFFFFF"));
+        this.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        this.setTextColor(Color.parseColor("#000000"));
         //this.setText("Testing");
 
     }
+
+
 
 
     @Override
@@ -66,17 +70,6 @@ public class TextView_ServerConnected extends TextView {
         super.onAttachedToWindow();
 
         callAsynchronousTask();
-
-      //  new Timer().schedule(new TimerTask() {
-        //    @Override
-        //    public void run() {
-
-                // run AsyncTask here.
-               // Log.e("ID",EConstants.ParkingID_Task);
-
-
-       //     }
-      //  }, 2000);
 
     }
 
@@ -110,7 +103,7 @@ public class TextView_ServerConnected extends TextView {
                 });
             }
         };
-        timer.schedule(doAsynchronousTask, 0, 5000); //execute in every 50000 ms
+        timer.schedule(doAsynchronousTask, 0, 3000); //execute in every 50000 ms
     }
 
 
@@ -130,54 +123,67 @@ public class TextView_ServerConnected extends TextView {
         protected String doInBackground(String... params) {
             String value = params[0];
 
+try {
+    StringBuilder sb = new StringBuilder();
+    sb.append(EConstants.Production_URL);
+    sb.append("getParkingAvailblity_JSON");
+    sb.append("/");
+    sb.append(value);
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(EConstants.Production_URL);
-            sb.append("getParkingAvailblity_JSON");
-            sb.append("/");
-            sb.append(value);
+    url = sb.toString();
+    //Log.e("URL", url);
 
-            url = sb.toString();
-            Log.e("URL",url);
-            HttpManager HM = new HttpManager();
-           String result =  HM.GetData(url);
+    try {
+        HttpManager HM = new HttpManager();
+        String result = HM.GetData(url);
 
-            sb.delete(0, sb.length());
+        sb.delete(0, sb.length());
 
 
-            return result;
+        return result;
+    }catch (Exception e){
+        return "Availability: N/A";
+    }
+}catch(Exception e){
+    return "Availability: N/A";
+}
 
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-           // setText(s);
+            // setText(s);
 
-            Object json ;
-            String G_Table = null;
-            try {
+            if (s.equalsIgnoreCase("Availability: N/A")) {
+                setText(s);
+            } else {
 
-                json = new JSONTokener(s).nextValue();
-                if (json instanceof JSONObject){
-                    JSONObject obj = new JSONObject(s);
-                    G_Table = obj.getString("getParkingAvailblity_JSONResult");
-                    Log.e("We are",G_Table);
-                    JSONObject  OJ = new JSONObject(G_Table);
-                    setText("Availability: " +OJ.optString("Availability"));
-                    Log.e("Data", OJ.optString("Availability"));
+                Object json;
+                String G_Table = null;
+                try {
+
+                    json = new JSONTokener(s).nextValue();
+                    if (json instanceof JSONObject) {
+                        JSONObject obj = new JSONObject(s);
+                        G_Table = obj.getString("getParkingAvailblity_JSONResult");
+                        Log.e("We are", G_Table);
+                        JSONObject OJ = new JSONObject(G_Table);
+                        setText("Availability: " + OJ.optString("Availability"));
+                       // Log.e("Data", OJ.optString("Availability"));
 
 
-                }else{
-                    setText("Something went wrong.");
+                    } else {
+                        setText("Availability: " + "N/A");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    // Server_Value = "";
+                    setText(s);
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Server_Value = "Error while fetching the latest notification";
-                setText(Server_Value);
+
+
             }
-
-
         }
     }
 

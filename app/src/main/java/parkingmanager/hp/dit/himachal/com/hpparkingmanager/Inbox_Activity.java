@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.Inbox_Adapter;
+import HelperFunctions.AppStatus;
 import JsonManager.Inbox_Json;
 import Model.Inbox_Pojo;
 import Utils.EConstants;
@@ -74,7 +75,7 @@ public class Inbox_Activity extends Activity {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isOnline()) {
+                if (AppStatus.getInstance(Inbox_Activity.this).isOnline()) {
                     Search_EditText.setText("");
                     Fetch_Inbox get_Inbox = new Fetch_Inbox();
                     get_Inbox.execute(ID);
@@ -84,7 +85,7 @@ public class Inbox_Activity extends Activity {
             }
         });
 
-        if(isOnline()){
+        if(AppStatus.getInstance(this).isOnline()){
 
             //Create Async Class
             Fetch_Inbox get_Inbox = new Fetch_Inbox();
@@ -144,15 +145,7 @@ public class Inbox_Activity extends Activity {
         });
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     protected void updateDisplay() {
 

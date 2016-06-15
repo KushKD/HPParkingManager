@@ -3,6 +3,8 @@ package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,7 +27,7 @@ import Utils.EConstants;
 public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView parkingname,parkingidentifier;
+    TextView parkingname,parkingidentifier , tv_TextView_ServerConnected;
     Button back,in,out,inbox,outbox;
 
     String ParkingID=null,Parking_Name=null,Capacity=null,thrashhold=null,Identifier=null;
@@ -48,6 +50,10 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        tv_TextView_ServerConnected = (TextView)findViewById(R.id.tv_server);
+
+
 
 
 
@@ -133,6 +139,8 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
 
 
     }
+
+
 
     @Override
     public void onBackPressed() {

@@ -1,5 +1,6 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -25,12 +26,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import HelperFunctions.AppStatus;
 import HelperFunctions.Date_Time;
 import JsonManager.Manage_Json;
 import Model.Inbox_Pojo;
 import Utils.EConstants;
 
-public class Inbox_Details_Activity extends AppCompatActivity {
+public class Inbox_Details_Activity extends Activity {
 
     private TextView tv_ParkingId,tv_RegisterId,tv_VehicleNo,tv_PhoneNumber,tv_RequestTime,tv_RequestStatus;
     private TextView tv_EstimatedTime , tv_VehicleType;
@@ -85,7 +87,7 @@ bt_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                //Start Async Task
 
-                if(isOnline()){
+                if(AppStatus.getInstance(Inbox_Details_Activity.this).isOnline()){
                     CHECKIN C_IN = new CHECKIN();
                     C_IN.execute(Inbox_Details);
 
@@ -97,15 +99,6 @@ bt_back.setOnClickListener(new View.OnClickListener() {
 
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     class CHECKIN extends AsyncTask<Object,String,String>{
 

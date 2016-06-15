@@ -1,5 +1,6 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -29,11 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.Out_Adapter;
+import HelperFunctions.AppStatus;
 import JsonManager.Out_Json;
 import Model.Out_Pojo;
 import Utils.EConstants;
 
-public class OUT_Activity extends AppCompatActivity {
+public class OUT_Activity extends Activity {
 
     String ID = null;
     private String Date_Service = null;
@@ -72,12 +74,11 @@ public class OUT_Activity extends AppCompatActivity {
         tasks = new ArrayList<>();
 
 
-
         //getParkedVehiclelist_JSON/{ParkingId}
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isOnline()) {
+                if (AppStatus.getInstance(OUT_Activity.this).isOnline()) {
                     Search_EditText.setText("");
                     GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
                     asy_Get_Ads.execute(ID);
@@ -87,7 +88,7 @@ public class OUT_Activity extends AppCompatActivity {
             }
         });
 
-        if(isOnline()){
+        if(AppStatus.getInstance(this).isOnline()){
 
             GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
             asy_Get_Ads.execute(ID);
@@ -158,7 +159,7 @@ public class OUT_Activity extends AppCompatActivity {
            ads_Server.clear();
            adapter = null;
            //itemList = getOrderList();
-           if(isOnline()){
+           if(AppStatus.getInstance(this).isOnline()){
 
                GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
                asy_Get_Ads.execute(ID);
@@ -179,15 +180,6 @@ public class OUT_Activity extends AppCompatActivity {
 
 
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
 

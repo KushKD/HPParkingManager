@@ -1,5 +1,6 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -28,11 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.Reports_Collection_Adapter;
+import HelperFunctions.AppStatus;
 import JsonManager.Reports_Collection_Json;
 import Model.Collection_Reports_Pojo;
 import Utils.EConstants;
 
-public class List_Reports extends AppCompatActivity {
+public class List_Reports extends Activity {
 
     private String Date_Service_From = null;
     private  String Date_Service_To = null;
@@ -71,7 +73,7 @@ public class List_Reports extends AppCompatActivity {
 
         tasks = new ArrayList<>();
 
-        if (isOnline()) {
+        if (AppStatus.getInstance(this).isOnline()) {
             GET_REPORT asy_Get_PD = new GET_REPORT();
             asy_Get_PD.execute(ID_Server,Date_Service_From,Date_Service_To);
         } else {
@@ -79,15 +81,7 @@ public class List_Reports extends AppCompatActivity {
         }
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     protected void updateDisplay() {
 

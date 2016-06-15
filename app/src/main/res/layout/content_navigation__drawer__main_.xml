@@ -78,11 +78,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical|center_horizontal|center"
                 android:layout_weight="1.5"
                 >
 
                 <Presentation.TextView_ServerConnected
+                    android:id="@+id/tv_server"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"

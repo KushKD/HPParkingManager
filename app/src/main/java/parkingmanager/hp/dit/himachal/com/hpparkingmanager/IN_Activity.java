@@ -27,6 +27,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import HelperFunctions.AppStatus;
 import Utils.EConstants;
 
 public class IN_Activity extends Activity {
@@ -95,7 +96,7 @@ public class IN_Activity extends Activity {
                 if(phonenumber.length()==10 && phonenumber!=null){
                     if(car_number.length()!=0 && car_number!=null){
                         if(Parking_ID.length()!=0 && Parking_ID!=null){
-                            if(isOnline()) {
+                            if(AppStatus.getInstance(IN_Activity.this).isOnline()) {
                                 PARK_CAR PC = new PARK_CAR();
                                 PC.execute(Parking_ID, typecar, car_number, "", phonenumber, Long.toString(estimated_Time), formattedDate);
                             }
@@ -130,16 +131,6 @@ public class IN_Activity extends Activity {
 
 
 
-
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     private class PARK_CAR extends AsyncTask<String,String,String>{
 

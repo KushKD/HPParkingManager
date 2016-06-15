@@ -1,5 +1,6 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -24,11 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.Outbox_Adapter;
+import HelperFunctions.AppStatus;
 import JsonManager.Outbox_Json;
 import Model.Outbox_Pojo;
 import Utils.EConstants;
 
-public class Outbox_Activity extends AppCompatActivity {
+public class Outbox_Activity extends Activity {
     public String ID = null;
     ProgressBar pb;
     URL url_;
@@ -56,7 +58,7 @@ public class Outbox_Activity extends AppCompatActivity {
         pb.setVisibility(View.INVISIBLE);
         tasks = new ArrayList<>();   //Write the Tasks
 
-        if(isOnline()){
+        if(AppStatus.getInstance(this).isOnline()){
 
             //Create Async Class
             Fetch_Outbox get_Outbox = new Fetch_Outbox();
@@ -83,15 +85,7 @@ public class Outbox_Activity extends AppCompatActivity {
         });
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     protected void updateDisplay() {
 
@@ -106,7 +100,7 @@ public class Outbox_Activity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(isOnline()){
+        if(AppStatus.getInstance(this).isOnline()){
 
             //Create Async Class
             Fetch_Outbox get_Outbox = new Fetch_Outbox();

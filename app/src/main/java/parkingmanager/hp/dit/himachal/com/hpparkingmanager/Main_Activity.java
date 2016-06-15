@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.Parking_Adapter;
+import HelperFunctions.AppStatus;
 import JsonManager.Parking_Json;
 import Model.Parking_Pojo;
 import Utils.EConstants;
@@ -70,7 +71,7 @@ public class Main_Activity extends Activity {
 
                 String Check = spinner_town.getSelectedItem().toString().trim();
 
-                if (isOnline()) {
+                if (AppStatus.getInstance(Main_Activity.this).isOnline()) {
 
                     GetParkingDetails asy_Get_Vacancy = new GetParkingDetails();
                     asy_Get_Vacancy.execute("10297");
@@ -148,15 +149,7 @@ public class Main_Activity extends Activity {
 
     }
 
-    protected boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
 
     protected void updateDisplay() {
