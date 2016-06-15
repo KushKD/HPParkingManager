@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import HelperFunctions.AppStatus;
 import Utils.EConstants;
 
 public class Navigation_Drawer_Main_Activity extends AppCompatActivity
@@ -38,7 +39,7 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         setContentView(R.layout.activity_navigation__drawer__main_);
 
 
-
+        tv_TextView_ServerConnected = (TextView)findViewById(R.id.tv_server);
         SharedPreferences prfs = getSharedPreferences(EConstants.PREF_NAME, Context.MODE_PRIVATE);
 
         ParkingID  = prfs.getString("ParkingID","");
@@ -51,7 +52,12 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        tv_TextView_ServerConnected = (TextView)findViewById(R.id.tv_server);
+       if(AppStatus.getInstance(this).isOnline()){
+
+           tv_TextView_ServerConnected.setVisibility(View.VISIBLE);
+       }else{
+           tv_TextView_ServerConnected.invalidate();
+       }
 
 
 
@@ -67,7 +73,8 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         View header=navigationView.getHeaderView(0);
-/*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
+
+        /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
       TextView  Parking_Name_tv = (TextView)header.findViewById(R.id.parkingname);
        TextView Parking_Landmark_tv = (TextView)header.findViewById(R.id.landmark);
         Parking_Name_tv.setText(Parking_Name);

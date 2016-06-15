@@ -2,49 +2,41 @@ package Presentation;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import HTTP.HttpManager;
+import HelperFunctions.AppStatus;
 import Utils.EConstants;
 
 
 /**
  * Created by kuush on 5/24/2016.
  */
-public class TextView_ServerConnected extends TextView {
+public class Availablility_TextView extends TextView {
 
     private GetAvailability currentTask = null;
 
-    public TextView_ServerConnected(Context context) {
+    public Availablility_TextView(Context context) {
         super(context);
         SetUP_TextView(context);
 
     }
-    public TextView_ServerConnected(Context context, AttributeSet attrs) {
+    public Availablility_TextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         SetUP_TextView(context);
 
     }
 
-    public TextView_ServerConnected(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Availablility_TextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         SetUP_TextView(context);
 
@@ -94,8 +86,10 @@ public class TextView_ServerConnected extends TextView {
                 handler.post(new Runnable() {
                     public void run() {
                         try {
-                            currentTask = new GetAvailability();
-                            currentTask.execute(EConstants.ParkingID_Task);
+
+                                currentTask = new GetAvailability();
+                                currentTask.execute(EConstants.ParkingID_Task);
+
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
                         }
@@ -135,17 +129,17 @@ try {
 
     try {
         HttpManager HM = new HttpManager();
-        String result = HM.GetData(url);
-
+        Server_Value = HM.GetData(url);
+         Log.e("Server_Value",Server_Value);
         sb.delete(0, sb.length());
 
 
-        return result;
+        return Server_Value;
     }catch (Exception e){
-        return "Availability: N/A";
+        return Server_Value="Error while connecting to server.";
     }
 }catch(Exception e){
-    return "Availability: N/A";
+    return Server_Value="Error while connecting to server.";
 }
 
         }
@@ -155,9 +149,7 @@ try {
             super.onPostExecute(s);
             // setText(s);
 
-            if (s.equalsIgnoreCase("Availability: N/A")) {
-                setText(s);
-            } else {
+
 
                 Object json;
                 String G_Table = null;
@@ -184,7 +176,7 @@ try {
 
 
             }
-        }
+
     }
 
 
