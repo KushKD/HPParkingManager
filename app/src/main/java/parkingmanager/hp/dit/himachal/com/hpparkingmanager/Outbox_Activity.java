@@ -76,6 +76,7 @@ public class Outbox_Activity extends AppCompatActivity {
                 userSearch.putExtra("OUTBOX", Outbox_Details);
                 userSearch.setClass(Outbox_Activity.this, Outbox_Details_Activity.class);
                 startActivity(userSearch);
+                Outbox_Activity.this.finish();
 
 
             }

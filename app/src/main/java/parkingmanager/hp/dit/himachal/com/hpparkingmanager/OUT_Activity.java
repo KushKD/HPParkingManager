@@ -106,6 +106,7 @@ public class OUT_Activity extends AppCompatActivity {
                 userSearch.putExtra("ADS_Details", Ads_Details);
                 userSearch.setClass(OUT_Activity.this, OUT_Details_Activity.class);
                 startActivity(userSearch);
+                OUT_Activity.this.finish();
 
 
             }
@@ -143,6 +144,8 @@ public class OUT_Activity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
 
@@ -186,15 +189,9 @@ public class OUT_Activity extends AppCompatActivity {
         }
     }
 
-    protected void updateDisplay() {
 
-        LGone.setVisibility(View.VISIBLE);
-        adapter = new Out_Adapter(this, R.layout.item_out_list, ads_Server);
-        listv.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        adapter.setNotifyOnChange (true);
 
-    }
+
 
     class GET_CARS_FOR_OUT extends AsyncTask<String,String,String> {
         String url = null;
@@ -252,7 +249,11 @@ public class OUT_Activity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else
             {
-                updateDisplay();
+                LGone.setVisibility(View.VISIBLE);
+                adapter = new Out_Adapter(OUT_Activity.this, R.layout.item_out_list, ads_Server);
+                listv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                adapter.setNotifyOnChange (true);
             }
             tasks.remove(this);
             if (tasks.size() == 0) {

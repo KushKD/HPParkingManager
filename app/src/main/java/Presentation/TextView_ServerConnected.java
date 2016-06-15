@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
@@ -64,14 +65,15 @@ public class TextView_ServerConnected extends TextView {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
+        callAsynchronousTask();
+
       //  new Timer().schedule(new TimerTask() {
         //    @Override
         //    public void run() {
 
                 // run AsyncTask here.
                // Log.e("ID",EConstants.ParkingID_Task);
-                currentTask = new GetAvailability();
-                currentTask.execute(EConstants.ParkingID_Task);
+
 
        //     }
       //  }, 2000);
@@ -86,7 +88,32 @@ public class TextView_ServerConnected extends TextView {
             currentTask.cancel(true);
             currentTask = null;
         }
+
     }
+
+
+    public void callAsynchronousTask() {
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            currentTask = new GetAvailability();
+                            currentTask.execute(EConstants.ParkingID_Task);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 5000); //execute in every 50000 ms
+    }
+
+
 
     class GetAvailability extends AsyncTask<String,String,String>{
 
@@ -96,7 +123,7 @@ public class TextView_ServerConnected extends TextView {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            setText("Loading Availability.. Please wait!");
+            setText("Availability: " );
         }
 
         @Override
@@ -125,7 +152,7 @@ public class TextView_ServerConnected extends TextView {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            setText(s);
+           // setText(s);
 
             Object json ;
             String G_Table = null;
@@ -138,12 +165,16 @@ public class TextView_ServerConnected extends TextView {
                     Log.e("We are",G_Table);
                     JSONObject  OJ = new JSONObject(G_Table);
                     setText("Availability: " +OJ.optString("Availability"));
+                    Log.e("Data", OJ.optString("Availability"));
 
 
+                }else{
+                    setText("Something went wrong.");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 Server_Value = "Error while fetching the latest notification";
+                setText(Server_Value);
             }
 
 

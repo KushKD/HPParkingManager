@@ -104,6 +104,7 @@ public class Inbox_Activity extends Activity {
                 userSearch.putExtra("INBOX", Inbox_Details);
                 userSearch.setClass(Inbox_Activity.this, Inbox_Details_Activity.class);
                 startActivity(userSearch);
+                Inbox_Activity.this.finish();
 
 
             }
