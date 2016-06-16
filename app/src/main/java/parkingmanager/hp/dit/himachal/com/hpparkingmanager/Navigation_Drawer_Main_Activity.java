@@ -3,11 +3,7 @@ package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -101,7 +97,7 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
             public void onClick(View v) {
 
                 //Get Parking ID
-                Intent i = new Intent(Navigation_Drawer_Main_Activity.this, Inbox_Activity.class);
+                Intent i = new Intent(Navigation_Drawer_Main_Activity.this, Online_Inbox_Activity.class);
                 i.putExtra("ID",ParkingID);
                 startActivity(i);
 
@@ -112,7 +108,7 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         outbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Navigation_Drawer_Main_Activity.this, Outbox_Activity.class);
+                Intent i = new Intent(Navigation_Drawer_Main_Activity.this, Online_Outbox_Activity.class);
                 i.putExtra("ID",ParkingID);
                 startActivity(i);
 
@@ -126,7 +122,7 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(Navigation_Drawer_Main_Activity.this, IN_Activity.class);
+                Intent i = new Intent(Navigation_Drawer_Main_Activity.this, Vehicle_In_Activity.class);
                 i.putExtra("ID",ParkingID);
                 startActivity(i);
 
@@ -137,7 +133,7 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Navigation_Drawer_Main_Activity.this, OUT_Activity.class);
+                Intent i = new Intent(Navigation_Drawer_Main_Activity.this, Vehicle_Out_Activity.class);
                 i.putExtra("ID",ParkingID);
                 startActivity(i);
 

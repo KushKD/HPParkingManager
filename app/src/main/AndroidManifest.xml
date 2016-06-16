@@ -28,24 +28,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Main_Activity"
+            android:name=".Vehicle_In_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".IN_Activity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".OUT_Activity"
+            android:name=".Vehicle_Out_Activity"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".OUT_Details_Activity"
+            android:name=".Vehicle_Out_Details_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".Inbox_Activity" />
-        <activity android:name=".Inbox_Details_Activity" />
-        <activity android:name=".Outbox_Activity" />
-        <activity android:name=".Outbox_Details_Activity" />
+        <activity android:name=".Online_Inbox_Activity" />
+        <activity android:name=".Online_Inbox_Details_Activity" />
+        <activity android:name=".Online_Outbox_Activity" />
+        <activity android:name=".Online_Outbox_Details_Activity" />
         <activity
             android:name=".Reports_Activity"
             android:theme="@style/AppTheme.NoActionBar" />

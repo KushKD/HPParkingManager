@@ -2,10 +2,7 @@ package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,34 +25,36 @@ import java.net.URL;
 import HelperFunctions.AppStatus;
 import HelperFunctions.Date_Time;
 import JsonManager.Manage_Json;
-import Model.Outbox_Pojo;
+import Model.Inbox_Pojo;
+import Presentation.Custom_Dialog;
 import Utils.EConstants;
 
-public class Outbox_Details_Activity extends Activity {
+public class Online_Inbox_Details_Activity extends Activity {
+
     private TextView tv_ParkingId,tv_RegisterId,tv_VehicleNo,tv_PhoneNumber,tv_RequestTime,tv_RequestStatus;
     private TextView tv_EstimatedTime , tv_VehicleType;
     private Button bt_back, bt_reject, bt_checkin;
 
     URL url_;
     HttpURLConnection conn_;
-    StringBuilder sb = null;
+    StringBuilder sb = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_outbox__details);
+        setContentView(R.layout.activity_inbox__details);
 
         //GTO
 
         Intent getRoomDetailsIntent = getIntent();
-        final Outbox_Pojo Outbox_Details =  (Outbox_Pojo) getRoomDetailsIntent.getSerializableExtra("OUTBOX");
+        final Inbox_Pojo Inbox_Details =  (Inbox_Pojo) getRoomDetailsIntent.getSerializableExtra("INBOX");
 
-        tv_ParkingId = (TextView)findViewById(R.id.ParkingId);
-        tv_RegisterId = (TextView)findViewById(R.id.RegisterId);
+         tv_ParkingId = (TextView)findViewById(R.id.ParkingId);
+       tv_RegisterId = (TextView)findViewById(R.id.RegisterId);
         tv_VehicleNo = (TextView)findViewById(R.id.VehicleNo);
-        tv_PhoneNumber = (TextView)findViewById(R.id.PhoneNumber);
+       tv_PhoneNumber = (TextView)findViewById(R.id.PhoneNumber);
         tv_RequestTime = (TextView)findViewById(R.id.RequestTime);
-        tv_RequestStatus = (TextView)findViewById(R.id.RequestStatus);
+       tv_RequestStatus = (TextView)findViewById(R.id.RequestStatus);
         tv_EstimatedTime = (TextView)findViewById(R.id.EstimatedTime);
         tv_VehicleType = (TextView)findViewById(R.id.VehicleType);
         bt_back = (Button)findViewById(R.id.backinbox);
@@ -63,34 +62,34 @@ public class Outbox_Details_Activity extends Activity {
         bt_checkin = (Button)findViewById(R.id.checkin);
 
 
-        tv_ParkingId.setText(Outbox_Details.getParkingId());
-        tv_RegisterId.setText(Outbox_Details.getRegisterId());
-        tv_VehicleNo.setText(Outbox_Details.getVehicleNo());
-        tv_PhoneNumber.setText(Outbox_Details.getPhoneNumber());
-        tv_RequestTime.setText(Outbox_Details.getRequestTime());
-        tv_RequestStatus.setText(Outbox_Details.getRequestStatus());
-        tv_EstimatedTime.setText(Outbox_Details.getEstimatedTime());
-        tv_VehicleType.setText(Outbox_Details.getVehicleType());
+                tv_ParkingId.setText(Inbox_Details.getParkingId());
+                tv_RegisterId.setText(Inbox_Details.getRegisterId());
+                tv_VehicleNo.setText(Inbox_Details.getVehicleNo());
+                tv_PhoneNumber.setText(Inbox_Details.getPhoneNumber());
+                tv_RequestTime.setText(Inbox_Details.getRequestTime());
+                tv_RequestStatus.setText(Inbox_Details.getRequestStatus());
+                tv_EstimatedTime.setText(Inbox_Details.getEstimatedTime());
+                tv_VehicleType.setText(Inbox_Details.getVehicleType());
 
 
-        bt_back.setOnClickListener(new View.OnClickListener() {
+bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Outbox_Details_Activity.this.finish();
+                Online_Inbox_Details_Activity.this.finish();
             }
         });
 
         bt_checkin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Start Async Task
+               //Start Async Task
 
-                if(AppStatus.getInstance(Outbox_Details_Activity.this).isOnline()){
-                    CHECKOUT C_IN = new CHECKOUT();
-                    C_IN.execute(Outbox_Details);
+                if(AppStatus.getInstance(Online_Inbox_Details_Activity.this).isOnline()){
+                    CHECKIN C_IN = new CHECKIN();
+                    C_IN.execute(Inbox_Details);
 
                 }else{
-                    Toast.makeText(Outbox_Details_Activity.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Online_Inbox_Details_Activity.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -98,7 +97,7 @@ public class Outbox_Details_Activity extends Activity {
     }
 
 
-    class CHECKOUT extends AsyncTask<Object,String,String> {
+    class CHECKIN extends AsyncTask<Object,String,String>{
 
         JSONStringer userJson = null;
 
@@ -109,7 +108,7 @@ public class Outbox_Details_Activity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(Outbox_Details_Activity.this);
+            dialog = new ProgressDialog(Online_Inbox_Details_Activity.this);
             this.dialog.setMessage("Please wait ..");
             this.dialog.show();
             this.dialog.setCancelable(false);
@@ -117,10 +116,10 @@ public class Outbox_Details_Activity extends Activity {
 
         @Override
         protected String doInBackground(Object... objects) {
-            Outbox_Pojo Outbox_Object_result = (Outbox_Pojo)objects[0];
+            Inbox_Pojo Inbox_Object_result = (Inbox_Pojo)objects[0];
 
             try {
-                url_ =new URL(EConstants.Production_URL+"getConfirmParkOutStatus_JSON");
+                url_ =new URL(EConstants.Production_URL+"getConfirmParkinStatus_JSON");
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -133,15 +132,15 @@ public class Outbox_Details_Activity extends Activity {
                 userJson = new JSONStringer()
                         .object().key("ParkInRequst")
                         .object()
-                        .key("EstimatedTime").value(Outbox_Object_result.getEstimatedTime())
+                        .key("EstimatedTime").value(Inbox_Object_result.getEstimatedTime())
                         .key("InTime").value(Date_Time.GetDateAndTime())
-                        .key("ParkingId").value(Outbox_Object_result.getParkingId())
-                        .key("PhoneNumber").value(Outbox_Object_result.getPhoneNumber())
-                        .key("RegisterId").value(Outbox_Object_result.getRegisterId())
-                        .key("RequestStatus").value("Checkout")
-                        .key("RequestTime").value(Outbox_Object_result.getRequestTime())
-                        .key("VehicleNo").value(Outbox_Object_result.getVehicleNo())
-                        .key("VehicleType").value(Outbox_Object_result.getVehicleType())
+                        .key("ParkingId").value(Inbox_Object_result.getParkingId())
+                        .key("PhoneNumber").value(Inbox_Object_result.getPhoneNumber())
+                        .key("RegisterId").value(Inbox_Object_result.getRegisterId())
+                        .key("RequestStatus").value("Comfirm")
+                        .key("RequestTime").value(Inbox_Object_result.getRequestTime())
+                        .key("VehicleNo").value(Inbox_Object_result.getVehicleNo())
+                        .key("VehicleType").value(Inbox_Object_result.getVehicleType())
                         .endObject()
                         .endObject();
 
@@ -157,7 +156,6 @@ public class Outbox_Details_Activity extends Activity {
                     if(HttpResult ==HttpURLConnection.HTTP_OK){
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn_.getInputStream(),"utf-8"));
                         String line = null;
-                        sb = new StringBuilder();
                         while ((line = br.readLine()) != null) {
                             sb.append(line + "\n");
                         }
@@ -191,14 +189,12 @@ public class Outbox_Details_Activity extends Activity {
             super.onPostExecute(s);
             Log.e("Message",s);
 
-            String Result = Manage_Json.parseOutward(s);
+            String Result = Manage_Json.parseInward(s);
 
-            Log.e("Message IS",Result);
+                 dialog.dismiss();
+            Custom_Dialog DC = new Custom_Dialog();
+            DC.showDialog_Vehicle_IN_OUT(Online_Inbox_Details_Activity.this,Result);
 
-            Toast.makeText(getApplicationContext(),Result,Toast.LENGTH_LONG).show();
-            Outbox_Details_Activity.this.finish();
-
-            dialog.dismiss();
 
 
         }

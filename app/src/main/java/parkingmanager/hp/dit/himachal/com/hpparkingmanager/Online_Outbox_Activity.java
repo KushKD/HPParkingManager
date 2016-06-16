@@ -3,10 +3,7 @@ package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +27,7 @@ import JsonManager.Outbox_Json;
 import Model.Outbox_Pojo;
 import Utils.EConstants;
 
-public class Outbox_Activity extends Activity {
+public class Online_Outbox_Activity extends Activity {
     public String ID = null;
     ProgressBar pb;
     URL url_;
@@ -66,7 +63,7 @@ public class Outbox_Activity extends Activity {
 
 
         }else{
-            Toast.makeText(Outbox_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Online_Outbox_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
         }
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,9 +73,9 @@ public class Outbox_Activity extends Activity {
                 Outbox_Pojo Outbox_Details = (Outbox_Pojo) parent.getItemAtPosition(position);   //change object
                 Intent userSearch = new Intent();
                 userSearch.putExtra("OUTBOX", Outbox_Details);
-                userSearch.setClass(Outbox_Activity.this, Outbox_Details_Activity.class);
+                userSearch.setClass(Online_Outbox_Activity.this, Online_Outbox_Details_Activity.class);
                 startActivity(userSearch);
-                Outbox_Activity.this.finish();
+                Online_Outbox_Activity.this.finish();
 
 
             }
@@ -108,7 +105,7 @@ public class Outbox_Activity extends Activity {
 
 
         }else{
-            Toast.makeText(Outbox_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Online_Outbox_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
         }
     }
 

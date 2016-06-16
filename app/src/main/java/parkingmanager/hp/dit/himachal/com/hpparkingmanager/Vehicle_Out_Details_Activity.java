@@ -2,12 +2,8 @@ package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,20 +25,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import HelperFunctions.AppStatus;
+import JsonManager.Vehicle_In_Out_Json;
 import Model.Out_Pojo;
+import Presentation.Custom_Dialog;
 import Utils.EConstants;
 
-public class OUT_Details_Activity extends Activity {
-
-    //PArking ID
-    //Driver Name
-    //Phone Number
-    //VehicleNumber
-    //Out Time
+public class Vehicle_Out_Details_Activity extends Activity {
 
     TextView tv_parkingid,tv_drivername,tv_phonenumber,tv_vehiclenumber,tv_outtime , tv_message_from_server, tv_intimee;
     Button checkout,confirm,back;
-
     URL url_;
     HttpURLConnection conn_;
     StringBuilder sb = null;
@@ -67,7 +58,7 @@ public class OUT_Details_Activity extends Activity {
                 tv_outtime = (TextView)findViewById(R.id.outtime);
                 checkout = (Button)findViewById(R.id.checkout);
                 tv_message_from_server = (TextView)findViewById(R.id.message_from_server);
-               confirm = (Button)findViewById(R.id.confirm);
+                confirm = (Button)findViewById(R.id.confirm);
                 tv_intimee = (TextView)findViewById(R.id.intime);
 
         back = (Button)findViewById(R.id.back);
@@ -75,7 +66,7 @@ public class OUT_Details_Activity extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OUT_Details_Activity.this.finish();
+                Vehicle_Out_Details_Activity.this.finish();
             }
         });
 
@@ -87,7 +78,6 @@ public class OUT_Details_Activity extends Activity {
         tv_drivername.setText(OUT_Details.getDriverName());
         tv_phonenumber.setText(OUT_Details.getPhoneNumber());
         tv_vehiclenumber.setText(OUT_Details.getVehicleNo());
-       // tv_outtime.setText(OUT_TIME);
         tv_intimee.setText(OUT_Details.getParkInTime());
 
 
@@ -97,7 +87,7 @@ public class OUT_Details_Activity extends Activity {
             @Override
             public void onClick(View v) {
                 // Send data to server
-                if(AppStatus.getInstance(OUT_Details_Activity.this).isOnline()){
+                if(AppStatus.getInstance(Vehicle_Out_Details_Activity.this).isOnline()){
 
                     String parking_id = OUT_Details.getParkingId();
                     String drivername = OUT_Details.getDriverName();
@@ -109,9 +99,6 @@ public class OUT_Details_Activity extends Activity {
 
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String formattedDate = df.format(c.getTime());
-                    // formattedDate have current date/time
-                    Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
-
                    OUT_TIME = formattedDate;
                     tv_outtime.setText(OUT_TIME);
 
@@ -119,7 +106,7 @@ public class OUT_Details_Activity extends Activity {
                     COC.execute(parking_id,drivername,phone_number,vehicle_number,OUT_TIME,"checkout");
 
                 }else{
-                    Toast.makeText(OUT_Details_Activity.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Vehicle_Out_Details_Activity.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -129,7 +116,7 @@ public class OUT_Details_Activity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if(AppStatus.getInstance(OUT_Details_Activity.this).isOnline()){
+                if(AppStatus.getInstance(Vehicle_Out_Details_Activity.this).isOnline()){
 
                     if(tv_message_from_server.getText().length()!=0)
                     {
@@ -145,18 +132,11 @@ public class OUT_Details_Activity extends Activity {
                     COC.execute(parking_id,drivername,phone_number,vehicle_number,out_time,"confirm");
 
                 }else{
-                    Toast.makeText(OUT_Details_Activity.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Vehicle_Out_Details_Activity.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-
-
-
-
-
-
-
 
 
     }
@@ -173,7 +153,7 @@ public class OUT_Details_Activity extends Activity {
         private String OUT_Time = null;
         private String function_Name = null;
         private String flag_Function = null;
-
+        private String Result_to_Show = null;
         private ProgressDialog dialog;
         String url = null;
 
@@ -182,7 +162,7 @@ public class OUT_Details_Activity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(OUT_Details_Activity.this);
+            dialog = new ProgressDialog(Vehicle_Out_Details_Activity.this);
             this.dialog.setMessage("Please wait ..");
             this.dialog.show();
             this.dialog.setCancelable(false);
@@ -276,66 +256,19 @@ public class OUT_Details_Activity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-          //  Toast.makeText(getApplicationContext(),Integer.toString(s.length()),Toast.LENGTH_LONG).show();
-
-
-            if(s.length()==54){
-                Parking_Id = null;
-                Driver_Name = null;
-                Vehicle_NO = null;
-                Phone_number = null;
-                OUT_Time = null;
-
-                Log.e("Result",s);
-                tv_message_from_server.setText(s);
-                dialog.dismiss();
-                OUT_Details_Activity.this.finish();
-            }else{
-                Parking_Id = null;
-                Driver_Name = null;
-                Vehicle_NO = null;
-                Phone_number = null;
-                OUT_Time = null;
-
-                Log.e("Result",s);
-                tv_message_from_server.setText(s);
-                dialog.dismiss();
-               // OUT_Details_Activity.this.finish();
-
-            }
-
-
-
-
-
-
-           // OUT_Details_Activity.this.finish();
-          /*  JsonParser JP;
-            String finalResult = null;
-
-            if(s.equalsIgnoreCase("Server Connection failed.")){
-                dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Server Connection failed.", Toast.LENGTH_SHORT).show();
-            }else{
-                JP = new JsonParser();
-                finalResult = JP.POST_ISSUE(s);
-                if(finalResult.length()>50){
-                    // clearData();
+            if(function_Name.equalsIgnoreCase("getParkingOut_JSON")) {
+                    Result_to_Show = Vehicle_In_Out_Json.Vehicle_Out_Parse(s);
                     dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), finalResult, Toast.LENGTH_SHORT).show();
-                    Issues_Feedback.this.finish();
-                }
-                else{
+                    Custom_Dialog CM = new Custom_Dialog();
+                    CM.showDialog(Vehicle_Out_Details_Activity.this, Result_to_Show);
+                    tv_message_from_server.setText(Result_to_Show);
+                }else{
+                    Result_to_Show = Vehicle_In_Out_Json.Vehicle_Out_Confirm_Parse(s);
                     dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), finalResult, Toast.LENGTH_SHORT).show();
+                    Custom_Dialog CM = new Custom_Dialog();
+                    CM.showDialog_Vehicle_IN_OUT(Vehicle_Out_Details_Activity.this, Result_to_Show);
 
                 }
-
-            }*/
-
-
-
-
         }
     }
 }

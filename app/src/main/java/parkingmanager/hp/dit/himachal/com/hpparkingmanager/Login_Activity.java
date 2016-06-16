@@ -297,47 +297,53 @@ public class Login_Activity extends Activity {
                     try {
                         PGP = new Parking_Guy_Pojo();
                         myJson = new JSONObject(finalResult);
-                        PGP.setAlternateMobileNumber(myJson.optString("AlternateMobileNumber"));
-                        PGP.setEmail(myJson.optString("Email"));
-                        PGP.setMobileNumber(myJson.optString("MobileNumber"));
-                        PGP.setOperatorAadhaarNo(myJson.optString("OperatorAadhaarNo"));
-                        PGP.setOperatorName(myJson.optString("OperatorName"));
-                        PGP.setP_id(myJson.optString("ParkingId"));
-                        PGP.setParkingLandmark(myJson.optString("ParkingLandmark"));
-                        PGP.setParkingLocation(myJson.optString("ParkingLocation"));
 
-                     /*   SharedPreferences settings = getSharedPreferences(EConstants.PREF_NAME, 0); // 0 - for private mode
-                        SharedPreferences.Editor editor = settings.edit();
-                        //Set "hasLoggedIn" to true
-                        editor.putBoolean("hasLoggedIn", true);
-                        // Commit the edits!
-                        editor.commit();*/
+                        if(myJson.optString("OperatorName").equalsIgnoreCase("OTP did not match. Please try again."))
+                        {
+                            dialog.dismiss();
+                            Custom_Dialog CD= new Custom_Dialog();
+                            CD.showDialog(Login_Activity.this,myJson.optString("OperatorName"));
+                        }else{
+                            PGP.setAlternateMobileNumber(myJson.optString("AlternateMobileNumber"));
+                            PGP.setEmail(myJson.optString("Email"));
+                            PGP.setMobileNumber(myJson.optString("MobileNumber"));
+                            PGP.setOperatorAadhaarNo(myJson.optString("OperatorAadhaarNo"));
+                            PGP.setOperatorName(myJson.optString("OperatorName"));
+                            PGP.setP_id(myJson.optString("ParkingId"));
+                            PGP.setParkingLandmark(myJson.optString("ParkingLandmark"));
+                            PGP.setParkingLocation(myJson.optString("ParkingLocation"));
 
-                        try{
-                            SharedPreferences settings = getSharedPreferences(EConstants.PREF_NAME, 0); // 0 - for private mode
-                            SharedPreferences.Editor editor = settings.edit();
-                            //Set "hasLoggedIn" to true
-                            editor.putBoolean("hasLoggedIn", true);
-                            editor.putString("ParkingID",PGP.getP_id());
-                            editor.putString("AlternateMobileNumber",PGP.getAlternateMobileNumber());
-                            editor.putString("Email",PGP.getEmail());
-                            editor.putString("MobileNumber",PGP.getMobileNumber());
-                            editor.putString("OperatorAadhaarNo",PGP.getOperatorAadhaarNo());
-                            editor.putString("OperatorName",PGP.getOperatorName());
-                            editor.putString("ParkingLandmark",PGP.getParkingLandmark());
-                            editor.putString("ParkingLocation",PGP.getParkingLocation());
-                            // Commit the edits!
-                            editor.commit();
-                            Intent Details_Intent = new Intent(Login_Activity.this,Navigation_Drawer_Main_Activity.class);
-                            startActivity(Details_Intent);
-                            Login_Activity.this.finish();
+                            try{
+                                SharedPreferences settings = getSharedPreferences(EConstants.PREF_NAME, 0); // 0 - for private mode
+                                SharedPreferences.Editor editor = settings.edit();
+                                //Set "hasLoggedIn" to true
+                                editor.putBoolean("hasLoggedIn", true);
+                                editor.putString("ParkingID",PGP.getP_id());
+                                editor.putString("AlternateMobileNumber",PGP.getAlternateMobileNumber());
+                                editor.putString("Email",PGP.getEmail());
+                                editor.putString("MobileNumber",PGP.getMobileNumber());
+                                editor.putString("OperatorAadhaarNo",PGP.getOperatorAadhaarNo());
+                                editor.putString("OperatorName",PGP.getOperatorName());
+                                editor.putString("ParkingLandmark",PGP.getParkingLandmark());
+                                editor.putString("ParkingLocation",PGP.getParkingLocation());
+                                // Commit the edits!
+                                editor.commit();
+                                Intent Details_Intent = new Intent(Login_Activity.this,Navigation_Drawer_Main_Activity.class);
+                                startActivity(Details_Intent);
+                                Login_Activity.this.finish();
 
 
-                        }catch (Exception e){
-                            Log.e("ERROR",e.getLocalizedMessage().toString());
+                            }catch (Exception e){
+                                Log.e("ERROR",e.getLocalizedMessage().toString());
+                            }
+
+                            this.dialog.dismiss();
+
                         }
 
-                        this.dialog.dismiss();
+
+
+
                         //Write it to Shared Prefrences and then exit the Screen.
                       //  Custom_Dialog CD= new Custom_Dialog();
                       //  CD.showDialog(Login_Activity.this,"Login Successful");

@@ -2,9 +2,6 @@ package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,9 +25,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import HelperFunctions.AppStatus;
+import JsonManager.Vehicle_In_Out_Json;
+import Presentation.Custom_Dialog;
 import Utils.EConstants;
 
-public class IN_Activity extends Activity {
+public class Vehicle_In_Activity extends Activity {
 
     String ID = null;
     Spinner s_typecar,s_estimatedtime;
@@ -96,19 +95,19 @@ public class IN_Activity extends Activity {
                 if(phonenumber.length()==10 && phonenumber!=null){
                     if(car_number.length()!=0 && car_number!=null){
                         if(Parking_ID.length()!=0 && Parking_ID!=null){
-                            if(AppStatus.getInstance(IN_Activity.this).isOnline()) {
+                            if(AppStatus.getInstance(Vehicle_In_Activity.this).isOnline()) {
                                 PARK_CAR PC = new PARK_CAR();
                                 PC.execute(Parking_ID, typecar, car_number, "", phonenumber, Long.toString(estimated_Time), formattedDate);
                             }
                         }else{
-                            Toast.makeText(IN_Activity.this, "Something Bad Happened", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Vehicle_In_Activity.this, "Something Bad Happened", Toast.LENGTH_SHORT).show();
 
                         }
                     }else{
-                        Toast.makeText(IN_Activity.this, "Please enter vehicle number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Vehicle_In_Activity.this, "Please enter vehicle number", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(IN_Activity.this, "Please enter valid 10 digit phone number.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Vehicle_In_Activity.this, "Please enter valid 10 digit phone number.", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -123,7 +122,7 @@ public class IN_Activity extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IN_Activity.this.finish();
+                Vehicle_In_Activity.this.finish();
             }
         });
 
@@ -147,11 +146,13 @@ public class IN_Activity extends Activity {
         private ProgressDialog dialog;
         String url = null;
 
+        String Result_to_Show = null;
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(IN_Activity.this);
+            dialog = new ProgressDialog(Vehicle_In_Activity.this);
             this.dialog.setMessage("Please wait ..");
             this.dialog.show();
             this.dialog.setCancelable(false);
@@ -240,40 +241,10 @@ public class IN_Activity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            //Toast.makeText(getApplicationContext(),s + s.length(),Toast.LENGTH_LONG).show();
-
-            if(s.length()>170 && s.length()<180)
-            {
-                Toast.makeText(getApplicationContext(),"Data sent to server.",Toast.LENGTH_LONG).show();
-                Car_Type = null;
-                Car_Number = null;
-                Driver_Name = null;
-                Phone_Number = null;
-                ES_Parking_Time = null;
-                Parking_ID = null;
-                time = null;
-                Log.e("Result",s);
-                dialog.dismiss();
-                IN_Activity.this.finish();
-            }else{
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
-                Car_Type = null;
-                Car_Number = null;
-                Driver_Name = null;
-                Phone_Number = null;
-                ES_Parking_Time = null;
-                Parking_ID = null;
-                time = null;
-                Log.e("Result",s);
-                dialog.dismiss();
-                IN_Activity.this.finish();
-            }
-
-
-
-
-
-
+            Result_to_Show = Vehicle_In_Out_Json.VehicleIn_Parse(s);
+            dialog.dismiss();
+            Custom_Dialog CM = new Custom_Dialog();
+            CM.showDialog_Vehicle_IN_OUT(Vehicle_In_Activity.this,Result_to_Show);
 
 
         }

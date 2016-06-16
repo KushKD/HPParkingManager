@@ -3,10 +3,7 @@ package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,27 +26,25 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapters.Out_Adapter;
+import Adapters.Inbox_Adapter;
 import HelperFunctions.AppStatus;
-import JsonManager.Out_Json;
-import Model.Out_Pojo;
+import JsonManager.Inbox_Json;
+import Model.Inbox_Pojo;
 import Utils.EConstants;
 
-public class OUT_Activity extends Activity {
+public class Online_Inbox_Activity extends Activity {
 
-    String ID = null;
-    private String Date_Service = null;
-
-
+    public String ID = null;
     ProgressBar pb;
     URL url_;
     HttpURLConnection conn_;
     StringBuilder sb = new StringBuilder();
     ListView listv;
     Context context;
-    List<GET_CARS_FOR_OUT> tasks;
-    List<Out_Pojo> ads_Server;
-    Out_Adapter adapter;
+    List<Fetch_Inbox> tasks;  //Changet he Object and task
+    List<Inbox_Pojo> Inbox_Server;   // change the list
+    Inbox_Adapter adapter;  // change the adapter
+
     LinearLayout LGone;
     EditText Search_EditText;
     Button refresh;
@@ -57,31 +52,31 @@ public class OUT_Activity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_out_);
+        setContentView(R.layout.activity_inbox);
 
         Bundle bundle = getIntent().getExtras();
 
         ID = bundle.getString("ID");
         Log.e("id",ID);
+
         Search_EditText = (EditText)findViewById(R.id.edit_text_search);
         refresh = (Button)findViewById(R.id.refresh);
         LGone = (LinearLayout)findViewById(R.id.lgone);
 
-        listv = (ListView) findViewById(R.id.list_ads);
+        listv = (ListView) findViewById(R.id.list);
         context = this;
         pb = (ProgressBar) findViewById(R.id.progressBar1);
         pb.setVisibility(View.INVISIBLE);
-        tasks = new ArrayList<>();
-
+        tasks = new ArrayList<>();   //Write the Tasks
 
         //getParkedVehiclelist_JSON/{ParkingId}
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppStatus.getInstance(OUT_Activity.this).isOnline()) {
+                if (AppStatus.getInstance(Online_Inbox_Activity.this).isOnline()) {
                     Search_EditText.setText("");
-                    GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
-                    asy_Get_Ads.execute(ID);
+                    Fetch_Inbox get_Inbox = new Fetch_Inbox();
+                    get_Inbox.execute(ID);
                 } else {
                     Toast.makeText(getApplicationContext(),"Please Connect to Internet", Toast.LENGTH_LONG).show();
                 }
@@ -90,24 +85,25 @@ public class OUT_Activity extends Activity {
 
         if(AppStatus.getInstance(this).isOnline()){
 
-            GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
-            asy_Get_Ads.execute(ID);
+            //Create Async Class
+            Fetch_Inbox get_Inbox = new Fetch_Inbox();
+            get_Inbox.execute(ID);
 
 
         }else{
-            Toast.makeText(OUT_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Online_Inbox_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
         }
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Out_Pojo Ads_Details = (Out_Pojo) parent.getItemAtPosition(position);
+                Inbox_Pojo Inbox_Details = (Inbox_Pojo) parent.getItemAtPosition(position);   //change object
                 Intent userSearch = new Intent();
-                userSearch.putExtra("ADS_Details", Ads_Details);
-                userSearch.setClass(OUT_Activity.this, OUT_Details_Activity.class);
+                userSearch.putExtra("INBOX", Inbox_Details);
+                userSearch.setClass(Online_Inbox_Activity.this, Online_Inbox_Details_Activity.class);
                 startActivity(userSearch);
-                OUT_Activity.this.finish();
+                Online_Inbox_Activity.this.finish();
 
 
             }
@@ -140,52 +136,28 @@ public class OUT_Activity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-                OUT_Activity.this.adapter.getFilter().filter(s);
+                Online_Inbox_Activity.this.adapter.getFilter().filter(s);
 
 
             }
         });
-
-
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-       if(adapter!=null){
-           //Reload data
-           ads_Server.clear();
-           adapter = null;
-           //itemList = getOrderList();
-           if(AppStatus.getInstance(this).isOnline()){
+    protected void updateDisplay() {
 
-               GET_CARS_FOR_OUT asy_Get_Ads = new GET_CARS_FOR_OUT();
-               asy_Get_Ads.execute(ID);
-
-              // updateDisplay();
-
-
-
-           }else{
-               Toast.makeText(OUT_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
-           }
-
-
-       }
+         LGone.setVisibility(View.VISIBLE);   //Adapter needs to be changed
+        adapter = new Inbox_Adapter(this, R.layout.item_inbox, Inbox_Server);
+        listv.setAdapter(adapter);
+        //  adapter.notifyDataSetChanged();
+        // listv.setTextFilterEnabled(true);
 
     }
 
 
 
-
-
-
-
-
-
-    class GET_CARS_FOR_OUT extends AsyncTask<String,String,String> {
+    class Fetch_Inbox extends AsyncTask<String,String,String> {
         String url = null;
         @Override
         protected void onPreExecute() {
@@ -198,15 +170,14 @@ public class OUT_Activity extends Activity {
         @Override
         protected String doInBackground(String... params) {
             try {
-
-                url_ =new URL(EConstants.Production_URL+"getParkedVehiclelist_JSON/"+params[0]);
+                //Change URL Function
+                url_ =new URL(EConstants.Production_URL+"getAllParkReqest_JSON/"+params[0]);
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setRequestMethod("GET");
                 conn_.setUseCaches(false);
                 conn_.setConnectTimeout(20000);
                 conn_.setReadTimeout(20000);
                 conn_.connect();
-
 
                 int HttpResult =conn_.getResponseCode();
                 if(HttpResult ==HttpURLConnection.HTTP_OK){
@@ -229,23 +200,18 @@ public class OUT_Activity extends Activity {
                 if(conn_!=null)
                     conn_.disconnect();
             }
-            Log.e("Error",sb.toString());
             return sb.toString();
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            ads_Server = Out_Json.parseFeed(result);
-            if(ads_Server.isEmpty()){
+            Inbox_Server = Inbox_Json.parseFeed(result);
+            if(Inbox_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else
             {
-                LGone.setVisibility(View.VISIBLE);
-                adapter = new Out_Adapter(OUT_Activity.this, R.layout.item_out_list, ads_Server);
-                listv.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                adapter.setNotifyOnChange (true);
+                updateDisplay();
             }
             tasks.remove(this);
             if (tasks.size() == 0) {
@@ -253,4 +219,5 @@ public class OUT_Activity extends Activity {
             }
         }
     }
+
 }

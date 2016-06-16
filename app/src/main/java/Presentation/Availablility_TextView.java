@@ -130,7 +130,7 @@ try {
     try {
         HttpManager HM = new HttpManager();
         Server_Value = HM.GetData(url);
-         Log.e("Server_Value",Server_Value);
+        // Log.e("Server_Value",Server_Value);
         sb.delete(0, sb.length());
 
 
@@ -159,7 +159,7 @@ try {
                     if (json instanceof JSONObject) {
                         JSONObject obj = new JSONObject(s);
                         G_Table = obj.getString("getParkingAvailblity_JSONResult");
-                        Log.e("We are", G_Table);
+                        //Log.e("We are", G_Table);
                         JSONObject OJ = new JSONObject(G_Table);
                         setText("Availability: " + OJ.optString("Availability"));
                        // Log.e("Data", OJ.optString("Availability"));
