@@ -44,10 +44,10 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
 
         ParkingID  = prfs.getString("ParkingID","");
         EConstants.ParkingID_Task = ParkingID;
-        Parking_Name = prfs.getString("Parking_Name","");
-        Capacity = prfs.getString("Capacity","");
-        thrashhold = prfs.getString("thrashhold","");
-        Identifier = prfs.getString("Identifier","");
+        Parking_Name = prfs.getString("ParkingLocation","");
+        Identifier = prfs.getString("ParkingLandmark","");
+
+        Log.e("Parking ID IS:",ParkingID);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

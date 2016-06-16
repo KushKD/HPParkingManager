@@ -16,7 +16,7 @@ public class Login_Json {
             Object json = new JSONTokener(s).nextValue();
             if (json instanceof JSONObject) {
                 JSONObject obj = new JSONObject(s);
-                g_Table = obj.optString("LoginResult");
+                g_Table = obj.optString("getOTP_JSONResult");
                 return g_Table;
             } else {
                 return null;
@@ -56,7 +56,7 @@ public class Login_Json {
             Object json = new JSONTokener(s).nextValue();
             if (json instanceof JSONObject) {
                 JSONObject obj = new JSONObject(s);
-                g_Table = obj.optString("CheckOTPResult");
+                g_Table = obj.optString("getValidateOTP_JSONResult");
                 return g_Table;
             } else {
                 return null;
