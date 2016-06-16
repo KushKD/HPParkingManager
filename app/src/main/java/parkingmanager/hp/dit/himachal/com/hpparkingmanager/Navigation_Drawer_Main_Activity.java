@@ -50,12 +50,12 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       if(AppStatus.getInstance(this).isOnline()){
+      /* if(AppStatus.getInstance(this).isOnline()){
 
            tv_TextView_ServerConnected.setVisibility(View.VISIBLE);
        }else{
            tv_TextView_ServerConnected.invalidate();
-       }
+       }*/
 
 
 

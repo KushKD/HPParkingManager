@@ -111,7 +111,7 @@ public class Availablility_TextView extends TextView {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            setText("Availability: " + "N/A"+ "  " +"Percentage: "+ "N/A" );
+            setText("Availability: " + "N/A" +" Percentage: "+ "N/A" );
         }
 
         @Override
@@ -152,27 +152,31 @@ try {
 
 
 
-                Object json;
+                Object json = null;
                 String G_Table = null;
                 try {
 
-                    json = new JSONTokener(s).nextValue();
+                    try {
+                        json = new JSONTokener(s).nextValue();
+                    }catch(Exception e){
+                        setText("Availability: " + "N/A"+" Percentage: "+ "N/A");
+                    }
                     if (json instanceof JSONObject) {
                         JSONObject obj = new JSONObject(s);
                         G_Table = obj.getString("getParkingAvailblity_JSONResult");
                         //Log.e("We are", G_Table);
                         JSONObject OJ = new JSONObject(G_Table);
-                        setText("Availability: " + OJ.optString("Availability") + "  " +"Percentage: "+ OJ.optString("percentage"));
+                        setText("Availability: " + OJ.optString("Availability")+" Percentage: "+ OJ.optString("percentage"));
                        // Log.e("Data", OJ.optString("Availability"));
 
 
                     } else {
-                        setText("Availability: " + "N/A"+ "  " +"Percentage: "+ "N/A");
+                        setText("Availability: " + "N/A"+" Percentage: "+ "N/A");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     // Server_Value = "";
-                    setText(s);
+                    setText("Availability: " + "N/A"+" Percentage: "+ "N/A");
                 }
 
 
