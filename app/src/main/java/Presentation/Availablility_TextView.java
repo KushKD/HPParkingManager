@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -110,7 +111,7 @@ public class Availablility_TextView extends TextView {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            setText("Availability: " );
+            setText("Availability: " + "N/A"+ "  " +"Percentage: "+ "N/A" );
         }
 
         @Override
@@ -161,12 +162,12 @@ try {
                         G_Table = obj.getString("getParkingAvailblity_JSONResult");
                         //Log.e("We are", G_Table);
                         JSONObject OJ = new JSONObject(G_Table);
-                        setText("Availability: " + OJ.optString("Availability"));
+                        setText("Availability: " + OJ.optString("Availability") + "  " +"Percentage: "+ OJ.optString("percentage"));
                        // Log.e("Data", OJ.optString("Availability"));
 
 
                     } else {
-                        setText("Availability: " + "N/A");
+                        setText("Availability: " + "N/A"+ "  " +"Percentage: "+ "N/A");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

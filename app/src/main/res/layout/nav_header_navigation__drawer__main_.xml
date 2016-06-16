@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-   android:background="#FF545454"
+   android:background="#FF535353"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/profile_pic" />
 
     <TextView
         android:id="@+id/parkingname"
@@ -26,13 +26,29 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Parking Name"
+        android:textStyle="bold"
+        android:textSize="18dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-
         android:id="@+id/landmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="Parking Landmark" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="Parking Landmark" />
+
+    <TextView
+        android:id="@+id/aadhaar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
         android:text="Parking Landmark" />
 
 </LinearLayout>

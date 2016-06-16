@@ -58,6 +58,6 @@ public class Splash_Screen_Activity extends AppCompatActivity {
 
 
             }
-        }, 1000);
+        }, 2000);
     }
 }

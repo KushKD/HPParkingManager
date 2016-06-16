@@ -27,7 +27,7 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
     TextView parkingname,parkingidentifier , tv_TextView_ServerConnected;
     Button back,in,out,inbox,outbox;
 
-    String ParkingID=null,Parking_Name=null,Capacity=null,thrashhold=null,Identifier=null;
+    String ParkingID=null,Parking_Name=null,name=null,aadhaar=null,Identifier=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         EConstants.ParkingID_Task = ParkingID;
         Parking_Name = prfs.getString("ParkingLocation","");
         Identifier = prfs.getString("ParkingLandmark","");
+        name = prfs.getString("OperatorName","");
+        aadhaar = prfs.getString("OperatorAadhaarNo","");
 
         Log.e("Parking ID IS:",ParkingID);
 
@@ -73,8 +75,12 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
       TextView  Parking_Name_tv = (TextView)header.findViewById(R.id.parkingname);
        TextView Parking_Landmark_tv = (TextView)header.findViewById(R.id.landmark);
+        TextView Name_Manager_Tv = (TextView)header .findViewById(R.id.name);
+        TextView Aadhaar_Manager_Tv = (TextView)header .findViewById(R.id.aadhaar);
         Parking_Name_tv.setText(Parking_Name);
         Parking_Landmark_tv.setText(Identifier);
+        Name_Manager_Tv.setText(name);
+        Aadhaar_Manager_Tv.setText(aadhaar);
 
 
         back = (Button)findViewById(R.id.back);
