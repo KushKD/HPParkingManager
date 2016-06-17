@@ -10,10 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONStringer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,14 +21,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import HelperFunctions.AppStatus;
 import JsonManager.Vehicle_In_Out_Json;
 import Model.Out_Pojo;
 import Presentation.Custom_Dialog;
 import Utils.EConstants;
+import Enum.TaskType;
+import Interfaces.AsyncTaskListener;
+import Utils.Generic_Async_Post;
 
-public class Vehicle_Out_Details_Activity extends Activity {
+
+public class Vehicle_Out_Details_Activity extends Activity implements AsyncTaskListener {
 
     TextView tv_parkingid,tv_drivername,tv_phonenumber,tv_vehiclenumber,tv_outtime , tv_message_from_server, tv_intimee;
     Button checkout,confirm,back;
@@ -102,8 +103,10 @@ public class Vehicle_Out_Details_Activity extends Activity {
                    OUT_TIME = formattedDate;
                     tv_outtime.setText(OUT_TIME);
 
-                    CHECK_OUT_CAR COC = new CHECK_OUT_CAR();
-                    COC.execute(parking_id,drivername,phone_number,vehicle_number,OUT_TIME,"checkout");
+                   /* CHECK_OUT_CAR COC = new CHECK_OUT_CAR();
+                    COC.execute(parking_id,drivername,phone_number,vehicle_number,OUT_TIME,"checkout");*/
+                    String URL = EConstants.Production_URL+"getParkingOut_JSON";
+                    new Generic_Async_Post(Vehicle_Out_Details_Activity.this, Vehicle_Out_Details_Activity.this, TaskType.VEHICLE_CHECK_OUT).execute("getParkingOut_JSON",URL,parking_id,drivername,phone_number,vehicle_number,OUT_TIME);
 
                 }else{
                     Toast.makeText(Vehicle_Out_Details_Activity.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
@@ -127,9 +130,9 @@ public class Vehicle_Out_Details_Activity extends Activity {
                     String phone_number = OUT_Details.getPhoneNumber();
                     String vehicle_number = OUT_Details.getVehicleNo();
                     String out_time = tv_outtime.getText().toString().trim();
+                    String URL = EConstants.Production_URL+"getConfirmPayment_JSON";
+                    new Generic_Async_Post(Vehicle_Out_Details_Activity.this, Vehicle_Out_Details_Activity.this, TaskType.VEHICLE_CHECK_OUT_CONFIRM).execute("getConfirmPayment_JSON",URL,parking_id,drivername,phone_number,vehicle_number,OUT_TIME);
 
-                    CHECK_OUT_CAR COC = new CHECK_OUT_CAR();
-                    COC.execute(parking_id,drivername,phone_number,vehicle_number,out_time,"confirm");
 
                 }else{
                     Toast.makeText(Vehicle_Out_Details_Activity.this, "Connect to Internet", Toast.LENGTH_SHORT).show();
@@ -141,134 +144,26 @@ public class Vehicle_Out_Details_Activity extends Activity {
 
     }
 
+    @Override
+    public void onTaskCompleted(String result, TaskType taskType) {
 
-
-
-    private class CHECK_OUT_CAR extends AsyncTask<String,String,String> {
-
-        private String Parking_Id = null;
-        private String Driver_Name = null;
-        private String Phone_number = null;
-        private String Vehicle_NO = null;
-        private String OUT_Time = null;
-        private String function_Name = null;
-        private String flag_Function = null;
-        private String Result_to_Show = null;
-        private ProgressDialog dialog;
-        String url = null;
-
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new ProgressDialog(Vehicle_Out_Details_Activity.this);
-            this.dialog.setMessage("Please wait ..");
-            this.dialog.show();
-            this.dialog.setCancelable(false);
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            Parking_Id = params[0];
-            Driver_Name = params[1];
-            Phone_number = params[2];
-            Vehicle_NO = params[3];
-            OUT_Time = params[4];
-            flag_Function = params[5];
-
-            if(flag_Function.equalsIgnoreCase("confirm")){
-                function_Name =  "getConfirmPayment_JSON";
-            }else{
-                function_Name = "getParkingOut_JSON";
-            }
-
-
-            try {
-                url_ =new URL(EConstants.Production_URL+function_Name);
-                conn_ = (HttpURLConnection)url_.openConnection();
-                conn_.setDoOutput(true);
-                conn_.setRequestMethod("POST");
-                conn_.setUseCaches(false);
-                conn_.setConnectTimeout(20000);
-                conn_.setReadTimeout(20000);
-                conn_.setRequestProperty("Content-Type", "application/json");
-                conn_.connect();
-
-                 userJson = new JSONStringer()
-                        .object().key("VehicleOuts")
-                        .object()
-                        .key("VehicleNo").value(Vehicle_NO)
-                        .key("ParkingId").value(Parking_Id)
-                        .key("DriverName").value(Driver_Name)
-                        .key("PhoneNumber").value(Phone_number)
-                        .key("OutTime").value(OUT_Time)
-                        .endObject()
-                        .endObject();
-
-
-                System.out.println(userJson.toString());
-                Log.e("Object",userJson.toString());
-                OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
-                out.write(userJson.toString());
-                out.close();
-
-                try{
-
-
-                    int HttpResult =conn_.getResponseCode();
-                    Log.e("HttpResult",Integer.toString(HttpResult));
-                    if(HttpResult ==HttpURLConnection.HTTP_OK){
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn_.getInputStream(),"utf-8"));
-                        String line = null;
-                        sb = new StringBuilder();
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line + "\n");
-                        }
-                        br.close();
-                        System.out.println(sb.toString());
-
-                    }else{
-                        System.out.println("Server Connection failed." + HttpResult);
-                    }
-
-                } catch(Exception e){
-                    return "Server Connection failed.";
-                }
-
-            }
-            catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally{
-                if(conn_!=null)
-                    conn_.disconnect();
-            }
-            return sb.toString();
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            if(function_Name.equalsIgnoreCase("getParkingOut_JSON")) {
-                    Result_to_Show = Vehicle_In_Out_Json.Vehicle_Out_Parse(s);
-                    dialog.dismiss();
-                    Custom_Dialog CM = new Custom_Dialog();
-                    CM.showDialog(Vehicle_Out_Details_Activity.this, Result_to_Show);
-                    tv_message_from_server.setText(Result_to_Show);
-                }else{
-                    Result_to_Show = Vehicle_In_Out_Json.Vehicle_Out_Confirm_Parse(s);
-                    dialog.dismiss();
-                    Custom_Dialog CM = new Custom_Dialog();
-                    CM.showDialog_Vehicle_IN_OUT(Vehicle_Out_Details_Activity.this, Result_to_Show);
-
-                }
+        if(taskType == TaskType.VEHICLE_CHECK_OUT) {
+            String Result_to_Show = null;
+            Result_to_Show = Vehicle_In_Out_Json.Vehicle_Out_Parse(result);
+            Custom_Dialog CM = new Custom_Dialog();
+            CM.showDialog(Vehicle_Out_Details_Activity.this, Result_to_Show);
+            tv_message_from_server.setText(Result_to_Show);
+        }else if(taskType == TaskType.VEHICLE_CHECK_OUT_CONFIRM){
+            String Result_to_Show = null;
+            Log.e("Check Out",taskType.toString());
+            Result_to_Show = Vehicle_In_Out_Json.Vehicle_Out_Confirm_Parse(result);
+            Custom_Dialog CM2 = new Custom_Dialog();
+            CM2.showDialog_Vehicle_IN_OUT(Vehicle_Out_Details_Activity.this, Result_to_Show);
+        }else{
+            Custom_Dialog CM2 = new Custom_Dialog();
+            CM2.showDialog_Vehicle_IN_OUT(Vehicle_Out_Details_Activity.this, "Something went wrong.");
         }
     }
+
+
 }

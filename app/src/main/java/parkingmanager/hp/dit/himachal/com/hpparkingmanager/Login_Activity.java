@@ -1,16 +1,9 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,24 +12,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.w3c.dom.Text;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import HTTP.HttpManager;
 import HelperFunctions.AppStatus;
+import Interfaces.AsyncTaskListener;
 import JsonManager.Login_Json;
 import Model.Parking_Guy_Pojo;
 import Presentation.Custom_Dialog;
 import Utils.EConstants;
+import Utils.Generic_Async_Get;
+import Enum.TaskType;
 
-public class Login_Activity extends Activity {
+public class Login_Activity extends Activity implements AsyncTaskListener {
 
     private int backButtonCount = 0;
     Boolean Flag_Initialize = false;
@@ -47,11 +37,6 @@ public class Login_Activity extends Activity {
     private  String aadhaar , otp = null;
     RelativeLayout Login_Header;
 
-    URL url;
-    HttpURLConnection conn;
-    StringBuilder sb = new StringBuilder();
-    String HeaderText;
-    String HeaderColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +47,12 @@ public class Login_Activity extends Activity {
 
         Flag_Initialize = InitializeControls();
         if (Flag_Initialize){
-
-
-
             button_getOTP.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getAadhaar();
                 }
             });
-
             button_submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,28 +65,7 @@ public class Login_Activity extends Activity {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState)
-    {
 
-        EditText etAadhaar = (EditText)findViewById(R.id.et_aadhaar);
-        String Save_Aadhaar = etAadhaar.getText().toString().trim();
-        savedInstanceState.putString("AADHAAR", Save_Aadhaar);
-        //savedInstanceState.putString("OTP", otp);
-
-        super.onSaveInstanceState(savedInstanceState);
-
-
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        aadhaar = savedInstanceState.getString("AADHAAR");
-        editText_aadhaarLogin.setText(aadhaar);
-        // otp = savedInstanceState.getString("OTP");
-        // ... recover more data
-    }
 
     @Override
     public void onBackPressed()
@@ -129,8 +89,17 @@ public class Login_Activity extends Activity {
         if(!otp.isEmpty()){
             if(otp.length()== 6){
                 if(AppStatus.getInstance(this).isOnline()) {
-                    OTP_Async OA = new OTP_Async();
-                    OA.execute(aadhaar_a, otp);
+
+                    String url = null;
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(EConstants.Production_URL);
+                    sb.append("getValidateOTP_JSON");
+                    sb.append("/");
+                    sb.append(aadhaar);
+                    sb.append("/");
+                    sb.append(otp);
+                    url = sb.toString();
+                    new Generic_Async_Get(Login_Activity.this, Login_Activity.this, TaskType.USER_LOGIN_VALIDATE_OTP_AADHAAR).execute(url);
                 } else {
                     Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
                 }
@@ -151,8 +120,20 @@ public class Login_Activity extends Activity {
             if(aadhaar.length() == 12 ){
 
                 if(AppStatus.getInstance(this).isOnline()){
-                    Login_Async LA  = new Login_Async();
-                    LA.execute(aadhaar);}
+
+                    // Login_Async LA  = new Login_Async();
+                    // LA.execute(aadhaar);
+                    String url = null;
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(EConstants.Production_URL);
+                    sb.append("getOTP_JSON"); //OTP MEthord
+                    sb.append("/");
+                    sb.append(aadhaar);
+                    url = sb.toString();
+
+                    new Generic_Async_Get(Login_Activity.this, Login_Activity.this, TaskType.USER_LOGIN_GETOTP).execute(url);
+                }
+
                 else {
                     Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
                 }
@@ -186,107 +167,23 @@ public class Login_Activity extends Activity {
         }
     }
 
-    class Login_Async extends AsyncTask<String,String,String>{
+    @Override
+    public void onTaskCompleted(String result, TaskType taskType) {
 
-        String url = null;
-        private ProgressDialog dialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new ProgressDialog(Login_Activity.this);
-            dialog.setMessage("Connecting to Server .. Please Wait");
-            dialog.show();
-            dialog.setCancelable(false);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            String aadhaar = params[0];
-            StringBuilder sb = new StringBuilder();
-            sb.append(EConstants.Production_URL);
-            sb.append("getOTP_JSON"); //OTP MEthord
-            sb.append("/");
-            sb.append(aadhaar);
-            url = sb.toString();
-
-            HttpManager jParser = new HttpManager();
-            String result  = jParser.GetData(url);
-
-            return result;
-
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
+      //  Log.e("Type Task",taskType.toString());
+        if(taskType == TaskType.USER_LOGIN_GETOTP) {
             Login_Json JP = new Login_Json();
 
-            String finalResult = JP.ParseString(s);
-            Log.e("Final Result",finalResult);
+            String finalResult = JP.ParseString(result);
+            Log.e("Final Result", finalResult);
 
-            this.dialog.dismiss();
 
             Custom_Dialog alert = new Custom_Dialog();
             alert.showDialog(Login_Activity.this, finalResult);
-
-/*
-            if(finalResult.equalsIgnoreCase("OTP has been sent on registered mobile number")){
-                dialog.dismiss();
-                Toast.makeText(getApplicationContext(), finalResult, Toast.LENGTH_SHORT).show();
-                editText_aadhaarLogin.setEnabled(false);
-                editText_otpLogin.setEnabled(true);
-            }
-            else{
-                dialog.dismiss();
-                Toast.makeText(getApplicationContext(), finalResult, Toast.LENGTH_SHORT).show();
-            }
-*/
-        }
-    }
-
-    class OTP_Async extends AsyncTask<String,String,String>{
-
-        private ProgressDialog dialog;
-        String url2 = null;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new ProgressDialog(Login_Activity.this);
-            dialog.setMessage("Connecting to Server .. Please Wait");
-            dialog.show();
-            dialog.setCancelable(false);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String aadhaar = params[0];
-            String otp = params[1];
-            StringBuilder sb = new StringBuilder();
-            sb.append(EConstants.Production_URL);
-            sb.append("getValidateOTP_JSON");    //Methord Name
-            sb.append("/");
-            sb.append(aadhaar);
-            sb.append("/");
-            sb.append(otp);
-            url2 = sb.toString();
-            HttpManager jParser = new HttpManager();
-            String result  = jParser.GetData(url2);
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        }else if(taskType == TaskType.USER_LOGIN_VALIDATE_OTP_AADHAAR){
 
             Login_Json JP = new Login_Json();
-
-            String finalResult = JP.ParseStringOTP(s);
-
+            String finalResult = JP.ParseStringOTP(result);
             Object json = null;
             try {
                 json = new JSONTokener(finalResult).nextValue();
@@ -300,7 +197,7 @@ public class Login_Activity extends Activity {
 
                         if(myJson.optString("OperatorName").equalsIgnoreCase("OTP did not match. Please try again."))
                         {
-                            dialog.dismiss();
+
                             Custom_Dialog CD= new Custom_Dialog();
                             CD.showDialog(Login_Activity.this,myJson.optString("OperatorName"));
                         }else{
@@ -336,66 +233,31 @@ public class Login_Activity extends Activity {
                             }catch (Exception e){
                                 Log.e("ERROR",e.getLocalizedMessage().toString());
                             }
-
-                            this.dialog.dismiss();
-
                         }
 
-
-
-
-                        //Write it to Shared Prefrences and then exit the Screen.
-                      //  Custom_Dialog CD= new Custom_Dialog();
-                      //  CD.showDialog(Login_Activity.this,"Login Successful");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 }
                 else if (json instanceof JSONArray){
-                    this.dialog.dismiss();
+
                     Custom_Dialog CD= new Custom_Dialog();
                     CD.showDialog(Login_Activity.this,"Error while getting the data from Server.");
                 }else{
-                    this.dialog.dismiss();
+
                     Custom_Dialog CD= new Custom_Dialog();
-                    CD.showDialog(Login_Activity.this,s);
+                    CD.showDialog(Login_Activity.this,result);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-
-
-
-
-
-
-
-
-
-            /*
-
-            if(finalResult.equalsIgnoreCase("Successful")){
-                SharedPreferences settings = getSharedPreferences(EConstants.PREF_NAME, 0); // 0 - for private mode
-                SharedPreferences.Editor editor = settings.edit();
-                //Set "hasLoggedIn" to true
-                editor.putBoolean("hasLoggedIn", true);
-                // Commit the edits!
-                editor.commit();
-                dialog.dismiss();
-                Intent i = new Intent(Login_Activity.this,Main_Activity.class);
-                startActivity(i);
-                Login_Activity.this.finish();
-
-
-            } else{
-                dialog.dismiss();
-                Toast.makeText(getApplicationContext(), finalResult, Toast.LENGTH_SHORT).show();
-            }*/
-
-
+        }else{
+            Log.e("Type Task",taskType.toString());
         }
+
     }
+
 
 }

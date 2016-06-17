@@ -10,10 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONStringer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,15 +19,16 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import HelperFunctions.AppStatus;
 import HelperFunctions.Date_Time;
 import JsonManager.Manage_Json;
 import Model.Inbox_Pojo;
 import Presentation.Custom_Dialog;
 import Utils.EConstants;
+import Enum.TaskType;
 
-public class Online_Inbox_Details_Activity extends Activity {
+
+public class Online_Inbox_Details_Activity extends Activity   {
 
     private TextView tv_ParkingId,tv_RegisterId,tv_VehicleNo,tv_PhoneNumber,tv_RequestTime,tv_RequestStatus;
     private TextView tv_EstimatedTime , tv_VehicleType;
@@ -84,10 +83,9 @@ bt_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                //Start Async Task
 
-                if(AppStatus.getInstance(Online_Inbox_Details_Activity.this).isOnline()){
+                if(AppStatus.getInstance(Online_Inbox_Details_Activity.this).isOnline()) {
                     CHECKIN C_IN = new CHECKIN();
                     C_IN.execute(Inbox_Details);
-
                 }else{
                     Toast.makeText(Online_Inbox_Details_Activity.this, "Please connect to Internet", Toast.LENGTH_SHORT).show();
                 }

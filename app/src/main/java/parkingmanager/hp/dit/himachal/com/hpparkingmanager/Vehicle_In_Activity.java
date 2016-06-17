@@ -25,11 +25,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import HelperFunctions.AppStatus;
+import Interfaces.AsyncTaskListener;
 import JsonManager.Vehicle_In_Out_Json;
 import Presentation.Custom_Dialog;
 import Utils.EConstants;
+import Utils.Generic_Async_Post;
+import Enum.TaskType;
 
-public class Vehicle_In_Activity extends Activity {
+public class Vehicle_In_Activity extends Activity implements AsyncTaskListener {
 
     String ID = null;
     Spinner s_typecar,s_estimatedtime;
@@ -72,32 +75,19 @@ public class Vehicle_In_Activity extends Activity {
                 long estimated_Time = s_estimatedtime.getSelectedItemId();
                 Log.e("Time",Long.toString(estimated_Time));
                 String car_number = carnumber_.getText().toString().trim();
-              //  String Driver_Name = drivername_.getText().toString().trim();
                 String phonenumber = phonenumber_.getText().toString().trim();
                 String Parking_ID = ID.trim();
-
                 Calendar c = Calendar.getInstance();
-              //  System.out.println("Current time => "+c.getTime());
-
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String formattedDate = df.format(c.getTime());
-                // formattedDate have current date/time
-               // Toast.makeText(getApplicationContext(), formattedDate, Toast.LENGTH_SHORT).show();
-
                 String IN_TIME = formattedDate;
-
-
-               // System.out.println("\t"+typecar + "\t"+ Long.toString(estimated_Time+1));
-
-
-
 
                 if(phonenumber.length()==10 && phonenumber!=null){
                     if(car_number.length()!=0 && car_number!=null){
                         if(Parking_ID.length()!=0 && Parking_ID!=null){
                             if(AppStatus.getInstance(Vehicle_In_Activity.this).isOnline()) {
-                                PARK_CAR PC = new PARK_CAR();
-                                PC.execute(Parking_ID, typecar, car_number, "", phonenumber, Long.toString(estimated_Time), formattedDate);
+                               String URL = EConstants.Production_URL+"getParkingTransaction_JSON";
+                                new Generic_Async_Post(Vehicle_In_Activity.this, Vehicle_In_Activity.this, TaskType.VEHICLE_IN).execute("getParkingTransaction_JSON",URL,Parking_ID,typecar,car_number,"",phonenumber,Long.toString(estimated_Time),formattedDate);
                             }
                         }else{
                             Toast.makeText(Vehicle_In_Activity.this, "Something Bad Happened", Toast.LENGTH_SHORT).show();
@@ -109,13 +99,6 @@ public class Vehicle_In_Activity extends Activity {
                 }else{
                     Toast.makeText(Vehicle_In_Activity.this, "Please enter valid 10 digit phone number.", Toast.LENGTH_SHORT).show();
                 }
-
-
-
-
-
-
-
             }
         });
 
@@ -128,125 +111,18 @@ public class Vehicle_In_Activity extends Activity {
 
     }
 
+    @Override
+    public void onTaskCompleted(String result, TaskType taskType) {
 
-
-
-    private class PARK_CAR extends AsyncTask<String,String,String>{
-
-        private String Car_Type = null;
-        private String Car_Number = null;
-        private String Driver_Name = null;
-        private String Phone_Number = null;
-        private String ES_Parking_Time = null;
-        private String Parking_ID = null;
-        private String time = null;
-
-        JSONStringer userJson = null;
-
-        private ProgressDialog dialog;
-        String url = null;
-
-        String Result_to_Show = null;
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new ProgressDialog(Vehicle_In_Activity.this);
-            this.dialog.setMessage("Please wait ..");
-            this.dialog.show();
-            this.dialog.setCancelable(false);
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            Parking_ID = params[0];
-            Car_Type = params[1];
-            Car_Number = params[2];
-            Driver_Name = params[3];
-            Phone_Number = params[4];
-            ES_Parking_Time = params[5];
-            time = params[6];
-
-            try {
-                url_ =new URL(EConstants.Production_URL+"getParkingTransaction_JSON");
-                conn_ = (HttpURLConnection)url_.openConnection();
-                conn_.setDoOutput(true);
-                conn_.setRequestMethod("POST");
-                conn_.setUseCaches(false);
-                conn_.setConnectTimeout(10000);
-                conn_.setReadTimeout(10000);
-                conn_.setRequestProperty("Content-Type", "application/json");
-                conn_.connect();
-
-                 userJson = new JSONStringer()
-                        .object().key("ParkTrans")
-                        .object()
-                        .key("ParkingId").value(Parking_ID)
-                        .key("TypeofCar").value(Car_Type)
-                        .key("VehicleNo").value(Car_Number)
-                        .key("DriverName").value("")
-                        .key("PhoneNumber").value(Phone_Number)
-                        .key("EstimatedParkingtime").value(ES_Parking_Time)
-                        .key("EstimatedFee").value("")
-                        .key("InTime").value(time)
-                        .key("OutTime").value("")
-                        .key("ActualFee").value("")
-                        .endObject()
-                        .endObject();
-
-
-                System.out.println(userJson.toString());
-                Log.e("Object",userJson.toString());
-                OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
-                out.write(userJson.toString());
-                out.close();
-
-                try{
-                    int HttpResult =conn_.getResponseCode();
-                    if(HttpResult ==HttpURLConnection.HTTP_OK){
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn_.getInputStream(),"utf-8"));
-                        String line = null;
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line + "\n");
-                        }
-                        br.close();
-                        System.out.println(sb.toString());
-
-                    }else{
-                        System.out.println("Server Connection failed.");
-                    }
-
-                } catch(Exception e){
-                    return "Server Connection failed.";
-                }
-
-            }
-            catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally{
-                if(conn_!=null)
-                    conn_.disconnect();
-            }
-            return sb.toString();
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Result_to_Show = Vehicle_In_Out_Json.VehicleIn_Parse(s);
-            dialog.dismiss();
+        if(taskType == TaskType.VEHICLE_IN) {
+            String Result_to_Show = null;
+            Result_to_Show = Vehicle_In_Out_Json.VehicleIn_Parse(result);
             Custom_Dialog CM = new Custom_Dialog();
-            CM.showDialog_Vehicle_IN_OUT(Vehicle_In_Activity.this,Result_to_Show);
-
-
+            CM.showDialog_Vehicle_IN_OUT(Vehicle_In_Activity.this, Result_to_Show);
+        }else{
+            Custom_Dialog CM = new Custom_Dialog();
+            CM.showDialog_Vehicle_IN_OUT(Vehicle_In_Activity.this, "Something went wrong.");
         }
+
     }
 }
