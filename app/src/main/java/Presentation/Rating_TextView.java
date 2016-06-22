@@ -120,7 +120,7 @@ public class Rating_TextView extends TextView {
             try {
                 StringBuilder sb = new StringBuilder();
                 sb.append(EConstants.Production_URL);
-                sb.append("getParkingRating_JSON");
+                sb.append("getParkingRateing_JSON");
                 sb.append("/");
                 sb.append(value);
 
