@@ -92,7 +92,9 @@ public class Vehicle_Out_Activity extends Activity {
 
 
         }else{
-            Toast.makeText(Vehicle_Out_Activity.this, "No Network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Vehicle_Out_Activity.this, "Please connect to Internet.", Toast.LENGTH_SHORT).show();
+            //SMS Goes Here
+            //// TODO: 7/6/2016
         }
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

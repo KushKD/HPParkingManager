@@ -31,7 +31,7 @@ public class HttpManager {
             HttpURLConnection con = (HttpURLConnection) url_.openConnection();
 
             if (con.getResponseCode() != 200) {
-                throw new IOException(con.getResponseMessage());
+                return "Timeout";
             }
 
 
