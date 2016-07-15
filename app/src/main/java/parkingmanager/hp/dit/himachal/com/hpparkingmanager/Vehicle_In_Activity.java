@@ -107,7 +107,8 @@ public class Vehicle_In_Activity extends Activity implements AsyncTaskListener {
                             SB.append(Parking_ID);SB.append(" ");
                             SB.append(car_number); SB.append(" ");
                             SB.append(phonenumber); SB.append(" ");
-                            SB.append(Long.toString(estimated_Time)); SB.append(" ");
+                            SB.append(typecar);SB.append(" ");
+                            SB.append(Long.toString(estimated_Time));
                             String DATASEND = SB.toString().trim();
 
                             //Send an SMS Alert

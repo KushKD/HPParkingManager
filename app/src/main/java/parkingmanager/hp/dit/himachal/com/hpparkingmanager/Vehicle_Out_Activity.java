@@ -1,10 +1,15 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,6 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -30,6 +36,7 @@ import Adapters.Out_Adapter;
 import HelperFunctions.AppStatus;
 import JsonManager.Out_Json;
 import Model.Out_Pojo;
+import Presentation.Custom_Dialog;
 import Utils.EConstants;
 
 public class Vehicle_Out_Activity extends Activity {
@@ -95,7 +102,17 @@ public class Vehicle_Out_Activity extends Activity {
             Toast.makeText(Vehicle_Out_Activity.this, "Please connect to Internet.", Toast.LENGTH_SHORT).show();
             //SMS Goes Here
             //// TODO: 7/6/2016
+            //HP PARK OUT <ParkingId> <VehicleNo> <MobileNo>
+
+
+
+            //Send an SMS Alert
+            ShowAlert_SMS("");
+          //  Log.e("SMS :",DATASEND);
+          //  Log.e("SMS Length",Integer.toString(DATASEND.length()));
         }
+
+
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -178,9 +195,112 @@ public class Vehicle_Out_Activity extends Activity {
 
 
 
+    private void ShowAlert_SMS(String x) {
+
+       // Log.d("SMS is ==========",DataSend);
+        final Dialog dialog = new Dialog(Vehicle_Out_Activity.this); // Context, this, etc.
+        dialog.setContentView(R.layout.dialog_sms_out);
+        dialog.setTitle("Send SMS");
+        dialog.setCancelable(false);
+        dialog.show();
 
 
 
+        EditText carnumber = (EditText)dialog.findViewById(R.id.carnumber);
+        EditText phonenumber = (EditText)dialog.findViewById(R.id.phonenumber);
+        Button agree = (Button)dialog.findViewById(R.id.dialog_ok);
+        Button disagree = (Button)dialog.findViewById(R.id.dialog_cancel);
+        TextView SMS = (TextView)dialog.findViewById(R.id.sms);
+
+
+        //Send SMS
+        StringBuilder SB = new StringBuilder();
+        SB.append("HP PARK OUT");SB.append(" ");
+        SB.append(ID);SB.append(" ");
+        SB.append(carnumber.getText().toString().trim()); SB.append(" ");
+        SB.append(phonenumber.getText().toString().trim());
+       final String DataSend = SB.toString().trim();
+
+       // SMS.setText(DataSend);
+
+        agree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * Phone Number
+                 * Message
+                 */
+                sendSMS("9223166166",DataSend);
+                dialog.dismiss();
+            }
+        });
+
+        disagree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
+
+    private void sendSMS(String phoneNumber, String message) {
+        String SENT = "SMS_SENT";
+        String DELIVERED = "SMS_DELIVERED";
+
+        PendingIntent sentPI = PendingIntent.getBroadcast(this, 0,new Intent(SENT), 0);
+        PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0,new Intent(DELIVERED), 0);
+
+        //---when the SMS has been sent---
+        registerReceiver(new BroadcastReceiver(){
+            @Override
+            public void onReceive(Context arg0, Intent arg1) {
+                switch (getResultCode())
+                {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(getBaseContext(), "SMS sent",Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        Toast.makeText(getBaseContext(), "Generic failure",Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        Toast.makeText(getBaseContext(), "No service",Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        Toast.makeText(getBaseContext(), "Null PDU",Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        Toast.makeText(getBaseContext(), "Radio off",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }, new IntentFilter(SENT));
+
+        //---when the SMS has been delivered---
+        registerReceiver(new BroadcastReceiver(){
+            @Override
+            public void onReceive(Context arg0, Intent arg1) {
+                switch (getResultCode())
+                {
+                    case Activity.RESULT_OK:
+                        //  Toast.makeText(getBaseContext(), "SMS delivered",Toast.LENGTH_SHORT).show();
+                        Custom_Dialog CM_SMS_Delievered = new Custom_Dialog();
+                        CM_SMS_Delievered.showDialog_Vehicle_IN_OUT(Vehicle_Out_Activity.this, "SMS delivered ");                     //  Toast.makeText(getBaseContext(), \"SMS delivered\",Toast.LENGTH_SHORT).show();\n");
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Custom_Dialog CM_SMS_Delievered_Not = new Custom_Dialog();
+                        CM_SMS_Delievered_Not.showDialog_Vehicle_IN_OUT(Vehicle_Out_Activity.this, "SMS not delivered");
+                       /* Toast.makeText(getBaseContext(), "SMS not delivered",
+                                Toast.LENGTH_SHORT).show();*/
+                        break;
+                }
+            }
+        }, new IntentFilter(DELIVERED));
+
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+    }
 
 
 
