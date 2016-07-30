@@ -37,15 +37,19 @@ public class IncomingSms extends BroadcastReceiver {
 
                     Log.i("SmsReceiver", "senderNum: "+ senderNum + "; message: " + message);
 
+                    if(senderNum.equalsIgnoreCase("TD-HPGOVT")) {
                    /* int duration = Toast.LENGTH_LONG;
                     Toast toast = Toast.makeText(context, "senderNum: "+ senderNum + ", message: " + message, duration);
                     toast.show();*/
-                    //	CustomDialog.showDialog(context,message);
-                    Intent mIntent = new Intent(context,ReceiveMessage.class); //Same as above two lines
-                    mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mIntent.putExtra("Message",message);
-                    mIntent.putExtra("Sender_Number",senderNum);
-                    context.startActivity(mIntent);
+                        //	CustomDialog.showDialog(context,message);
+                        Intent mIntent = new Intent(context, ReceiveMessage.class); //Same as above two lines
+                        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mIntent.putExtra("Message", message);
+                        mIntent.putExtra("Sender_Number", senderNum);
+                        context.startActivity(mIntent);
+                    }else{
+                        Log.e("","Message from other Senders.");
+                    }
                 } // end for loop
             } // bundle is null
 

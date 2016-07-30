@@ -25,10 +25,11 @@ public class Vehicle_Out_Offline extends Activity{
     String ID = null;
     StringBuilder SB = null;
     String CarNumber = null;
+    String MobileNumber = null;
     String DataSend_Out = null;
     Button bt_agree;
     Button disagree;
-    EditText et_carnumber;
+    EditText et_carnumber,et_phonenumber;
     TextView SMS;
 
     @Override
@@ -43,6 +44,7 @@ public class Vehicle_Out_Offline extends Activity{
 
 
         et_carnumber = (EditText)findViewById(R.id.car_);
+        et_phonenumber = (EditText)findViewById(R.id.phonenumber);
          bt_agree = (Button)findViewById(R.id.agree);
          disagree = (Button)findViewById(R.id.dialog_cancel);
          SMS = (TextView)findViewById(R.id.sms);
@@ -58,7 +60,8 @@ public class Vehicle_Out_Offline extends Activity{
 
                 Log.e("Car Number", "We Are Here");
                 CarNumber = et_carnumber.getText().toString();
-                System.out.println("Car Number is: "+ CarNumber);
+                MobileNumber =  et_phonenumber.getText().toString();
+                System.out.println("Car Number is: "+ CarNumber+" "+ MobileNumber);
                 //Send SMS
                 SB = new StringBuilder();
                 SB.append("HP PARK OUT");
@@ -66,6 +69,8 @@ public class Vehicle_Out_Offline extends Activity{
                 SB.append(ID);
                 SB.append(" ");
                 SB.append(CarNumber);
+                SB.append(" ");
+                SB.append(MobileNumber);
                 DataSend_Out = SB.toString().trim();
                 System.out.println("SMS  "+ DataSend_Out);
                 Log.e("SMS",DataSend_Out);
