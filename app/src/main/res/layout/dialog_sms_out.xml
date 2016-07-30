@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="500dp"
+    android:layout_height="300dp"
     android:orientation="vertical"
     android:background="#FFFFFF">
 
@@ -49,13 +49,15 @@
             android:layout_width="fill_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/carnumber"
+                android:id="@+id/car_"
                 android:inputType="textCapCharacters"
                 android:layout_width="wrap_content"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
+
         </LinearLayout>
 
 
@@ -116,7 +118,7 @@
             android:text="Cancel"/>
 
         <Button
-            android:id="@+id/dialog_ok"
+            android:id="@+id/agree"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.50"

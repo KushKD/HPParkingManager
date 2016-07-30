@@ -98,23 +98,31 @@ public class Vehicle_In_Activity extends Activity implements AsyncTaskListener {
                             if(AppStatus.getInstance(Vehicle_In_Activity.this).isOnline()) {
                                String URL = EConstants.Production_URL+"getParkingTransaction_JSON";
                                 new Generic_Async_Post(Vehicle_In_Activity.this, Vehicle_In_Activity.this, TaskType.VEHICLE_IN).execute("getParkingTransaction_JSON",URL,Parking_ID,typecar,car_number,"",phonenumber,Long.toString(estimated_Time),formattedDate);
+                            }else{
+                                Toast.makeText(Vehicle_In_Activity.this, "Please connect to Internet.", Toast.LENGTH_SHORT).show();
+                                //Send SMS
+                                StringBuilder SB = null;
+                                 SB = new StringBuilder();
+                                SB.append("HP PARK IN");SB.append(" ");
+                                SB.append(Parking_ID);SB.append(" ");
+                                SB.append(car_number); SB.append(" ");
+                                SB.append(phonenumber); SB.append(" ");
+                               // SB.append(typecar);SB.append(" ");
+                                if(typecar.equalsIgnoreCase("Small Car")){
+                                    SB.append("1");SB.append(" ");
+                                }else{
+                                    SB.append("2");SB.append(" ");
+                                }
+                                SB.append(Long.toString(estimated_Time));
+                                String DATASEND = SB.toString().trim();
+
+                                //Send an SMS Alert
+                                ShowAlert_SMS(DATASEND);
+                                Log.e("SMS :",DATASEND);
+                                Log.e("SMS Length",Integer.toString(DATASEND.length()));
                             }
                         }else{
-                            Toast.makeText(Vehicle_In_Activity.this, "Please connect to Internet.", Toast.LENGTH_SHORT).show();
-                            //Send SMS
-                            StringBuilder SB = new StringBuilder();
-                            SB.append("HP PARK IN");SB.append(" ");
-                            SB.append(Parking_ID);SB.append(" ");
-                            SB.append(car_number); SB.append(" ");
-                            SB.append(phonenumber); SB.append(" ");
-                            SB.append(typecar);SB.append(" ");
-                            SB.append(Long.toString(estimated_Time));
-                            String DATASEND = SB.toString().trim();
-
-                            //Send an SMS Alert
-                            ShowAlert_SMS(DATASEND);
-                            Log.e("SMS :",DATASEND);
-                            Log.e("SMS Length",Integer.toString(DATASEND.length()));
+                            Toast.makeText(Vehicle_In_Activity.this, "Something is Bad..", Toast.LENGTH_SHORT).show();
 
                         }
                     }else{
@@ -228,7 +236,7 @@ public class Vehicle_In_Activity extends Activity implements AsyncTaskListener {
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
     }
 
-    @Override
+    @ Override
     public void onTaskCompleted(String result, TaskType taskType) {
 
         if(taskType == TaskType.VEHICLE_IN) {

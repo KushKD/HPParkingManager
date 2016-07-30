@@ -68,6 +68,8 @@
 
         <activity android:name=".ReceiveMessage"
             android:theme="@style/Theme.Smspopuptheme"></activity>
+
+        <activity android:name=".Vehicle_Out_Offline"></activity>
     </application>
 
 </manifest>
