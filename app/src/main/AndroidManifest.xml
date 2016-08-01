@@ -47,29 +47,39 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Vehicle_Out_Activity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Vehicle_Out_Details_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".Online_Inbox_Activity" />
-        <activity android:name=".Online_Inbox_Details_Activity" />
-        <activity android:name=".Online_Outbox_Activity" />
-        <activity android:name=".Online_Outbox_Details_Activity" />
+        <activity android:name=".Online_Inbox_Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Online_Inbox_Details_Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Online_Outbox_Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Online_Outbox_Details_Activity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Reports_Activity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".List_Reports"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Login_Activity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".ReceiveMessage"
-            android:theme="@style/Theme.Smspopuptheme"></activity>
+            android:theme="@style/Theme.Smspopuptheme"
+            android:screenOrientation="portrait" ></activity>
 
-        <activity android:name=".Vehicle_Out_Offline"></activity>
+        <activity android:name=".Vehicle_Out_Offline"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
