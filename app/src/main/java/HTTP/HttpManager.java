@@ -256,6 +256,7 @@ public class HttpManager {
         String OUT_Time = null;
         String Result_to_Show = null;
         String URL = null;
+        String Aadhaar = null;
 
         try {
 
@@ -265,6 +266,7 @@ public class HttpManager {
             Phone_number = params[4];
             Vehicle_NO = params[5];
             OUT_Time = params[6];
+            Aadhaar = params[7];
 
 
             url_ =new URL(URL);
@@ -285,12 +287,13 @@ public class HttpManager {
                     .key("DriverName").value(Driver_Name)
                     .key("PhoneNumber").value(Phone_number)
                     .key("OutTime").value(OUT_Time)
+                    .key("OprAadhaar").value(Aadhaar)
                     .endObject()
                     .endObject();
 
 
             //  System.out.println(userJson.toString());
-            //  Log.e("Object",userJson.toString());
+              Log.e("Object",userJson.toString());
             OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
             out.write(userJson.toString());
             out.close();

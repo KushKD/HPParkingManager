@@ -3,6 +3,7 @@ package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +41,8 @@ public class Vehicle_Out_Details_Activity extends Activity implements AsyncTaskL
     StringBuilder sb = null;
     JSONStringer userJson = null;
     String OUT_TIME = null;
+    String Aadhaar = null;
+    private String Server_MAin_Time = null;
 
 
 
@@ -50,6 +53,17 @@ public class Vehicle_Out_Details_Activity extends Activity implements AsyncTaskL
 
         Intent getRoomDetailsIntent = getIntent();
         final Out_Pojo OUT_Details =  (Out_Pojo) getRoomDetailsIntent.getSerializableExtra("ADS_Details");
+
+        SharedPreferences settings = getSharedPreferences(EConstants.PREF_NAME, MODE_PRIVATE);
+
+        // Writing data to SharedPreferences
+      // SharedPreferences.Editor editor = settings.edit();
+      //  editor.putString("key", "some value");
+       // editor.commit();
+
+        // Reading from SharedPreferences
+        Aadhaar = settings.getString("OperatorAadhaarNo", "");
+        Log.e(" New Aadhaar is", Aadhaar);
 
 
                 tv_parkingid = (TextView)findViewById(R.id.parkingid);
@@ -131,7 +145,7 @@ public class Vehicle_Out_Details_Activity extends Activity implements AsyncTaskL
                     String vehicle_number = OUT_Details.getVehicleNo();
                     String out_time = tv_outtime.getText().toString().trim();
                     String URL = EConstants.Production_URL+"getConfirmPayment_JSON";
-                    new Generic_Async_Post(Vehicle_Out_Details_Activity.this, Vehicle_Out_Details_Activity.this, TaskType.VEHICLE_CHECK_OUT_CONFIRM).execute("getConfirmPayment_JSON",URL,parking_id,drivername,phone_number,vehicle_number,OUT_TIME);
+                    new Generic_Async_Post(Vehicle_Out_Details_Activity.this, Vehicle_Out_Details_Activity.this, TaskType.VEHICLE_CHECK_OUT_CONFIRM).execute("getConfirmPayment_JSON",URL,parking_id,drivername,phone_number,vehicle_number,Server_MAin_Time,Aadhaar);
 
 
                 }else{
@@ -149,6 +163,9 @@ public class Vehicle_Out_Details_Activity extends Activity implements AsyncTaskL
 
         if(taskType == TaskType.VEHICLE_CHECK_OUT) {
             String Result_to_Show = null;
+            Log.e("New Result",result);
+            Server_MAin_Time = result.substring(result.indexOf("(")+1,result.indexOf(")"));
+            Log.e("Server_MAin_Time",Server_MAin_Time);
             Result_to_Show = Vehicle_In_Out_Json.Vehicle_Out_Parse(result);
             Custom_Dialog CM = new Custom_Dialog();
             CM.showDialog(Vehicle_Out_Details_Activity.this, Result_to_Show);

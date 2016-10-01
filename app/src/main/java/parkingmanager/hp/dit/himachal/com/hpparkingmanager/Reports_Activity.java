@@ -59,6 +59,8 @@ public class Reports_Activity extends Activity implements View.OnClickListener {
     private int hour;
     private int minute;
     private String ID_Parking = null;
+    private String Aadhaar_Parking = null;
+    private String flag = null;
 
     URL url_;
     HttpURLConnection conn_;
@@ -74,7 +76,11 @@ public class Reports_Activity extends Activity implements View.OnClickListener {
         Bundle bundle = getIntent().getExtras();
 
         ID_Parking = bundle.getString("ID");
+        Aadhaar_Parking = bundle.getString("Aadhaar");
+        flag = bundle.getString("Flag");
         Log.e("id",ID_Parking);
+        Log.e("Aadhaar",Aadhaar_Parking);
+        Log.e("Flag",flag);
 
         bt_back = (Button)findViewById(R.id.back);
         bt_getreport = (Button)findViewById(R.id.getreport);
@@ -165,6 +171,8 @@ public class Reports_Activity extends Activity implements View.OnClickListener {
 
                      Intent I_List = new Intent(Reports_Activity.this,List_Reports.class);
                     I_List.putExtra("ID",ID_Parking);
+                    I_List.putExtra("Aadhaar",Aadhaar_Parking);
+                    I_List.putExtra("Flag",flag);
                     I_List.putExtra("FROM",Changed_from_date_time);
                     I_List.putExtra("TO",Changed_to_date_time);
                     startActivity(I_List);

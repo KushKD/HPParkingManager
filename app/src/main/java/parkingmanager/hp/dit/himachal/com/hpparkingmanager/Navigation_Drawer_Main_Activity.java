@@ -194,7 +194,9 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         if (id == R.id.nav_collection_report) {
 
             Intent i  = new Intent(Navigation_Drawer_Main_Activity.this,Reports_Activity.class);
+            i.putExtra("Aadhaar",aadhaar);
             i.putExtra("ID",ParkingID);
+            i.putExtra("Flag","no");
             startActivity(i);
 
             return true;
@@ -231,6 +233,8 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
             //Toast.makeText(getApplicationContext(),"individual_report Clicked",Toast.LENGTH_LONG).show();
             Intent i  = new Intent(Navigation_Drawer_Main_Activity.this,Individual_Reports_Activity.class);
             i.putExtra("Aadhaar",aadhaar);
+            i.putExtra("ID",ParkingID);
+            i.putExtra("Flag","yes");
             startActivity(i);
 
 

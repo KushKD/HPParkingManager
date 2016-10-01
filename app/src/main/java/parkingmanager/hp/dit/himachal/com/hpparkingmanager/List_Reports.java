@@ -39,6 +39,8 @@ public class List_Reports extends Activity {
     private String Date_Service_From = null;
     private  String Date_Service_To = null;
     private String ID_Server = null;
+    private String Aadhaar_Server = null;
+    private String flag_server = null;
     private String Reformated_From_Date,Reformated_To_Date = null;
 
     private String Date_Service = null;
@@ -60,6 +62,8 @@ public class List_Reports extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         ID_Server = bundle.getString("ID");
+        Aadhaar_Server = bundle.getString("Aadhaar");
+        flag_server = bundle.getString("Flag");
         Date_Service_From = bundle.getString("FROM");
         Date_Service_To = bundle.getString("TO");
 
@@ -121,7 +125,13 @@ public class List_Reports extends Activity {
 
 
             try {
-                url_ =new URL(EConstants.Production_URL+"getDailyReport_JSON");
+                if(flag_server.equalsIgnoreCase("yes")){
+                    url_ =new URL(EConstants.Production_URL+"getDailyReportOpr_JSON");
+                }else{
+                    url_ =new URL(EConstants.Production_URL+"getDailyReport_JSON");
+                }
+
+                Log.e("URL",url_.toString());
                 conn_ = (HttpURLConnection)url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -131,18 +141,22 @@ public class List_Reports extends Activity {
                 conn_.setRequestProperty("Content-Type", "application/json");
                 conn_.connect();
 
-                userJson = new JSONStringer()
-                        .object().key("fDate")
-                        .object()
-                        .key("ParkingId").value(P_ID_Server)
-                        .key("FromDate").value(FromDate_Server)
-                        .key("LastDate").value(ToDate_Server)
-                        .endObject()
-                        .endObject();
+
+                    userJson = new JSONStringer()
+                            .object().key("fDate")
+                            .object()
+                            .key("ParkingId").value(P_ID_Server)
+                            .key("FromDate").value(FromDate_Server)
+                            .key("LastDate").value(ToDate_Server)
+                            .key("Aadhaar").value(Aadhaar_Server)
+                            .endObject()
+                            .endObject();
+
 
 
                 System.out.println(userJson.toString());
                 Log.e("Object",userJson.toString());
+
                 OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
                 out.write(userJson.toString());
                 out.close();
@@ -157,6 +171,7 @@ public class List_Reports extends Activity {
                         }
                         br.close();
                         System.out.println(sb.toString());
+                        Log.e("String Is",sb.toString());
 
                     }else{
                         System.out.println("Server Connection failed.");
@@ -183,7 +198,15 @@ public class List_Reports extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Collection_Reports_pojo = Reports_Collection_Json.parseFeed(result);
+
+            if(flag_server.equalsIgnoreCase("yes")){
+                Collection_Reports_pojo = Reports_Collection_Json.parseFeednew(result);
+            }else{
+                Collection_Reports_pojo = Reports_Collection_Json.parseFeed(result);
+
+            }
+
+
             if(Collection_Reports_pojo.isEmpty()){
                 Toast.makeText(getApplicationContext(),"No record found.",Toast.LENGTH_LONG).show();
             }else
