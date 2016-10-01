@@ -18,7 +18,6 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver android:name=".IncomingSms">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
@@ -35,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Navigation_Drawer_Main_Activity"
             android:launchMode="singleInstance"
@@ -48,38 +46,43 @@
         <activity
             android:name=".Vehicle_Out_Activity"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vehicle_Out_Details_Activity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-        <activity android:name=".Online_Inbox_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Online_Inbox_Details_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Online_Outbox_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Online_Outbox_Details_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Online_Inbox_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Online_Inbox_Details_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Online_Outbox_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Online_Outbox_Details_Activity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Reports_Activity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".List_Reports"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Login_Activity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".ReceiveMessage"
-            android:theme="@style/Theme.Smspopuptheme"
-            android:screenOrientation="portrait" ></activity>
-
-        <activity android:name=".Vehicle_Out_Offline"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReceiveMessage"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Smspopuptheme" />
+        <activity
+            android:name=".Vehicle_Out_Offline"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Individual_Reports_Activity"></activity>
     </application>
 
 </manifest>

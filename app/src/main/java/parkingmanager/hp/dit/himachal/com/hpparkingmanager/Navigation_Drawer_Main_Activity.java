@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import HelperFunctions.AppStatus;
+import Presentation.Custom_Dialog;
 import Utils.EConstants;
 
 public class Navigation_Drawer_Main_Activity extends AppCompatActivity
@@ -197,7 +198,45 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
             startActivity(i);
 
             return true;
-        } else{
+        }else if (id == R.id.logout) {
+
+            try{
+                SharedPreferences settings = getSharedPreferences(EConstants.PREF_NAME, 0); // 0 - for private mode
+                SharedPreferences.Editor editor = settings.edit();
+                //Set "hasLoggedIn" to true
+                editor.putBoolean("hasLoggedIn", false);
+                editor.putString("ParkingID","");
+                editor.putString("AlternateMobileNumber","");
+                editor.putString("Email","");
+                editor.putString("MobileNumber","");
+                editor.putString("OperatorAadhaarNo","");
+                editor.putString("OperatorName","");
+                editor.putString("ParkingLandmark","");
+                editor.putString("ParkingLocation","");
+                // Commit the edits!
+                editor.commit();
+                Intent i  = new Intent(Navigation_Drawer_Main_Activity.this,Login_Activity.class);
+                //i.putExtra("ID",ParkingID);
+                startActivity(i);
+                Navigation_Drawer_Main_Activity.this.finish();
+
+            }catch(Exception e){
+                Custom_Dialog CM  = new Custom_Dialog();
+                CM.showDialog(Navigation_Drawer_Main_Activity.this,e.getLocalizedMessage().toString());
+            }
+
+            return true;
+        } else if (id == R.id.individual_report) {
+
+            //Toast.makeText(getApplicationContext(),"individual_report Clicked",Toast.LENGTH_LONG).show();
+            Intent i  = new Intent(Navigation_Drawer_Main_Activity.this,Individual_Reports_Activity.class);
+            i.putExtra("Aadhaar",aadhaar);
+            startActivity(i);
+
+
+
+            return true;
+        } else {
             Toast.makeText(getApplicationContext(),"No idea whats going on.",Toast.LENGTH_LONG).show();
         }
 
