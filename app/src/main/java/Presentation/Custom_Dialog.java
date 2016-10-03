@@ -42,6 +42,8 @@ public class Custom_Dialog {
 
         }
 
+
+
     public void showDialog_Vehicle_IN_OUT(final Activity activity, String msg){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -116,7 +116,7 @@ public class HttpManager {
 
 
           //  System.out.println(userJson.toString());
-          //  Log.e("Object",userJson.toString());
+            Log.e("Object",userJson.toString());
             OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
             out.write(userJson.toString());
             out.close();

@@ -8,8 +8,8 @@ android {
         applicationId "parkingmanager.hp.dit.himachal.com.hpparkingmanager"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 5
-        versionName "1.5"
+        versionCode 6
+        versionName "6.5"
     }
     buildTypes {
         release {

@@ -1,11 +1,13 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
@@ -81,23 +83,108 @@ public class Vehicle_In_Activity extends Activity implements AsyncTaskListener {
             @Override
             public void onClick(View v) {
 
-                String typecar = s_typecar.getSelectedItem().toString().trim();
-                long estimated_Time = s_estimatedtime.getSelectedItemId();
-                Log.e("Time",Long.toString(estimated_Time));
-                String car_number = carnumber_.getText().toString().trim();
-                String phonenumber = phonenumber_.getText().toString().trim();
-                String Parking_ID = ID.trim();
+              final  String typecar = s_typecar.getSelectedItem().toString().trim();
+
+
+              final  long estimated_Time = s_estimatedtime.getSelectedItemId();
+
+                Log.e("Final Estimated Time",Long.toString(estimated_Time));
+               final String car_number = carnumber_.getText().toString().trim();
+               final String phonenumber = phonenumber_.getText().toString().trim();
+               final String Parking_ID = ID.trim();
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String formattedDate = df.format(c.getTime());
+                final  String formattedDate = df.format(c.getTime());
                 String IN_TIME = formattedDate;
 
                 if(phonenumber.length()==10 && phonenumber!=null){
                     if(car_number.length()!=0 && car_number!=null){
                         if(Parking_ID.length()!=0 && Parking_ID!=null){
                             if(AppStatus.getInstance(Vehicle_In_Activity.this).isOnline()) {
-                               String URL = EConstants.Production_URL+"getParkingTransaction_JSON";
-                                new Generic_Async_Post(Vehicle_In_Activity.this, Vehicle_In_Activity.this, TaskType.VEHICLE_IN).execute("getParkingTransaction_JSON",URL,Parking_ID,typecar,car_number,"",phonenumber,Long.toString(estimated_Time),formattedDate);
+                              final String URL = EConstants.Production_URL+"getParkingTransaction_JSON";
+
+                                //Add Alert
+                                if(estimated_Time>0){
+                                    String message = Long.toString(estimated_Time);
+                                    String main_message = null;
+
+                                    switch(message){
+
+                                        case "1": message.equalsIgnoreCase("1");
+                                            main_message = "Upto 3 Hours";
+                                            break;
+
+                                        case "2": message.equalsIgnoreCase("2");
+                                            main_message = "Upto 4 Hours";
+                                            break;
+
+                                        case "3": message.equalsIgnoreCase("3");
+                                            main_message = "Upto 6 Hours";
+                                            break;
+
+                                        case "4": message.equalsIgnoreCase("4");
+                                            main_message = "Upto 8 Hours";
+                                            break;
+
+                                        case "5": message.equalsIgnoreCase("5");
+                                            main_message = "Upto 10 Hours";
+                                            break;
+
+                                        case "6": message.equalsIgnoreCase("6");
+                                            main_message = "Upto 12 Hours";
+                                            break;
+
+                                        case "7": message.equalsIgnoreCase("7");
+                                            main_message = "Upto 24 Hours";
+                                            break;
+
+                                        case "8": message.equalsIgnoreCase("8");
+                                            main_message = "Upto 1 Month";
+                                            break;
+
+                                        case "9": message.equalsIgnoreCase("9");
+                                            main_message = "Upto 1 Hour";
+                                            break;
+
+
+                                        default: main_message = "Something Bad Happened";
+                                            break;
+
+                                    }
+
+                                    Log.e("Time for alert",Long.toString(estimated_Time));
+                                  // Custom_Dialog CD = new Custom_Dialog();
+                                  //  CD.showDialog(Vehicle_In_Activity.this,"You have selected " + main_message +". \n Are You sure you want to continue?");
+                                    Log.e("Time After Selection",Long.toString(estimated_Time));
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(Vehicle_In_Activity.this);
+                                    builder.setMessage("You have selected " + main_message +". \n Are You sure you want to continue?")
+                                            .setCancelable(false)
+                                            .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    new Generic_Async_Post(Vehicle_In_Activity.this, Vehicle_In_Activity.this, TaskType.VEHICLE_IN).execute("getParkingTransaction_JSON",URL,Parking_ID,typecar,car_number,"",phonenumber,Long.toString(estimated_Time),formattedDate);
+
+                                                }
+                                            })
+                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+
+                                   //   }
+                                    // else{
+
+                                   }else {
+                                    Log.e("Time",Long.toString(estimated_Time));
+                                    new Generic_Async_Post(Vehicle_In_Activity.this, Vehicle_In_Activity.this, TaskType.VEHICLE_IN).execute("getParkingTransaction_JSON",URL,Parking_ID,typecar,car_number,"",phonenumber,Long.toString(estimated_Time),formattedDate);
+
+                                }
+
+
+
+
                             }else{
                                 Toast.makeText(Vehicle_In_Activity.this, "Please connect to Internet.", Toast.LENGTH_SHORT).show();
                                 //Send SMS
@@ -122,14 +209,19 @@ public class Vehicle_In_Activity extends Activity implements AsyncTaskListener {
                                 Log.e("SMS Length",Integer.toString(DATASEND.length()));
                             }
                         }else{
-                            Toast.makeText(Vehicle_In_Activity.this, "Something is Bad..", Toast.LENGTH_SHORT).show();
+                            Custom_Dialog CM = new Custom_Dialog();
+                            CM.showDialog(Vehicle_In_Activity.this,"Something is Bad..");
 
                         }
                     }else{
-                        Toast.makeText(Vehicle_In_Activity.this, "Please enter vehicle number", Toast.LENGTH_SHORT).show();
+                        Custom_Dialog CM1 = new Custom_Dialog();
+                        CM1.showDialog(Vehicle_In_Activity.this,"Please enter vehicle number");
+                       // Toast.makeText(Vehicle_In_Activity.this, "Please enter vehicle number", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(Vehicle_In_Activity.this, "Please enter valid 10 digit phone number.", Toast.LENGTH_SHORT).show();
+                    Custom_Dialog CM2 = new Custom_Dialog();
+                    CM2.showDialog(Vehicle_In_Activity.this,"Please enter valid 10 digit phone number.");
+                  //  Toast.makeText(Vehicle_In_Activity.this, "Please enter valid 10 digit phone number.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
