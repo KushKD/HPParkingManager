@@ -7,29 +7,30 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_weight="1">
 
         <RelativeLayout
-            android:id="@+id/header_login"
+            android:id="@+id/header_register"
             android:layout_width="fill_parent"
             android:gravity="center|center_horizontal|center_vertical"
-            android:background="#FF545454"
             android:layout_height="fill_parent">
 
-            <TextView
-                android:id="@+id/tvheader"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/register"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="LOGIN"
+                android:text="Register Parking"
+                android:gravity="center|center_vertical|center_horizontal"
                 android:paddingBottom ="10dip"
-
-                android:textColor="#FFFFFF"
-                android:textSize="30dip"
+                android:background="#006600"
+                android:textColor="#ffffff"
+                android:textSize="20dip"
                 android:layout_margin="2dip"
                 android:textStyle="bold"
                 android:typeface="sans"
@@ -45,6 +46,46 @@
 
 
     </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:id="@+id/header_login"
+            android:layout_width="fill_parent"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:background="#FF545454"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:id="@+id/tvheader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="LOGIN"
+
+                android:textColor="#FFFFFF"
+                android:textSize="26dip"
+                android:textStyle="bold"
+                android:typeface="sans"
+                />
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
 
 
     <!-- Login Procedure -->
@@ -102,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:hint="An OTP is sent to your registered Mobile number. Please enter the OTP"
                     android:textColor="#FF545454"
-                    android:textSize="22sp"
+                    android:textSize="16sp"
                     android:layout_marginTop="18dp" />
 
                 <EditText

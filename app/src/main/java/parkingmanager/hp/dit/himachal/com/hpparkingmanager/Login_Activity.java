@@ -36,6 +36,7 @@ public class Login_Activity extends Activity implements AsyncTaskListener {
     private TextView tv_header;
     private  String aadhaar , otp = null;
     RelativeLayout Login_Header;
+    Button register_bt;
 
 
     @Override
@@ -57,6 +58,13 @@ public class Login_Activity extends Activity implements AsyncTaskListener {
                 @Override
                 public void onClick(View v) {
                     getOtpandAadhaa();
+                }
+            });
+            register_bt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent I_Map = new Intent(Login_Activity.this,Add_Parking.class);
+                    startActivity(I_Map);
                 }
             });
 
@@ -153,6 +161,7 @@ public class Login_Activity extends Activity implements AsyncTaskListener {
         try{
             button_submit = (Button)findViewById(R.id.bt_login);
             button_getOTP = (Button)findViewById(R.id.bt_getotp);
+            register_bt = (Button)findViewById(R.id.register);
             editText_aadhaarLogin = (EditText)findViewById(R.id.et_aadhaar);
             editText_otpLogin = (EditText)findViewById(R.id.et_otp);
             l1 = (LinearLayout)findViewById(R.id.otp);
