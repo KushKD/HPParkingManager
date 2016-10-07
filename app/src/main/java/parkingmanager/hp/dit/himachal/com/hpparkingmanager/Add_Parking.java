@@ -1,7 +1,9 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -9,6 +11,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +51,8 @@ public class Add_Parking extends FragmentActivity implements
     LatLng latLng;
     Marker currLocationMarker;
     private GoogleMap mMap;
-    private TextView tv_latitude,tv_longitude;
+    public TextView tv_latitude,tv_longitude;
+    Button addparking_bt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +64,27 @@ public class Add_Parking extends FragmentActivity implements
         mapFragment.getMapAsync(this);
 
         tv_latitude = (TextView)findViewById(R.id.latitudetv);
-        tv_latitude = (TextView)findViewById(R.id.longitudetv);
+        tv_longitude = (TextView)findViewById(R.id.longitudetv);
+        addparking_bt = (Button)findViewById(R.id.addparking);
+
+        addparking_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if(tv_latitude.getText().length()!= 0 && tv_longitude.getText().length()!=0){
+
+                    Intent i = new Intent(Add_Parking.this,Add_Parking_Here.class);
+                    i.putExtra("LATITUDE",tv_latitude.getText().toString());
+                    i.putExtra("LONGITUDE",tv_longitude.getText().toString());
+                    startActivity(i);
+                }else{
+
+                    Custom_Dialog CD  = new Custom_Dialog();
+                    CD.showDialog(Add_Parking.this,"Please go to the settings and  enable your GPS Location.");
+                }
+            }
+        });
 
 
     }
@@ -199,8 +224,8 @@ public class Add_Parking extends FragmentActivity implements
             currLocationMarker.remove();
         }
         latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
+        //MarkerOptions markerOptions = new MarkerOptions();
+       // markerOptions.position(latLng);
         if(latLng!=null){
 
          //   tv_latitude.setText(Double.toString((location.getLatitude())));
@@ -208,15 +233,19 @@ public class Add_Parking extends FragmentActivity implements
 
             Log.e("Latitude",Double.toString(location.getLatitude()));
             Log.e("Longitude",Double.toString(location.getLongitude()));
-            markerOptions.title("Latitude: \t"+Double.toString(location.getLatitude())+"\n Longitude:-"+ Double.toString(location.getLongitude()));
+           // markerOptions.title("Latitude: \t"+Double.toString(location.getLatitude())+"\n Longitude:-"+ Double.toString(location.getLongitude()));
+
+            //Update TextView
+            new update_View_GPS().execute(Double.toString(location.getLatitude()),Double.toString(location.getLongitude()));
+
 
         }else{
-            // tv_latitude.setText(Double.toString((latLng.latitude)));
-            // tv_longitude.setText(Double.toString((latLng.longitude)));
+             tv_latitude.setText("N/A");
+             tv_longitude.setText("N/A");
         }
         //
-         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        currLocationMarker = mMap.addMarker(markerOptions);
+        // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        //currLocationMarker = mMap.addMarker(markerOptions);
 
 
         Location CurrentLocation = new Location("Current Location");
@@ -259,4 +288,43 @@ public class Add_Parking extends FragmentActivity implements
     }
 
 
-}
+    public class update_View_GPS extends AsyncTask<String,String,String[]>{
+
+        String[] GPS_ = new String[2]; // <--initialized statement
+
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            tv_latitude.setText("");
+            tv_longitude.setText("");
+        }
+
+        @Override
+        protected String[] doInBackground(String... params) {
+
+
+            GPS_[0] = params[0];
+            GPS_[1] = params[1];
+
+            Log.e("Latitude Async", GPS_[0] );
+            Log.e("Longitude Async", GPS_[1] );
+
+            return GPS_;
+        }
+
+        @Override
+        protected void onPostExecute(String[] s) {
+           // super.onPreExecute(s);
+            Log.e("Latitude Async Post", s[0] );
+            Log.e("Longitude Async Post", s[1] );
+             tv_latitude.setText(s[0]);
+             tv_longitude.setText(s[1]);
+
+        }
+        }
+    }
+
+
+
