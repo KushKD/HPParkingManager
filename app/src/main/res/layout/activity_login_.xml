@@ -30,6 +30,7 @@
                 android:paddingBottom ="10dip"
                 android:background="#006600"
                 android:textColor="#ffffff"
+                android:visibility="gone"
                 android:textSize="20dip"
                 android:layout_margin="2dip"
                 android:textStyle="bold"
