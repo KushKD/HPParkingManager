@@ -1,16 +1,10 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -33,11 +26,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapters.Out_Adapter;
+import Adapters.OUT_Adapter;
 import HelperFunctions.AppStatus;
 import JsonManager.Out_Json;
-import Model.Out_Pojo;
-import Presentation.Custom_Dialog;
+import Model.OUT_POJO;
 import Utils.EConstants;
 
 public class Vehicle_Out_Activity extends Activity {
@@ -53,8 +45,8 @@ public class Vehicle_Out_Activity extends Activity {
     ListView listv;
     Context context;
     List<GET_CARS_FOR_OUT> tasks;
-    List<Out_Pojo> ads_Server;
-    Out_Adapter adapter;
+    List<OUT_POJO> ads_Server;
+    OUT_Adapter adapter;
     LinearLayout LGone;
     EditText Search_EditText;
     Button refresh;
@@ -118,7 +110,7 @@ public class Vehicle_Out_Activity extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Out_Pojo Ads_Details = (Out_Pojo) parent.getItemAtPosition(position);
+                OUT_POJO Ads_Details = (OUT_POJO) parent.getItemAtPosition(position);
                 Intent userSearch = new Intent();
                 userSearch.putExtra("ADS_Details", Ads_Details);
                 userSearch.setClass(Vehicle_Out_Activity.this, Vehicle_Out_Details_Activity.class);
@@ -234,7 +226,7 @@ public class Vehicle_Out_Activity extends Activity {
                 }else
                 {
                     LGone.setVisibility(View.VISIBLE);
-                    adapter = new Out_Adapter(Vehicle_Out_Activity.this, R.layout.item_out_list, ads_Server);
+                    adapter = new OUT_Adapter(Vehicle_Out_Activity.this, R.layout.item_out_list, ads_Server);
                     listv.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     adapter.setNotifyOnChange (true);

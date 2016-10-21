@@ -9,17 +9,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import HTTP.HttpManager;
 import JsonManager.Out_Json;
-import Model.Out_Pojo;
+import Model.OUT_POJO;
 import Utils.EConstants;
 
 /**
@@ -29,7 +25,7 @@ public class TotalCars extends TextView {
 
 
     private GetAvailability currentTask = null;
-    List<Out_Pojo> ads_Server;
+    List<OUT_POJO> ads_Server;
 
     public TotalCars(Context context) {
         super(context);
@@ -138,7 +134,7 @@ public class TotalCars extends TextView {
                     // Log.e("Server_Value",Server_Value);
                     sb.delete(0, sb.length());
 
-Log.e("Server Value",Server_Value);
+                    Log.e("Server Value",Server_Value);
                     return Server_Value;
                 } catch (Exception e) {
                     return Server_Value = "Error while connecting to server.";
@@ -153,14 +149,17 @@ Log.e("Server Value",Server_Value);
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             // setText(s);
+try {
+    ads_Server = Out_Json.parseFeed(s);
 
-            ads_Server = Out_Json.parseFeed(s);
-
-            if(ads_Server!=null){
-                setText("Total Cars In Parking: " + Integer.toString(ads_Server.size()) );
-            }else{
-                setText("Total Cars In Parking: " + "N/A");
-            }
+    if (ads_Server != null) {
+        setText("Total Cars In Parking: " + Integer.toString(ads_Server.size()));
+    } else {
+        setText("Total Cars In Parking: " + "N/A");
+    }
+}catch(Exception e){
+    setText("Total Cars In Parking: " + "N/A");
+}
 
           /*  Object json = null;
             String G_Table = null;

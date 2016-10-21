@@ -25,7 +25,7 @@ import Utils.EConstants;
 public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView parkingname,parkingidentifier , tv_TextView_ServerConnected;
+    TextView parkingname,parkingidentifier , tv_TextView_ServerConnected, tv_server_rating, tv_server_cars;
     Button back,in,out,inbox,outbox;
 
     String ParkingID=null,Parking_Name=null,name=null,aadhaar=null,Identifier=null;
@@ -37,6 +37,8 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
 
 
         tv_TextView_ServerConnected = (TextView)findViewById(R.id.tv_server);
+        tv_server_rating = (TextView)findViewById(R.id.tv_server_rating);
+        tv_server_cars = (TextView)findViewById(R.id.tv_server_cars);
         SharedPreferences prfs = getSharedPreferences(EConstants.PREF_NAME, Context.MODE_PRIVATE);
 
         ParkingID  = prfs.getString("ParkingID","");
@@ -74,8 +76,8 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         View header=navigationView.getHeaderView(0);
 
         /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
-      TextView  Parking_Name_tv = (TextView)header.findViewById(R.id.parkingname);
-       TextView Parking_Landmark_tv = (TextView)header.findViewById(R.id.landmark);
+        TextView  Parking_Name_tv = (TextView)header.findViewById(R.id.parkingname);
+         TextView Parking_Landmark_tv = (TextView)header.findViewById(R.id.landmark);
         TextView Name_Manager_Tv = (TextView)header .findViewById(R.id.name);
         TextView Aadhaar_Manager_Tv = (TextView)header .findViewById(R.id.aadhaar);
         Parking_Name_tv.setText(Parking_Name);

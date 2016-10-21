@@ -13,7 +13,7 @@ import Model.Inbox_Pojo;
 /**
  * Created by kuush on 6/5/2016.
  */
-public class Inbox_Json {
+public class Inbox_JSON {
 
     public static List<Inbox_Pojo> parseFeed(String content) {
 

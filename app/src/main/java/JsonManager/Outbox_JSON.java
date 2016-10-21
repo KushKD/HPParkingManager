@@ -13,7 +13,7 @@ import Model.Outbox_Pojo;
 /**
  * Created by kuush on 6/6/2016.
  */
-public class Outbox_Json {
+public class Outbox_JSON {
     public static List<Outbox_Pojo> parseFeed(String content) {
 
         try {

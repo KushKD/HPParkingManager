@@ -23,7 +23,7 @@ import java.util.List;
 
 import Adapters.Outbox_Adapter;
 import HelperFunctions.AppStatus;
-import JsonManager.Outbox_Json;
+import JsonManager.Outbox_JSON;
 import Model.Outbox_Pojo;
 import Utils.EConstants;
 
@@ -159,7 +159,7 @@ public class Online_Outbox_Activity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Outbox_Server = Outbox_Json.parseFeed(result);
+            Outbox_Server = Outbox_JSON.parseFeed(result);
             if(Outbox_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else

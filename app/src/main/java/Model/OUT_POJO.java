@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by kuush on 6/3/2016.
  */
-public class Out_Pojo implements Serializable{
+public class OUT_POJO implements Serializable{
 
 
 

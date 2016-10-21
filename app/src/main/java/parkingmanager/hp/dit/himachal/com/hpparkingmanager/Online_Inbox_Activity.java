@@ -28,7 +28,7 @@ import java.util.List;
 
 import Adapters.Inbox_Adapter;
 import HelperFunctions.AppStatus;
-import JsonManager.Inbox_Json;
+import JsonManager.Inbox_JSON;
 import Model.Inbox_Pojo;
 import Utils.EConstants;
 
@@ -206,7 +206,7 @@ public class Online_Inbox_Activity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Inbox_Server = Inbox_Json.parseFeed(result);
+            Inbox_Server = Inbox_JSON.parseFeed(result);
             if(Inbox_Server.isEmpty()){
                 Toast.makeText(getApplicationContext(),"List Empty",Toast.LENGTH_LONG).show();
             }else

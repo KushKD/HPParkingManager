@@ -1,30 +1,24 @@
 package parkingmanager.hp.dit.himachal.com.hpparkingmanager;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.json.JSONException;
+
 import org.json.JSONStringer;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import HelperFunctions.AppStatus;
 import JsonManager.Vehicle_In_Out_Json;
-import Model.Out_Pojo;
+import Model.OUT_POJO;
 import Presentation.Custom_Dialog;
 import Utils.EConstants;
 import Enum.TaskType;
@@ -52,7 +46,7 @@ public class Vehicle_Out_Details_Activity extends Activity implements AsyncTaskL
         setContentView(R.layout.activity_out__details);
 
         Intent getRoomDetailsIntent = getIntent();
-        final Out_Pojo OUT_Details =  (Out_Pojo) getRoomDetailsIntent.getSerializableExtra("ADS_Details");
+        final OUT_POJO OUT_Details =  (OUT_POJO) getRoomDetailsIntent.getSerializableExtra("ADS_Details");
 
         SharedPreferences settings = getSharedPreferences(EConstants.PREF_NAME, MODE_PRIVATE);
 

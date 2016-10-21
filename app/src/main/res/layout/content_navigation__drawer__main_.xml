@@ -94,6 +94,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Presentation.Rating_TextView
+                    android:id="@+id/tv_server_rating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|center_horizontal|center_vertical"
@@ -105,6 +106,7 @@
 
 
                 <Presentation.TotalCars
+                    android:id="@+id/tv_server_cars"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|center_horizontal|center_vertical"
