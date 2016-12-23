@@ -122,26 +122,89 @@
                     android:layout_height="wrap_content"
                     android:text="Requests received from app"
                     android:gravity="center"/>
-                <Button
-                    android:id="@+id/inbox"
-                    android:layout_margin="5dp"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#006838"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:text="Inward"/>
+                    android:weightSum="3"
+                    android:orientation="horizontal">
 
 
-                <Button
-                    android:id="@+id/outbox"
-                    android:layout_margin="5dp"
-                    android:layout_width="match_parent"
-                    android:background="#F7941E"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:text="Outward"/>
+                    <Button
+                        android:id="@+id/inbox"
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#006838"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="1"
+                        android:text="Inward"/>
+
+
+                    <Button
+                        android:id="@+id/outbox"
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:background="#F7941E"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:text="Outward"/>
+
+                    <LinearLayout
+                        android:id="@+id/complainant_details"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/badge_layout1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:gravity="center|center_horizontal|center_vertical">
+
+                            <RelativeLayout
+                                android:id="@+id/relative_layout_item_count"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+
+                                <Button
+                                    android:id="@+id/button1"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="test"/>
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/badge_notification_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignRight="@id/relative_layout_item_count"
+                                android:background="@android:drawable/ic_notification_overlay"
+                                android:text="241"
+                                android:textColor="#FFF"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/relative_layout_item_count"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="10dp"
+                                android:gravity="bottom|center_horizontal|center_vertical"
+                                android:text="Complainant Details"
+                                android:textColor="#000000" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
 
 
             </LinearLayout>
