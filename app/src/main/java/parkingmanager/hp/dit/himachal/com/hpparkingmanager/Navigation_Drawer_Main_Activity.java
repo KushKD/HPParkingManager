@@ -103,7 +103,9 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         tv_server_notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Navigation_Drawer_Main_Activity.this,"Button Clicked",Toast.LENGTH_LONG).show();
+               Intent notifications = new Intent(Navigation_Drawer_Main_Activity.this,Notifications_Details.class);
+                notifications.putExtra("ID",ParkingID);
+                startActivity(notifications);
             }
         });
 

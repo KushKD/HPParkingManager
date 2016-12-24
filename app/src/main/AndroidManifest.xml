@@ -116,7 +116,8 @@
         <activity
             android:name=".Add_Parking"
             android:label="@string/title_activity_add__parking" />
-        <activity android:name=".Add_Parking_Here"></activity>
+        <activity android:name=".Add_Parking_Here" />
+        <activity android:name=".Notifications_Details"></activity>
     </application>
 
 </manifest>

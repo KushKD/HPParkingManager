@@ -169,7 +169,6 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
                                 android:background="@android:drawable/ic_notification_overlay"
-                                android:text="0"
                                 android:gravity="center|center_horizontal|center_vertical"
                                 android:textColor="#FFF"
                                 android:textSize="12sp"
