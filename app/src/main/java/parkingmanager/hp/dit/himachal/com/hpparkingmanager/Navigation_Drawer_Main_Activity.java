@@ -25,7 +25,7 @@ import Utils.EConstants;
 public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView parkingname,parkingidentifier , tv_TextView_ServerConnected, tv_server_rating, tv_server_cars;
+    TextView parkingname,parkingidentifier , tv_TextView_ServerConnected, tv_server_rating, tv_server_cars ,tv_server_notifications;
     Button back,in,out,inbox,outbox;
 
     String ParkingID=null,Parking_Name=null,name=null,aadhaar=null,Identifier=null;
@@ -39,6 +39,7 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
         tv_TextView_ServerConnected = (TextView)findViewById(R.id.tv_server);
         tv_server_rating = (TextView)findViewById(R.id.tv_server_rating);
         tv_server_cars = (TextView)findViewById(R.id.tv_server_cars);
+        tv_server_notifications = (TextView)findViewById(R.id.badge_notification_1);
         SharedPreferences prfs = getSharedPreferences(EConstants.PREF_NAME, Context.MODE_PRIVATE);
 
         ParkingID  = prfs.getString("ParkingID","");
@@ -99,6 +100,12 @@ public class Navigation_Drawer_Main_Activity extends AppCompatActivity
             }
         });
 
+        tv_server_notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Navigation_Drawer_Main_Activity.this,"Button Clicked",Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         inbox.setOnClickListener(new View.OnClickListener() {

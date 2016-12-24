@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:background="#006838"
                         android:textColor="#FFFFFF"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:layout_weight="1"
                         android:text="Inward"/>
 
@@ -150,55 +150,33 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textColor="#FFFFFF"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:text="Outward"/>
 
                     <LinearLayout
-                        android:id="@+id/complainant_details"
+                        android:id="@+id/notifications"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
+                        android:gravity="center|center_horizontal|center_vertical"
                         android:orientation="vertical">
 
-                        <RelativeLayout
-                            android:id="@+id/badge_layout1"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:gravity="center|center_horizontal|center_vertical">
 
-                            <RelativeLayout
-                                android:id="@+id/relative_layout_item_count"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content">
 
-                                <Button
-                                    android:id="@+id/button1"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="test"/>
-                            </RelativeLayout>
-
-                            <TextView
+                            <Presentation.Notifications
                                 android:id="@+id/badge_notification_1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignRight="@id/relative_layout_item_count"
+                                android:layout_margin="3dp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
                                 android:background="@android:drawable/ic_notification_overlay"
-                                android:text="241"
+                                android:text="0"
+                                android:gravity="center|center_horizontal|center_vertical"
                                 android:textColor="#FFF"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/relative_layout_item_count"
-                                android:layout_marginLeft="0dp"
-                                android:layout_marginTop="10dp"
-                                android:gravity="bottom|center_horizontal|center_vertical"
-                                android:text="Complainant Details"
-                                android:textColor="#000000" />
-                        </RelativeLayout>
+
+
 
                     </LinearLayout>
 
