@@ -38,12 +38,10 @@ public class notifications_Adapter extends ArrayAdapter<Notifications>  {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.item_inbox, parent, false);
+        View view = inflater.inflate(R.layout.item_notifications, parent, false);
         Notifications u = inbox_List.get(position);
         TextView tv1 = (TextView)view.findViewById(R.id.itemone);
-        TextView tv2 = (TextView)view.findViewById(R.id.itemtwo);
         tv1.setText(u.getMobileNumber());
-        tv2.setText(u.getNotification());
         return view;
     }
 

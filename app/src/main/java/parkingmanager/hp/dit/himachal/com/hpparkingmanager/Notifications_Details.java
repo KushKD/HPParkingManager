@@ -96,7 +96,7 @@ public class Notifications_Details extends AppCompatActivity {
     protected void updateDisplay() {
 
        // LGone.setVisibility(View.VISIBLE);   //Adapter needs to be changed
-        adapter = new notifications_Adapter(this, R.layout.item_inbox, notifications_Server);
+        adapter = new notifications_Adapter(this, R.layout.item_notifications, notifications_Server);
         listv.setAdapter(adapter);
         //  adapter.notifyDataSetChanged();
         // listv.setTextFilterEnabled(true);
