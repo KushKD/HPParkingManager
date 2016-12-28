@@ -48,11 +48,13 @@ public class Add_Parking_Here extends Activity implements AsyncTaskListener {
     public String Latitude = null;
     public String Longitude = null;
     private TextView tv_latitude, tv_Longitude;
-    private EditText state_tv, address_tv, aadhaar_tv, mobile_number_tv, firstname_tv, capacity_tv, threshold_tv, identifier_tv, area_et;
+    private EditText state_tv,parkingname_et, address_tv, aadhaar_tv, mobile_number_tv, firstname_tv, capacity_tv, threshold_tv, identifier_tv, area_et;
     private Button Back_bt, update_bt;
     private Spinner district_sp, tehsil_sp, village_sp;
     private String districtID = null, tehsilID = null, villageId = null;
     private String districtName = null, tehsilName = null, villageName = null;
+
+    AddParkingPOJO APJ = null;
 
     URL url_;
     HttpURLConnection conn_;
@@ -80,6 +82,7 @@ public class Add_Parking_Here extends Activity implements AsyncTaskListener {
         Log.e("Latitude new Activity", Latitude);
         Log.e("Longitude new Activity", Longitude);
 
+        parkingname_et = (EditText)findViewById(R.id.parkingname);
         tv_latitude = (TextView) findViewById(R.id.latitude);
         tv_Longitude = (TextView) findViewById(R.id.longitude);
         firstname_tv = (EditText) findViewById(R.id.firstname);
@@ -183,52 +186,59 @@ public class Add_Parking_Here extends Activity implements AsyncTaskListener {
     }
 
     private void getData() {
-        AddParkingPOJO APJ = new AddParkingPOJO();
+        APJ = new AddParkingPOJO();
         try {
-
+            APJ.setParkingName(parkingname_et.getText().toString().trim());
             APJ.setLatitude(tv_latitude.getText().toString().trim());
-            Log.e("Latitude", tv_latitude.getText().toString().trim());
             APJ.setLongitude(tv_Longitude.getText().toString().trim());
-            Log.e("Longitude", tv_Longitude.getText().toString().trim());
             APJ.setContact_Person_Name(firstname_tv.getText().toString().trim());
-            Log.e("Name", firstname_tv.getText().toString().trim());
             APJ.setAadhaar_Number(aadhaar_tv.getText().toString().trim());
-            Log.e("Aadhaar", aadhaar_tv.getText().toString().trim());
             APJ.setMobile_number(mobile_number_tv.getText().toString().trim());
-            Log.e("Mobile", mobile_number_tv.getText().toString().trim());
             APJ.setState("Himachal Pradesh");
             APJ.setDistrict(districtID);
-            Log.e("District", districtID);
-            Log.e("District", districtName);
             APJ.setSub_District(tehsilID);
-            Log.e("Tehsil", tehsilID);
-            Log.e("Tehsil", tehsilName);
             APJ.setVillage(villageId);
-            Log.e("Village", villageId);
-            Log.e("Village Name", villageName);
             APJ.setParkingAddress(address_tv.getText().toString().trim());
-            Log.e("Address", address_tv.getText().toString().trim());
             APJ.setIdentifier(identifier_tv.getText().toString().trim());
-            Log.e("Identifier", identifier_tv.getText().toString().trim());
             APJ.setArea(area_et.getText().toString().trim());
-            Log.e("Area", area_et.getText().toString().trim());
             APJ.setCapacity(capacity_tv.getText().toString().trim());
-            Log.e("Capacity", capacity_tv.getText().toString().trim());
             APJ.setThreshold_Limit(threshold_tv.getText().toString().trim());
-            Log.e("Threshold", threshold_tv.getText().toString().trim());
         } catch (Exception ex) {
             CD.showDialog(Add_Parking_Here.this, ex.getLocalizedMessage().toString().trim());
         }
 
         try {
-            //Send Data To Server
-            if (AppStatus.getInstance(Add_Parking_Here.this).isOnline()) {
-                SaveParking C_IN = new SaveParking();
-                C_IN.execute(APJ);
+            //Check the Values
+            if (    APJ.getParkingName() != null && !APJ.getParkingName().isEmpty()&&
+                    APJ.getLatitude() != null && !APJ.getLatitude().isEmpty() &&
+                    APJ.getLongitude() != null && !APJ.getLongitude().isEmpty() &&
+                    APJ.getContact_Person_Name() != null && !APJ.getContact_Person_Name().isEmpty() &&
+                    APJ.getAadhaar_Number() != null && !APJ.getAadhaar_Number().isEmpty() &&
+                    APJ.getMobile_number() != null && !APJ.getMobile_number().isEmpty() &&
+                    APJ.getState() != null && !APJ.getState().isEmpty() &&
+                    APJ.getDistrict() != null && !APJ.getDistrict().isEmpty() &&
+                    APJ.getSub_District() != null && !APJ.getSub_District().isEmpty() &&
+                    APJ.getVillage() != null && !APJ.getVillage().isEmpty() &&
+                    APJ.getParkingAddress() != null && !APJ.getParkingAddress().isEmpty() &&
+                    APJ.getIdentifier() != null && !APJ.getIdentifier().isEmpty() &&
+                    APJ.getArea() != null && !APJ.getArea().isEmpty() &&
+                    APJ.getCapacity() != null && !APJ.getCapacity().isEmpty() &&
+                    APJ.getThreshold_Limit() != null && !APJ.getThreshold_Limit().isEmpty()) {
+
+                if (AppStatus.getInstance(Add_Parking_Here.this).isOnline()) {
+
+                    //Send Data To Server
+                    SaveParking C_IN = new SaveParking();
+                    C_IN.execute(APJ);
+
+                } else {
+                    CD.showDialog(Add_Parking_Here.this, "Please connect to Internet.");
+                }
 
             } else {
-                CD.showDialog(Add_Parking_Here.this, "Please connect to Internet.");
+                CD.showDialog(Add_Parking_Here.this, "Add fields are mandatory.");
             }
+
 
         } catch (Exception ex) {
             CD.showDialog(Add_Parking_Here.this, ex.getLocalizedMessage().toString().trim());
@@ -332,6 +342,7 @@ public class Add_Parking_Here extends Activity implements AsyncTaskListener {
                 userJson = new JSONStringer()
                         .object().key("AddParking")    //Might be changed
                         .object()
+                        .key("ParkingPlace").value(Outbox_Object_result.getParkingName())
                         .key("Latitude").value(Outbox_Object_result.getLatitude())
                         .key("Longitude").value(Outbox_Object_result.getLongitude())
                         .key("Name").value(Outbox_Object_result.getContact_Person_Name())
@@ -346,7 +357,6 @@ public class Add_Parking_Here extends Activity implements AsyncTaskListener {
                         .key("Area").value(Outbox_Object_result.getArea())
                         .key("Capacity").value(Outbox_Object_result.getCapacity())
                         .key("ThresholdLimit").value(Outbox_Object_result.getThreshold_Limit())
-                        .key("DateTime").value(Date_Time.GetDateAndTime())
                         .endObject()
                         .endObject();
 

@@ -8,6 +8,15 @@ import java.io.Serializable;
 
 public class AddParkingPOJO implements Serializable {
 
+    public String getParkingName() {
+        return ParkingName;
+    }
+
+    public void setParkingName(String parkingName) {
+        ParkingName = parkingName;
+    }
+
+    public String ParkingName;
     public String Latitude;
     public String Longitude;
     public String Contact_Person_Name;
