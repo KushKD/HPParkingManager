@@ -329,7 +329,7 @@ public class Add_Parking_Here extends Activity implements AsyncTaskListener {
             AddParkingPOJO Outbox_Object_result = (AddParkingPOJO) objects[0];
 
             try {
-                url_ = new URL(EConstants.Production_URL + "AddParking");   //Might be changed
+                url_ = new URL(EConstants.Production_URL + "AddParkings_JSON");   //Might be changed
                 conn_ = (HttpURLConnection) url_.openConnection();
                 conn_.setDoOutput(true);
                 conn_.setRequestMethod("POST");
@@ -342,7 +342,7 @@ public class Add_Parking_Here extends Activity implements AsyncTaskListener {
                 userJson = new JSONStringer()
                         .object().key("AddParking")    //Might be changed
                         .object()
-                        .key("ParkingPlace").value(Outbox_Object_result.getParkingName())
+                        .key("ParkingName").value(Outbox_Object_result.getParkingName())
                         .key("Latitude").value(Outbox_Object_result.getLatitude())
                         .key("Longitude").value(Outbox_Object_result.getLongitude())
                         .key("Name").value(Outbox_Object_result.getContact_Person_Name())
@@ -407,7 +407,7 @@ public class Add_Parking_Here extends Activity implements AsyncTaskListener {
             String Result = Manage_Json.parseOutward(s);
             dialog.dismiss();
             Custom_Dialog D_C = new Custom_Dialog();
-            D_C.showDialog_Vehicle_IN_OUT(Add_Parking_Here.this, Result);
+            D_C.showDialog_Vehicle_IN_OUT(Add_Parking_Here.this, s);
 
 
         }
