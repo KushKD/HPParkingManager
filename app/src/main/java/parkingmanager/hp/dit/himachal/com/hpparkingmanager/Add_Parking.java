@@ -181,7 +181,6 @@ public class Add_Parking extends FragmentActivity implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this,"onConnected",Toast.LENGTH_SHORT).show();
         Location mLastLocation = null;
         try {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);

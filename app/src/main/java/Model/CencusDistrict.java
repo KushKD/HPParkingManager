@@ -9,6 +9,7 @@ public class CencusDistrict implements Serializable{
 
 
     private String Id;
+    private String Name;
 
     public String getName() {
         return Name;
@@ -26,5 +27,5 @@ public class CencusDistrict implements Serializable{
         Id = id;
     }
 
-    private String Name;
+
 }
