@@ -12,7 +12,9 @@ public enum TaskType {
     VEHICLE_CHECK_OUT_CONFIRM(5),
     GET_DISTRICT(6),
     GET_SUBDISTRICT(7),
-    GET_TOWN(8);
+    GET_TOWN(8),
+    GET_PHONE_NUMBER(9);
+
     int value; private TaskType(int value) { this.value = value; }
 
 

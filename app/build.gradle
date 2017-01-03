@@ -8,8 +8,8 @@ android {
         applicationId "parkingmanager.hp.dit.himachal.com.hpparkingmanager"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 11
-        versionName "11.5"
+        versionCode 12
+        versionName "12.5"
         // Enabling multidex support
         multiDexEnabled true
     }

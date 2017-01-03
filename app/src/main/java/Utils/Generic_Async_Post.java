@@ -7,6 +7,7 @@ package Utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import Enum.TaskType;
 import HTTP.HttpManager;
@@ -51,6 +52,12 @@ public class Generic_Async_Post extends AsyncTask<String,Void ,String> {
                 return Data_From_Server;
             }else if(params[0].equalsIgnoreCase("getConfirmParkinStatus_JSON")){
                 Data_From_Server = http_manager.PostData_Vehicle_OUT_Confirm(params);
+                return Data_From_Server;
+            }else if(params[0].equalsIgnoreCase("getMobileNo_JSON")){
+
+                Data_From_Server = http_manager.GetData(params[1]);
+               // Log.e("Params",params[1]);
+               // Log.e("Data From Server",Data_From_Server);
                 return Data_From_Server;
             }
 

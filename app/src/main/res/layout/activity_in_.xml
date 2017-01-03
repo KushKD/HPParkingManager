@@ -8,7 +8,6 @@
     tools:context=".Vehicle_In_Activity">
 
 
-
     <LinearLayout
         android:id="@+id/lay1"
         android:layout_width="match_parent"
@@ -19,21 +18,21 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:id="@+id/ImageUser"
             android:layout_width="60dp"
-            android:visibility="visible"
             android:layout_height="60dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="visible" />
+
         <TextView
-            android:text="HP Parking Manager"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:gravity="left|center_horizontal|center_vertical"
+            android:text="HP Parking Manager"
             android:textColor="#006600"
-            android:textSize="17sp"
-            />
+            android:textSize="17sp" />
     </LinearLayout>
 
 
@@ -42,271 +41,322 @@
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_margin="5dp"
-        android:gravity="top|center_horizontal|center_vertical"
-        android:layout_weight="2.4" >
+        android:layout_weight="2.4"
+        android:gravity="top|center_horizontal|center_vertical">
 
 
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:gravity="top|center_horizontal|center_vertical"
+            android:orientation="vertical">
 
+
+            <!-- Type Of Car -->
             <LinearLayout
-                android:id="@+id/linearLayout1"
-                android:background="#FFFFFF"
-                android:gravity="top|center_horizontal|center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-
-
-
-    <!-- Type Of Car -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select type of car:"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_weight="1"/>
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-        <Spinner
-            android:id="@+id/typecar"
-            android:entries="@array/type_of_car"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-            </LinearLayout>
-
-
-    </LinearLayout>
-
-    <!-- Car Number -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enter Car Number:"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/carnumber"
-                android:inputType="textCapCharacters"
-                android:layout_width="wrap_content"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <!-- Driver Name -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enter Driver Name:"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/drivername"
-                android:inputType="textCapWords"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <!-- Phone Number -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enter Mobile number:"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/phonenumber"
-                android:inputType="number"
-                android:layout_width="wrap_content"
-                android:maxLength="10"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <!-- Estimated Parking Time -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Estimated Parking Time:"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <Spinner
-                android:id="@+id/estimatedtime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/estimatedtime"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-
-    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="Select type of car:"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/typecar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:entries="@array/type_of_car" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- Car Number -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="Enter Car Number:"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/carnumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                        android:inputType="textCapCharacters" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <!-- Get Phone Number from Server -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enter Car Number:"
+                        android:padding="5dp"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/getphonenumber"
+                        android:background="@drawable/bluebutton"
+                        android:inputType="textCapCharacters"
+                        android:layout_width="wrap_content"
+                        android:text="Get Mobile Number"
+                        android:textColor="#ffffff"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <!-- Driver Name -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="Enter Driver Name:"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/drivername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="textCapWords" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- Phone Number -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="Enter Mobile number:"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/phonenumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="10" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- Estimated Parking Time -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="Estimated Parking Time:"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/estimatedtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:entries="@array/estimatedtime" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
         </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lay3"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:layout_weight="0.2"
-        android:orientation="horizontal"
-        android:weightSum="3"
         android:layout_gravity="bottom"
-        android:gravity="right|center_horizontal|center_vertical"
+        android:layout_margin="3dp"
+        android:layout_weight="0.2"
         android:background="#F2F2F2"
-        android:layout_margin="3dp">
-
-    <!-- Buttons -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:gravity="right|center_horizontal|center_vertical"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="3">
 
+        <!-- Buttons -->
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Back"
-                android:textColor="#FFFFFF"
-                android:background="#FF545454"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#FF545454"
+                    android:padding="5dp"
+                    android:text="Back"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/park"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bluebutton"
+                    android:text="Park Car"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/park"
-                android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                android:text="Park Car"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/bluebutton"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
 
     </LinearLayout>
-
-        </LinearLayout>
-
 
 
 </LinearLayout>
